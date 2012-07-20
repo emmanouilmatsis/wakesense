@@ -1,0 +1,4 @@
+".\obj\stm32f10x_it.o" ".\obj\main.o" ".\obj\sysclock.o" ".\obj\vn100.o" ".\obj\vn_user.o" ".\obj\vn_lib.o" ".\obj\vn_math.o" ".\obj\stm32f10x_flash.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_lib.o" ".\obj\stm32f10x_nvic.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_spi.o" ".\obj\stm32f10x_systick.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_vector.o" ".\obj\cortexm3_macro.o" --library_type=microlib --device DARMSTM --strict --scatter ".\Obj\STM3210B-EVAL.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\List\STM3210B-EVAL.map" -o ".\Obj\STM3210B-EVAL.axf"

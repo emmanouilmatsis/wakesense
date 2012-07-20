@@ -1,0 +1,38 @@
+Accelerometer
+-------------
+
+X min: -280
+X max: 252
+
+Y min: -250
+Y max: 275
+
+Z min: -290
+Z max: 223
+
+Magnetometer
+------------
+
+X min: -280
+X max: 735
+
+Y min: -575
+Y max: 355
+
+Z min: -460
+Z max: 525
+
+Gyroscope
+---------
+
+X min: -14.00
+X max: -13.80
+
+Y min: 35.00
+Y max: 35.35
+
+Z min: -1.00
+Z max: -1.50
+
+==========
+Adjust appropriately if axis external representation is different that the internal.

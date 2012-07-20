@@ -1,0 +1,35 @@
+*** Creating Trace Output File '.\Obj\STM3210B-EVAL.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\obj\stm32f10x_it.o"'
+### List of Objects: adding '".\obj\main.o"'
+### List of Objects: adding '".\obj\sysclock.o"'
+### List of Objects: adding '".\obj\vn100.o"'
+### List of Objects: adding '".\obj\vn_user.o"'
+### List of Objects: adding '".\obj\vn_lib.o"'
+### List of Objects: adding '".\obj\vn_math.o"'
+### List of Objects: adding '".\obj\stm32f10x_flash.o"'
+### List of Objects: adding '".\obj\stm32f10x_gpio.o"'
+### List of Objects: adding '".\obj\stm32f10x_lib.o"'
+### List of Objects: adding '".\obj\stm32f10x_nvic.o"'
+### List of Objects: adding '".\obj\stm32f10x_rcc.o"'
+### List of Objects: adding '".\obj\stm32f10x_spi.o"'
+### List of Objects: adding '".\obj\stm32f10x_systick.o"'
+### List of Objects: adding '".\obj\stm32f10x_usart.o"'
+### List of Objects: adding '".\obj\stm32f10x_vector.o"'
+### List of Objects: adding '".\obj\cortexm3_macro.o"'
+### ADS-LD Command completed:
+".\obj\stm32f10x_it.o" ".\obj\main.o" ".\obj\sysclock.o" ".\obj\vn100.o" ".\obj\vn_user.o" ".\obj\vn_lib.o" ".\obj\vn_math.o" ".\obj\stm32f10x_flash.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_lib.o" ".\obj\stm32f10x_nvic.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_spi.o" ".\obj\stm32f10x_systick.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_vector.o" ".\obj\cortexm3_macro.o" --library_type=microlib --device DARMSTM --strict --scatter ".\Obj\STM3210B-EVAL.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\List\STM3210B-EVAL.map" -o ".\Obj\STM3210B-EVAL.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Obj\STM3210B-EVAL.axf'
+### ADS-LD Command File: '.\Obj\STM3210B-EVAL.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Obj\STM3210B-EVAL.lnp', Handle=0x00000334
+### Writing '.lnp' file
+### ADS-LD Command file '.\Obj\STM3210B-EVAL.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

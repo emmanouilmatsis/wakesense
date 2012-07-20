@@ -1,0 +1,1264 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [.\Obj\STM3210B-EVAL.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image .\Obj\STM3210B-EVAL.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, RVCT3.1 [Build 939]: Last Updated: Sun Jun 13 20:09:34 2010
+<BR><P>
+<H3>Maximum Stack Usage =        192 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+main &rArr; VN100_SPI_SetMagAccRef &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[22ea970]">BusFaultException</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[22ea970]">BusFaultException</a><BR>
+ <LI><a href="#[22ea2b0]">HardFaultException</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[22ea2b0]">HardFaultException</a><BR>
+ <LI><a href="#[22ea148]">MemManageException</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[22ea148]">MemManageException</a><BR>
+ <LI><a href="#[22e9770]">UsageFaultException</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[22e9770]">UsageFaultException</a><BR>
+ <LI><a href="#[2b8b738]">assert_failed</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[2b8b738]">assert_failed</a><BR>
+</UL>
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[2cbda80]">Reset_Handler</a>
+ <LI><a href="#[22ea100]">NMIException</a>
+ <LI><a href="#[22ea2b0]">HardFaultException</a>
+ <LI><a href="#[22ea148]">MemManageException</a>
+ <LI><a href="#[22ea970]">BusFaultException</a>
+ <LI><a href="#[22e9770]">UsageFaultException</a>
+ <LI><a href="#[22e9e30]">SVCHandler</a>
+ <LI><a href="#[22ea580]">DebugMonitor</a>
+ <LI><a href="#[22ea070]">PendSVC</a>
+ <LI><a href="#[2b87820]">SysTickHandler</a>
+ <LI><a href="#[22e9728]">WWDG_IRQHandler</a>
+ <LI><a href="#[22ea0b8]">PVD_IRQHandler</a>
+ <LI><a href="#[22e9de8]">TAMPER_IRQHandler</a>
+ <LI><a href="#[22e9f98]">RTC_IRQHandler</a>
+ <LI><a href="#[22ea340]">FLASH_IRQHandler</a>
+ <LI><a href="#[22ea028]">RCC_IRQHandler</a>
+ <LI><a href="#[22ea538]">EXTI0_IRQHandler</a>
+ <LI><a href="#[22ea4a8]">EXTI1_IRQHandler</a>
+ <LI><a href="#[22ea460]">EXTI2_IRQHandler</a>
+ <LI><a href="#[22ea418]">EXTI3_IRQHandler</a>
+ <LI><a href="#[22ea3d0]">EXTI4_IRQHandler</a>
+ <LI><a href="#[22ea898]">DMA1_Channel1_IRQHandler</a>
+ <LI><a href="#[22ea850]">DMA1_Channel2_IRQHandler</a>
+ <LI><a href="#[22ea808]">DMA1_Channel3_IRQHandler</a>
+ <LI><a href="#[22ea7c0]">DMA1_Channel4_IRQHandler</a>
+ <LI><a href="#[22ea778]">DMA1_Channel5_IRQHandler</a>
+ <LI><a href="#[22ea730]">DMA1_Channel6_IRQHandler</a>
+ <LI><a href="#[22ea6e8]">DMA1_Channel7_IRQHandler</a>
+ <LI><a href="#[22eaa00]">ADC1_2_IRQHandler</a>
+ <LI><a href="#[22e9800]">USB_HP_CAN_TX_IRQHandler</a>
+ <LI><a href="#[22e97b8]">USB_LP_CAN_RX0_IRQHandler</a>
+ <LI><a href="#[22ea928]">CAN_RX1_IRQHandler</a>
+ <LI><a href="#[22ea8e0]">CAN_SCE_IRQHandler</a>
+ <LI><a href="#[22ea388]">EXTI9_5_IRQHandler</a>
+ <LI><a href="#[22e9da0]">TIM1_BRK_IRQHandler</a>
+ <LI><a href="#[22e9cc8]">TIM1_UP_IRQHandler</a>
+ <LI><a href="#[22e9d10]">TIM1_TRG_COM_IRQHandler</a>
+ <LI><a href="#[22e9d58]">TIM1_CC_IRQHandler</a>
+ <LI><a href="#[22e9c80]">TIM2_IRQHandler</a>
+ <LI><a href="#[22e9c38]">TIM3_IRQHandler</a>
+ <LI><a href="#[22e9bf0]">TIM4_IRQHandler</a>
+ <LI><a href="#[22ea220]">I2C1_EV_IRQHandler</a>
+ <LI><a href="#[22ea268]">I2C1_ER_IRQHandler</a>
+ <LI><a href="#[22ea190]">I2C2_EV_IRQHandler</a>
+ <LI><a href="#[22ea1d8]">I2C2_ER_IRQHandler</a>
+ <LI><a href="#[22e9f08]">SPI1_IRQHandler</a>
+ <LI><a href="#[22e9ec0]">SPI2_IRQHandler</a>
+ <LI><a href="#[22e9920]">USART1_IRQHandler</a>
+ <LI><a href="#[22e98d8]">USART2_IRQHandler</a>
+ <LI><a href="#[22e9890]">USART3_IRQHandler</a>
+ <LI><a href="#[22ea4f0]">EXTI15_10_IRQHandler</a>
+ <LI><a href="#[22e9fe0]">RTCAlarm_IRQHandler</a>
+ <LI><a href="#[22e9848]">USBWakeUp_IRQHandler</a>
+ <LI><a href="#[22e9ad0]">TIM8_BRK_IRQHandler</a>
+ <LI><a href="#[22e99f8]">TIM8_UP_IRQHandler</a>
+ <LI><a href="#[22e9a40]">TIM8_TRG_COM_IRQHandler</a>
+ <LI><a href="#[22e9a88]">TIM8_CC_IRQHandler</a>
+ <LI><a href="#[22ea9b8]">ADC3_IRQHandler</a>
+ <LI><a href="#[22ea2f8]">FSMC_IRQHandler</a>
+ <LI><a href="#[22e9f50]">SDIO_IRQHandler</a>
+ <LI><a href="#[22e9ba8]">TIM5_IRQHandler</a>
+ <LI><a href="#[22e9e78]">SPI3_IRQHandler</a>
+ <LI><a href="#[22e99b0]">UART4_IRQHandler</a>
+ <LI><a href="#[22e9968]">UART5_IRQHandler</a>
+ <LI><a href="#[22e9b60]">TIM6_IRQHandler</a>
+ <LI><a href="#[22e9b18]">TIM7_IRQHandler</a>
+ <LI><a href="#[22ea6a0]">DMA2_Channel1_IRQHandler</a>
+ <LI><a href="#[22ea658]">DMA2_Channel2_IRQHandler</a>
+ <LI><a href="#[22ea610]">DMA2_Channel3_IRQHandler</a>
+ <LI><a href="#[22ea5c8]">DMA2_Channel4_5_IRQHandler</a>
+ <LI><a href="#[2cbac60]">__main</a>
+ <LI><a href="#[2b8b6a8]">main</a>
+ <LI><a href="#[2b8b6f0]">fputc</a>
+ <LI><a href="#[2d7a748]">_sputc</a>
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[2cbac60]"></a>__main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, entry.o($$startup$$))
+<BR><BR>[Calls]<UL><LI><a href="#[2d76e68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__init
+</UL>
+
+<P><STRONG><a name="[2d76eb0]"></a>__call_main</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, init.o(.emb_text))
+<BR><BR>[Called By]<UL><LI><a href="#[2d76e68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__init
+</UL>
+
+<P><STRONG><a name="[2cbda80]"></a>Reset_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_vector.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2d79588]"></a>__aeabi_dadd</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, dadd.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[2d79540]"></a>__aeabi_dsub</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, dadd.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+
+<P><STRONG><a name="[2d794f8]"></a>__aeabi_drsub</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, dadd.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+
+<P><STRONG><a name="[2d79248]"></a>__aeabi_dmul</STRONG> (Thumb, 230 bytes, Stack size 80 bytes, dmul.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d75d70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[2d790c8]"></a>__aeabi_ddiv</STRONG> (Thumb, 246 bytes, Stack size 72 bytes, ddiv.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d75d70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[2d78f48]"></a>__aeabi_f2d</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, f2d.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2d78d70]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 74 bytes, Stack size 0 bytes, cdrcmple.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[2d76e68]"></a>__init</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, init.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[2d76eb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__call_main
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2cbac60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
+
+<P><STRONG><a name="[2d76e20]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+
+<P><STRONG><a name="[2d769f8]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
+
+<P><STRONG><a name="[2d769b0]"></a>__aeabi_uidivmod</STRONG> (Thumb, 38 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[2d76840]"></a>__aeabi_uldivmod</STRONG> (Thumb, 84 bytes, Stack size 32 bytes, uldiv.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d764c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+<LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[2d76670]"></a>__aeabi_llsl</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d75c50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+
+<P><STRONG><a name="[2d76628]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
+
+<P><STRONG><a name="[2d764c0]"></a>__aeabi_llsr</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d75c50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[2d76840]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+
+<P><STRONG><a name="[2d76478]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+
+<P><STRONG><a name="[2d75db8]"></a>_double_round</STRONG> (Thumb, 54 bytes, Stack size 20 bytes, depilogue.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d75d70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+</UL>
+
+<P><STRONG><a name="[2d75d70]"></a>_double_epilogue</STRONG> (Thumb, 138 bytes, Stack size 28 bytes, depilogue.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d75db8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d790c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[2d79248]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[2d795d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_addcore
+</UL>
+
+<P><STRONG><a name="[2d75c50]"></a>__aeabi_d2ulz</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, dfixull.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d764c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
+<LI><a href="#[2d76670]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+
+<P><STRONG><a name="[22eaa00]"></a>ADC1_2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.ADC1_2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea9b8]"></a>ADC3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.ADC3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea970]"></a>BusFaultException</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.BusFaultException))
+<BR><BR>[Calls]<UL><LI><a href="#[22ea970]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusFaultException
+</UL>
+<BR>[Called By]<UL><LI><a href="#[22ea970]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusFaultException
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea928]"></a>CAN_RX1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.CAN_RX1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea8e0]"></a>CAN_SCE_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.CAN_SCE_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea898]"></a>DMA1_Channel1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea850]"></a>DMA1_Channel2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea808]"></a>DMA1_Channel3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea7c0]"></a>DMA1_Channel4_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel4_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea778]"></a>DMA1_Channel5_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel5_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea730]"></a>DMA1_Channel6_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel6_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea6e8]"></a>DMA1_Channel7_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA1_Channel7_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea6a0]"></a>DMA2_Channel1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA2_Channel1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea658]"></a>DMA2_Channel2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA2_Channel2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea610]"></a>DMA2_Channel3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA2_Channel3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea5c8]"></a>DMA2_Channel4_5_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DMA2_Channel4_5_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea580]"></a>DebugMonitor</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DebugMonitor))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea538]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI0_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea4f0]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI15_10_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea4a8]"></a>EXTI1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea460]"></a>EXTI2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea418]"></a>EXTI3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea3d0]"></a>EXTI4_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI4_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea388]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.EXTI9_5_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea340]"></a>FLASH_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.FLASH_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b660]"></a>FLASH_PrefetchBufferCmd</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, stm32f10x_flash.o(i.FLASH_PrefetchBufferCmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = FLASH_PrefetchBufferCmd
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b618]"></a>FLASH_SetLatency</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, stm32f10x_flash.o(i.FLASH_SetLatency))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = FLASH_SetLatency
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[22ea2f8]"></a>FSMC_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.FSMC_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b8a0]"></a>GPIO_Configuration</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, main.o(i.GPIO_Configuration))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GPIO_Configuration
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8b588]"></a>GPIO_Init</STRONG> (Thumb, 290 bytes, Stack size 24 bytes, stm32f10x_gpio.o(i.GPIO_Init), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+
+<P><STRONG><a name="[2c40128]"></a>GPIO_ResetBits</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, stm32f10x_gpio.o(i.GPIO_ResetBits))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GPIO_ResetBits
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b81688]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SetSS
+</UL>
+
+<P><STRONG><a name="[2c400e0]"></a>GPIO_SetBits</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, stm32f10x_gpio.o(i.GPIO_SetBits))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GPIO_SetBits
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b81688]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SetSS
+</UL>
+
+<P><STRONG><a name="[22ea2b0]"></a>HardFaultException</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.HardFaultException))
+<BR><BR>[Calls]<UL><LI><a href="#[22ea2b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFaultException
+</UL>
+<BR>[Called By]<UL><LI><a href="#[22ea2b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HardFaultException
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea268]"></a>I2C1_ER_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.I2C1_ER_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea220]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.I2C1_EV_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea1d8]"></a>I2C2_ER_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.I2C2_ER_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea190]"></a>I2C2_EV_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.I2C2_EV_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea148]"></a>MemManageException</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.MemManageException))
+<BR><BR>[Calls]<UL><LI><a href="#[22ea148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MemManageException
+</UL>
+<BR>[Called By]<UL><LI><a href="#[22ea148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MemManageException
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea100]"></a>NMIException</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.NMIException))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b858]"></a>NVIC_Configuration</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, main.o(i.NVIC_Configuration))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Configuration &rArr; NVIC_SetVectorTable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b540]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_SetVectorTable
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8b540]"></a>NVIC_SetVectorTable</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, stm32f10x_nvic.o(i.NVIC_SetVectorTable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_SetVectorTable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b858]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Configuration
+</UL>
+
+<P><STRONG><a name="[22ea0b8]"></a>PVD_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.PVD_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22ea070]"></a>PendSVC</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.PendSVC))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b4f8]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RCC_APB2PeriphClockCmd
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b810]"></a>RCC_Configuration</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, main.o(i.RCC_Configuration))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = RCC_Configuration &rArr; RCC_WaitForHSEStartUp &rArr; RCC_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_WaitForHSEStartUp
+<LI><a href="#[2b8b228]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_SYSCLKConfig
+<LI><a href="#[2b8b270]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PLLConfig
+<LI><a href="#[2b8b2b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PLLCmd
+<LI><a href="#[2b8b300]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PCLK2Config
+<LI><a href="#[2b8b348]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PCLK1Config
+<LI><a href="#[2b8b390]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_HSEConfig
+<LI><a href="#[2b8b3d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_HCLKConfig
+<LI><a href="#[2b8b420]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetSYSCLKSource
+<LI><a href="#[2b8b468]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetFlagStatus
+<LI><a href="#[2b8b4f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<LI><a href="#[2b8b618]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_SetLatency
+<LI><a href="#[2b8b660]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_PrefetchBufferCmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8b4b0]"></a>RCC_DeInit</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_DeInit), UNUSED)
+
+<P><STRONG><a name="[2c64640]"></a>RCC_GetClocksFreq</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_GetClocksFreq))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RCC_GetClocksFreq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8afe8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+</UL>
+
+<P><STRONG><a name="[2b8b468]"></a>RCC_GetFlagStatus</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_GetFlagStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RCC_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_WaitForHSEStartUp
+<LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b420]"></a>RCC_GetSYSCLKSource</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_GetSYSCLKSource))
+<BR><BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b3d8]"></a>RCC_HCLKConfig</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_HCLKConfig))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_HCLKConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b390]"></a>RCC_HSEConfig</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_HSEConfig))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RCC_HSEConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[22ea028]"></a>RCC_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.RCC_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b348]"></a>RCC_PCLK1Config</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_PCLK1Config))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_PCLK1Config
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b300]"></a>RCC_PCLK2Config</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_PCLK2Config))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_PCLK2Config
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b2b8]"></a>RCC_PLLCmd</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_PLLCmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_PLLCmd
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b270]"></a>RCC_PLLConfig</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_PLLConfig))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RCC_PLLConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b228]"></a>RCC_SYSCLKConfig</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, stm32f10x_rcc.o(i.RCC_SYSCLKConfig))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RCC_SYSCLKConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[2b8b1e0]"></a>RCC_WaitForHSEStartUp</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, stm32f10x_rcc.o(i.RCC_WaitForHSEStartUp))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = RCC_WaitForHSEStartUp &rArr; RCC_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b468]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetFlagStatus
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+</UL>
+
+<P><STRONG><a name="[22e9fe0]"></a>RTCAlarm_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.RTCAlarm_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9f98]"></a>RTC_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.RTC_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9f50]"></a>SDIO_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SDIO_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9f08]"></a>SPI1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SPI1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9ec0]"></a>SPI2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SPI2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9e78]"></a>SPI3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SPI3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b150]"></a>SPI_Cmd</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, stm32f10x_spi.o(i.SPI_Cmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SPI_Cmd
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2c40098]"></a>SPI_I2S_GetFlagStatus</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, stm32f10x_spi.o(i.SPI_I2S_GetFlagStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SPI_I2S_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+</UL>
+
+<P><STRONG><a name="[2c40050]"></a>SPI_I2S_ReceiveData</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, stm32f10x_spi.o(i.SPI_I2S_ReceiveData))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SPI_I2S_ReceiveData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+</UL>
+
+<P><STRONG><a name="[2c40008]"></a>SPI_I2S_SendData</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, stm32f10x_spi.o(i.SPI_I2S_SendData))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+</UL>
+
+<P><STRONG><a name="[2b8b108]"></a>SPI_Init</STRONG> (Thumb, 270 bytes, Stack size 16 bytes, stm32f10x_spi.o(i.SPI_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SPI_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[22e9e30]"></a>SVCHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SVCHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b7c8]"></a>Serial_SendByte</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, main.o(i.Serial_SendByte))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Serial_SendByte &rArr; USART_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8afa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<LI><a href="#[2b8b030]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b780]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHexBytes
+</UL>
+
+<P><STRONG><a name="[2b8b780]"></a>Serial_SendHexBytes</STRONG> (Thumb, 62 bytes, Stack size 24 bytes, main.o(i.Serial_SendHexBytes))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Serial_SendHexBytes &rArr; Serial_SendByte &rArr; USART_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b7c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendByte
+<LI><a href="#[2d7a478]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__1sprintf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b87820]"></a>SysTickHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, sysclock.o(i.SysTickHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9de8]"></a>TAMPER_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TAMPER_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9da0]"></a>TIM1_BRK_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM1_BRK_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9d58]"></a>TIM1_CC_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM1_CC_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9d10]"></a>TIM1_TRG_COM_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM1_TRG_COM_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9cc8]"></a>TIM1_UP_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM1_UP_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9c80]"></a>TIM2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9c38]"></a>TIM3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9bf0]"></a>TIM4_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM4_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9ba8]"></a>TIM5_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM5_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9b60]"></a>TIM6_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM6_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9b18]"></a>TIM7_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM7_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9ad0]"></a>TIM8_BRK_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM8_BRK_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9a88]"></a>TIM8_CC_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM8_CC_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9a40]"></a>TIM8_TRG_COM_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM8_TRG_COM_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e99f8]"></a>TIM8_UP_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.TIM8_UP_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e99b0]"></a>UART4_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UART4_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9968]"></a>UART5_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UART5_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9920]"></a>USART1_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USART1_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e98d8]"></a>USART2_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USART2_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9890]"></a>USART3_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USART3_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8b078]"></a>USART_Cmd</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, stm32f10x_usart.o(i.USART_Cmd))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_Cmd
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8b030]"></a>USART_GetFlagStatus</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, stm32f10x_usart.o(i.USART_GetFlagStatus))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USART_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fputc
+<LI><a href="#[2b8b7c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendByte
+</UL>
+
+<P><STRONG><a name="[2b8afe8]"></a>USART_Init</STRONG> (Thumb, 330 bytes, Stack size 48 bytes, stm32f10x_usart.o(i.USART_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = USART_Init &rArr; RCC_GetClocksFreq
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+<LI><a href="#[2c64640]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8afa0]"></a>USART_SendData</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, stm32f10x_usart.o(i.USART_SendData))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fputc
+<LI><a href="#[2b8b7c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendByte
+</UL>
+
+<P><STRONG><a name="[22e9848]"></a>USBWakeUp_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USBWakeUp_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9800]"></a>USB_HP_CAN_TX_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USB_HP_CAN_TX_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e97b8]"></a>USB_LP_CAN_RX0_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.USB_LP_CAN_RX0_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[22e9770]"></a>UsageFaultException</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UsageFaultException))
+<BR><BR>[Calls]<UL><LI><a href="#[22e9770]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UsageFaultException
+</UL>
+<BR>[Called By]<UL><LI><a href="#[22e9770]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UsageFaultException
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2b8af58]"></a>VN100_SPI_GetADOF</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetADOF))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetADOF &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8af10]"></a>VN100_SPI_GetADOR</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetADOR))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetADOR &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8aec8]"></a>VN100_SPI_GetAcc</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetAcc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetAcc &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ae80]"></a>VN100_SPI_GetAccComp</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetAccComp))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetAccComp &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ae38]"></a>VN100_SPI_GetAccGain</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetAccGain))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetAccGain &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8adf0]"></a>VN100_SPI_GetBaudRate</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetBaudRate))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetBaudRate &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ada8]"></a>VN100_SPI_GetDCM</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_GetDCM))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = VN100_SPI_GetDCM &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ad60]"></a>VN100_SPI_GetFWVer</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetFWVer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetFWVer &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ad18]"></a>VN100_SPI_GetFiltActTuning</STRONG> (Thumb, 44 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_GetFiltActTuning))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = VN100_SPI_GetFiltActTuning &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8acd0]"></a>VN100_SPI_GetFiltMeasVar</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetFiltMeasVar))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetFiltMeasVar &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ac88]"></a>VN100_SPI_GetHWRev</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetHWRev))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetHWRev &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ac40]"></a>VN100_SPI_GetHardSoftIronComp</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetHardSoftIronComp))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetHardSoftIronComp &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8abf8]"></a>VN100_SPI_GetMag</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetMag))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetMag &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8abb0]"></a>VN100_SPI_GetMagAccRates</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetMagAccRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetMagAccRates &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ab68]"></a>VN100_SPI_GetMagAccRef</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetMagAccRef))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetMagAccRef &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8ab20]"></a>VN100_SPI_GetModel</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetModel))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetModel &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8aad8]"></a>VN100_SPI_GetQuat</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetQuat))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetQuat &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8aa90]"></a>VN100_SPI_GetQuatAcc</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetQuatAcc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetQuatAcc &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8aa48]"></a>VN100_SPI_GetQuatAccRates</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetQuatAccRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetQuatAccRates &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8aa00]"></a>VN100_SPI_GetQuatMag</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetQuatMag))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetQuatMag &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a9b8]"></a>VN100_SPI_GetQuatMagAcc</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetQuatMagAcc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetQuatMagAcc &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a970]"></a>VN100_SPI_GetQuatMagAccRates</STRONG> (Thumb, 108 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_GetQuatMagAccRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = VN100_SPI_GetQuatMagAccRates &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a928]"></a>VN100_SPI_GetQuatRates</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetQuatRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetQuatRates &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a8e0]"></a>VN100_SPI_GetRates</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetRates &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a898]"></a>VN100_SPI_GetRefFrameRot</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetRefFrameRot))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetRefFrameRot &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a850]"></a>VN100_SPI_GetSerial</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_GetSerial))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_GetSerial &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a808]"></a>VN100_SPI_GetYPR</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_GetYPR))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VN100_SPI_GetYPR &rArr; VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a7c0]"></a>VN100_SPI_GetYPRMagAccRates</STRONG> (Thumb, 108 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_GetYPRMagAccRates))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = VN100_SPI_GetYPRMagAccRates
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b81880]"></a>VN100_SPI_ReadRegister</STRONG> (Thumb, 90 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_ReadRegister))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_ReadRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81688]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SetSS
+<LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+<LI><a href="#[2b8a460]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_Delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8a808]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetYPR
+<LI><a href="#[2b8a850]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetSerial
+<LI><a href="#[2b8a898]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetRefFrameRot
+<LI><a href="#[2b8a8e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetRates
+<LI><a href="#[2b8a928]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatRates
+<LI><a href="#[2b8a970]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMagAccRates
+<LI><a href="#[2b8a9b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMagAcc
+<LI><a href="#[2b8aa00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMag
+<LI><a href="#[2b8aa48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatAccRates
+<LI><a href="#[2b8aa90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatAcc
+<LI><a href="#[2b8aad8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuat
+<LI><a href="#[2b8ab20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetModel
+<LI><a href="#[2b8ab68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMagAccRef
+<LI><a href="#[2b8abb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMagAccRates
+<LI><a href="#[2b8abf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMag
+<LI><a href="#[2b8ac40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetHardSoftIronComp
+<LI><a href="#[2b8ac88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetHWRev
+<LI><a href="#[2b8acd0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFiltMeasVar
+<LI><a href="#[2b8ad18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFiltActTuning
+<LI><a href="#[2b8ad60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFWVer
+<LI><a href="#[2b8ada8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetDCM
+<LI><a href="#[2b8adf0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetBaudRate
+<LI><a href="#[2b8ae38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAccGain
+<LI><a href="#[2b8ae80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAccComp
+<LI><a href="#[2b8aec8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAcc
+<LI><a href="#[2b8af10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetADOR
+<LI><a href="#[2b8af58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetADOF
+</UL>
+
+<P><STRONG><a name="[2b8a778]"></a>VN100_SPI_RestoreFactorySettings</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, vn100.o(i.VN100_SPI_RestoreFactorySettings))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = VN100_SPI_RestoreFactorySettings &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81688]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SetSS
+<LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+<LI><a href="#[2b8a460]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_Delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a730]"></a>VN100_SPI_SetADOF</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_SetADOF))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_SetADOF &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a6e8]"></a>VN100_SPI_SetADOR</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_SetADOR))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_SetADOR &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a6a0]"></a>VN100_SPI_SetAccComp</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, vn100.o(i.VN100_SPI_SetAccComp))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_SetAccComp &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a658]"></a>VN100_SPI_SetAccGain</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_SetAccGain))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_SetAccGain &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a610]"></a>VN100_SPI_SetBaudRate</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, vn100.o(i.VN100_SPI_SetBaudRate))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = VN100_SPI_SetBaudRate &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a5c8]"></a>VN100_SPI_SetFiltActTuning</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_SetFiltActTuning))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = VN100_SPI_SetFiltActTuning &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a580]"></a>VN100_SPI_SetFiltMeasVar</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, vn100.o(i.VN100_SPI_SetFiltMeasVar))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_SetFiltMeasVar &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a538]"></a>VN100_SPI_SetHardSoftIronComp</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, vn100.o(i.VN100_SPI_SetHardSoftIronComp))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_SetHardSoftIronComp &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a4f0]"></a>VN100_SPI_SetMagAccRef</STRONG> (Thumb, 42 bytes, Stack size 32 bytes, vn100.o(i.VN100_SPI_SetMagAccRef))
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = VN100_SPI_SetMagAccRef &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8a4a8]"></a>VN100_SPI_SetRefFrameRot</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, vn100.o(i.VN100_SPI_SetRefFrameRot))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_SetRefFrameRot &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b817a8]"></a>VN100_SPI_WriteRegister</STRONG> (Thumb, 102 bytes, Stack size 24 bytes, vn100.o(i.VN100_SPI_WriteRegister))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b81688]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SetSS
+<LI><a href="#[2b816d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_SPI_SendReceive
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8a4a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetRefFrameRot
+<LI><a href="#[2b8a4f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetMagAccRef
+<LI><a href="#[2b8a538]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetHardSoftIronComp
+<LI><a href="#[2b8a580]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetFiltMeasVar
+<LI><a href="#[2b8a5c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetFiltActTuning
+<LI><a href="#[2b8a610]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetBaudRate
+<LI><a href="#[2b8a658]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetAccGain
+<LI><a href="#[2b8a6a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetAccComp
+<LI><a href="#[2b8a6e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetADOR
+<LI><a href="#[2b8a730]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetADOF
+</UL>
+
+<P><STRONG><a name="[2b8a460]"></a>VN_Delay</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, vn_user.o(i.VN_Delay))
+<BR><BR>[Called By]<UL><LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+<LI><a href="#[2b8a778]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_RestoreFactorySettings
+<LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b816d0]"></a>VN_SPI_SendReceive</STRONG> (Thumb, 82 bytes, Stack size 32 bytes, vn_user.o(i.VN_SPI_SendReceive))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2c40008]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_SendData
+<LI><a href="#[2c40050]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_ReceiveData
+<LI><a href="#[2c40098]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_GetFlagStatus
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+<LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+<LI><a href="#[2b8a778]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_RestoreFactorySettings
+</UL>
+
+<P><STRONG><a name="[2b81688]"></a>VN_SPI_SetSS</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, vn_user.o(i.VN_SPI_SetSS))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = VN_SPI_SetSS &rArr; GPIO_SetBits
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2c400e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[2c40128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b817a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_WriteRegister
+<LI><a href="#[2b81880]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_ReadRegister
+<LI><a href="#[2b8a778]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_RestoreFactorySettings
+</UL>
+
+<P><STRONG><a name="[22e9728]"></a>WWDG_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.WWDG_IRQHandler))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x_vector.o(RESET)
+</UL>
+<P><STRONG><a name="[2d7a5e0]"></a>__0printf</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[2d7a598]"></a>__1printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __1printf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2d7a550]"></a>__c89printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
+
+<P><STRONG><a name="[2d7a508]"></a>printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
+
+<P><STRONG><a name="[2d7a4c0]"></a>__0sprintf</STRONG> (Thumb, 34 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d7a748]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
+<LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[2d7a478]"></a>__1sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __1sprintf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8b780]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHexBytes
+</UL>
+
+<P><STRONG><a name="[2d7a430]"></a>__c89sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf), UNUSED)
+
+<P><STRONG><a name="[2d7a3e8]"></a>sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0sprintf), UNUSED)
+
+<P><STRONG><a name="[2d73fd0]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+
+<P><STRONG><a name="[2d73f88]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+
+<P><STRONG><a name="[2d73f40]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+
+<P><STRONG><a name="[2b8b738]"></a>assert_failed</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(i.assert_failed))
+<BR><BR>[Calls]<UL><LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2b8afa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<LI><a href="#[2b8afe8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[2b8b030]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
+<LI><a href="#[2b8b078]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
+<LI><a href="#[2b8b108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Init
+<LI><a href="#[2b8b150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Cmd
+<LI><a href="#[2b8b228]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_SYSCLKConfig
+<LI><a href="#[2b8b270]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PLLConfig
+<LI><a href="#[2b8b2b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PLLCmd
+<LI><a href="#[2b8b300]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PCLK2Config
+<LI><a href="#[2b8b348]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PCLK1Config
+<LI><a href="#[2b8b390]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_HSEConfig
+<LI><a href="#[2b8b3d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_HCLKConfig
+<LI><a href="#[2b8b468]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetFlagStatus
+<LI><a href="#[2b8b4f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<LI><a href="#[2b8b540]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_SetVectorTable
+<LI><a href="#[2b8b588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[2b8b618]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_SetLatency
+<LI><a href="#[2b8b660]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_PrefetchBufferCmd
+<LI><a href="#[2b8b738]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;assert_failed
+<LI><a href="#[2c40008]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_SendData
+<LI><a href="#[2c40050]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_ReceiveData
+<LI><a href="#[2c40098]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_I2S_GetFlagStatus
+<LI><a href="#[2c400e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[2c40128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+</UL>
+
+<P><STRONG><a name="[2b8a190]"></a>debug</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, stm32f10x_lib.o(i.debug))
+<BR><BR>[Called By]<UL><LI><a href="#[2b8b6a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b8b6f0]"></a>fputc</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, main.o(i.fputc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = fputc &rArr; USART_GetFlagStatus
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8afa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<LI><a href="#[2b8b030]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetFlagStatus
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> printfa.o(i.__0printf)
+</UL>
+<P><STRONG><a name="[2b8b6a8]"></a>main</STRONG> (Thumb, 9620 bytes, Stack size 88 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = main &rArr; VN100_SPI_SetMagAccRef &rArr; VN100_SPI_WriteRegister &rArr; VN_SPI_SendReceive &rArr; SPI_I2S_SendData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2b8a190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug
+<LI><a href="#[2b8a460]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN_Delay
+<LI><a href="#[2b8a4a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetRefFrameRot
+<LI><a href="#[2b8a4f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetMagAccRef
+<LI><a href="#[2b8a538]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetHardSoftIronComp
+<LI><a href="#[2b8a580]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetFiltMeasVar
+<LI><a href="#[2b8a5c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetFiltActTuning
+<LI><a href="#[2b8a610]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetBaudRate
+<LI><a href="#[2b8a658]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetAccGain
+<LI><a href="#[2b8a6a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetAccComp
+<LI><a href="#[2b8a6e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetADOR
+<LI><a href="#[2b8a730]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_SetADOF
+<LI><a href="#[2b8a778]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_RestoreFactorySettings
+<LI><a href="#[2b8a7c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetYPRMagAccRates
+<LI><a href="#[2b8a808]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetYPR
+<LI><a href="#[2b8a850]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetSerial
+<LI><a href="#[2b8a898]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetRefFrameRot
+<LI><a href="#[2b8a8e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetRates
+<LI><a href="#[2b8a928]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatRates
+<LI><a href="#[2b8a970]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMagAccRates
+<LI><a href="#[2b8a9b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMagAcc
+<LI><a href="#[2b8aa00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatMag
+<LI><a href="#[2b8aa48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatAccRates
+<LI><a href="#[2b8aa90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuatAcc
+<LI><a href="#[2b8aad8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetQuat
+<LI><a href="#[2b8ab20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetModel
+<LI><a href="#[2b8ab68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMagAccRef
+<LI><a href="#[2b8abb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMagAccRates
+<LI><a href="#[2b8abf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetMag
+<LI><a href="#[2b8ac40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetHardSoftIronComp
+<LI><a href="#[2b8ac88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetHWRev
+<LI><a href="#[2b8acd0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFiltMeasVar
+<LI><a href="#[2b8ad18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFiltActTuning
+<LI><a href="#[2b8ad60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetFWVer
+<LI><a href="#[2b8ada8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetDCM
+<LI><a href="#[2b8adf0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetBaudRate
+<LI><a href="#[2b8ae38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAccGain
+<LI><a href="#[2b8ae80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAccComp
+<LI><a href="#[2b8aec8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetAcc
+<LI><a href="#[2b8af10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetADOR
+<LI><a href="#[2b8af58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VN100_SPI_GetADOF
+<LI><a href="#[2b8afe8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[2b8b078]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
+<LI><a href="#[2b8b108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Init
+<LI><a href="#[2b8b150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Cmd
+<LI><a href="#[2b8b780]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHexBytes
+<LI><a href="#[2b8b810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_Configuration
+<LI><a href="#[2b8b858]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Configuration
+<LI><a href="#[2b8b8a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Configuration
+<LI><a href="#[2d78f48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[2d7a598]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__1printf
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> init.o(.text)
+</UL><P>
+<H3>
+Local Symbols
+</H3>
+<P><STRONG><a name="[2d7a868]"></a>_fp_digits</STRONG> (Thumb, 372 bytes, Stack size 64 bytes, printfa.o(i._fp_digits), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d75c50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[2d76840]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[2d78d70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[2d790c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[2d79248]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[2d79588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[2d7a820]"></a>_printf_core</STRONG> (Thumb, 1754 bytes, Stack size 152 bytes, printfa.o(i._printf_core), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d76840]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[2d769b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2d7a790]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
+<LI><a href="#[2d7a868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d7a4c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf
+<LI><a href="#[2d7a5e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf
+</UL>
+
+<P><STRONG><a name="[2d7a790]"></a>_printf_pre_padding</STRONG> (Thumb, 44 bytes, Stack size 24 bytes, printfa.o(i._printf_pre_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2d7a820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[2d7a748]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, printfa.o(i._sputc))
+<BR><BR>[Called By]<UL><LI><a href="#[2d7a4c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> printfa.o(i.__0sprintf)
+</UL>
+<P><STRONG><a name="[2d795d0]"></a>_double_addcore</STRONG> (Thumb, 274 bytes, Stack size 64 bytes, dadd.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2d75d70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<LI><a href="#[2d764c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
+<LI><a href="#[2d76670]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2d794f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<LI><a href="#[2d79540]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[2d79588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+</UL>
+<P>
+<H3>
+Undefined Global Symbols
+</H3><HR></body></html>
