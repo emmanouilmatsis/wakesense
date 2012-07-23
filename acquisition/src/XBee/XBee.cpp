@@ -48,7 +48,7 @@ XBeeATCommandRequest :: XBeeATCommandRequest() : XBeeRequest() {
 }
 
 XBeeATCommandRequest :: XBeeATCommandRequest(byte frameId, byte atCommand0, byte atCommand1, byte parameterValue) : XBeeRequest() {
-  // Assemble AT_COMMAND_REQUEST
+	// Assemble AT_COMMAND_REQUEST
 	this->apiId = AT_COMMAND_REQUEST;
 	this->frameId = frameId;
 	this->atCommand0 = atCommand0;
@@ -62,6 +62,20 @@ XBeeATCommandRequest :: XBeeATCommandRequest(byte frameId, byte atCommand0, byte
 	this->checksum = calculateChecksum();
 }
 
+XBeeATCommandRequest :: XBeeATCommandRequest(byte frameId, byte atCommand0, byte atCommand1) : XBeeRequest() {
+	// Assemble AT_COMMAND_REQUEST
+	this->apiId = AT_COMMAND_REQUEST;
+	this->frameId = frameId;
+	this->atCommand0 = atCommand0;
+	this->atCommand1 = atCommand1;
+
+	// Assemble FRAME
+	this->startDelimiter = START_DELIMITER;
+	this->lengthMSB = 0x00;
+	this->lengthLSB = 0x04;
+	this->checksum = calculateChecksum();
+}
+
 byte XBeeATCommandRequest :: getData(byte field) {
 	// Get field	
 	if (field == FRAME_START_DELIMITER) return startDelimiter;
@@ -71,17 +85,17 @@ byte XBeeATCommandRequest :: getData(byte field) {
 	else if (field == AT_COMMAND_REQUEST_FRAME_ID) return frameId;
 	else if (field == AT_COMMAND_REQUEST_AT_COMMAND_0) return atCommand0;
 	else if (field == AT_COMMAND_REQUEST_AT_COMMAND_1) return atCommand1;
-	else if (field == AT_COMMAND_REQUEST_PARAMETER_VALUE) return parameterValue;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if (field == AT_COMMAND_REQUEST_PARAMETER_VALUE && lengthLSB == 0x05) return parameterValue; // TODO optional field
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
 void XBeeATCommandRequest :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-		setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeATCommandRequest :: setData(byte data, byte field) {
+void XBeeATCommandRequest :: setData(byte field, byte data) {
 	// Set field	
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -90,9 +104,12 @@ void XBeeATCommandRequest :: setData(byte data, byte field) {
 	else if (field == AT_COMMAND_REQUEST_FRAME_ID) frameId = data;
 	else if (field == AT_COMMAND_REQUEST_AT_COMMAND_0) atCommand0 = data;
 	else if (field == AT_COMMAND_REQUEST_AT_COMMAND_1) atCommand1 = data;
-	else if (field == AT_COMMAND_REQUEST_PARAMETER_VALUE) parameterValue = data;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if (field == AT_COMMAND_REQUEST_PARAMETER_VALUE && lengthLSB == 0x05) parameterValue = data; // TODO optional field
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lenghtMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum
+	this->checksum = calculateChecksum();
 }
 
 /* -------- XBeeTXRequest -------- */
@@ -103,9 +120,9 @@ XBeeTXRequest :: XBeeTXRequest() : XBeeRequest() {
 	// Invoke base constractor
 }
 
-XBeeTXRequest :: XBeeTXRequest(byte frameId, unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte broadcastRadius, byte options, byte* rfData) : XBeeRequest() {
+XBeeTXRequest :: XBeeTXRequest(byte frameId, unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte broadcastRadius, byte options, byte rfDataSize) : XBeeRequest() {
 	// Assemble TX_REQUEST
-  this->apiId = TX_REQUEST;
+	this->apiId = TX_REQUEST;
 	this->frameId = frameId;
 	this->destinationAddress0 = (addressMSB >> 24) & 0xFF;
 	this->destinationAddress1 = (addressMSB >> 16) & 0xFF;
@@ -119,13 +136,13 @@ XBeeTXRequest :: XBeeTXRequest(byte frameId, unsigned long int addressMSB, unsig
 	this->networkAddress1 = networkAddress1;
 	this->broadcastRadius = broadcastRadius;
 	this->options = options;
-	for (unsigned int i = 0; i < sizeof(rfData); i++)
-		this->rfData[i] = rfData[i];
+	for (unsigned int i = 0; i < rfDataSize; i++)
+		this->rfData[i] = 0x00; // initialize with 0x00
 
 	// Assemble FRAME
 	this->startDelimiter = START_DELIMITER;
-	this->lengthMSB = ((14 + sizeof(rfData)) >> 8) & 0xFF;
-	this->lengthLSB = ((14 + sizeof(rfData)) >> 0) & 0xFF;
+	this->lengthMSB = ((rfDataSize + 14) >> 8) & 0xFF;
+	this->lengthLSB = ((rfDataSize + 14) >> 0) & 0xFF;
 	this->checksum = calculateChecksum();
 }
 
@@ -148,17 +165,17 @@ byte XBeeTXRequest :: getData(byte field) {
 	else if (field == TX_REQUEST_NETWORK_ADDRESS_1) return networkAddress1;
 	else if (field == TX_REQUEST_BROADCAST_RADIUS) return broadcastRadius;
 	else if (field == TX_REQUEST_OPTIONS) return options;
-	else if ((field >= TX_REQUEST_RF_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) return rfData[field]; 
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if ((field >= TX_REQUEST_RF_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) return rfData[field - TX_REQUEST_RF_DATA]; // TODO error if lenghtMSB and lengthLSB are undefined
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
 void XBeeTXRequest :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-		setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeTXRequest :: setData(byte data, byte field) {
+void XBeeTXRequest :: setData(byte field, byte data) {
 	// Set field
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -177,12 +194,18 @@ void XBeeTXRequest :: setData(byte data, byte field) {
 	else if (field == TX_REQUEST_NETWORK_ADDRESS_1) networkAddress1 = data;
 	else if (field == TX_REQUEST_BROADCAST_RADIUS) broadcastRadius = data;
 	else if (field == TX_REQUEST_OPTIONS) options = data;
-	else if ((field >= TX_REQUEST_RF_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) rfData[field] = data; 
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if ((field >= TX_REQUEST_RF_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) rfData[field - TX_REQUEST_RF_DATA] = data; // TODO error if lenghtMSB and lengthLSB are undefined
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lenghtMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum
+	this->checksum = calculateChecksum();
 }
 
-/* -------- XBeeResponse -------- */
+/* ======== XBeeResponse ======== */
+
+/* Public */ 
+
 XBeeResponse :: XBeeResponse() : XBeeFrame() {
 	// Invoke base constractor 
 }
@@ -195,22 +218,6 @@ XBeeATCommandResponse :: XBeeATCommandResponse() : XBeeResponse() {
 	// Invoke base constractor
 }
 
-XBeeATCommandResponse :: XBeeATCommandResponse(byte frameId, byte atCommand0, byte atCommand1, byte commandStatus, byte commandData) : XBeeResponse() {
-	// Assemble AT_COMMAND_RESPONSE
-	this->apiId = AT_COMMAND_RESPONSE;
-	this->frameId = frameId;
-	this->atCommand0 = atCommand0;
-	this->atCommand1 = atCommand1;
-	this->commandStatus = commandStatus;
-	this->commandData = commandData;
-
-	// Assemble FRAME
-	this->startDelimiter = START_DELIMITER;
-	this->lengthMSB = 0x00;
-	this->lengthLSB = 0x06;
-	this->checksum = calculateChecksum();
-}
-
 byte XBeeATCommandResponse :: getData(byte field) {
 	// Get field
 	if (field == FRAME_START_DELIMITER) return startDelimiter;
@@ -221,17 +228,18 @@ byte XBeeATCommandResponse :: getData(byte field) {
 	else if (field == AT_COMMAND_RESPONSE_AT_COMMAND_0) return atCommand0;
 	else if (field == AT_COMMAND_RESPONSE_AT_COMMAND_1) return atCommand1;
 	else if (field == AT_COMMAND_RESPONSE_COMMAND_STATUS) return commandStatus;
-	else if (field == AT_COMMAND_RESPONSE_COMMAND_DATA) return commandData;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if (field == AT_COMMAND_RESPONSE_COMMAND_DATA && lengthLSB == 0x06) return commandData; // TODO optional field
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
+
 void XBeeATCommandResponse :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-  	setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeATCommandResponse :: setData(byte data, byte field) {
+void XBeeATCommandResponse :: setData(byte field, byte data) {
 	// Set field
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -241,9 +249,12 @@ void XBeeATCommandResponse :: setData(byte data, byte field) {
 	else if (field == AT_COMMAND_RESPONSE_AT_COMMAND_0) atCommand0 = data;
 	else if (field == AT_COMMAND_RESPONSE_AT_COMMAND_1) atCommand1 = data;
 	else if (field == AT_COMMAND_RESPONSE_COMMAND_STATUS) commandStatus = data;
-	else if (field == AT_COMMAND_RESPONSE_COMMAND_DATA) commandData = data;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if (field == AT_COMMAND_RESPONSE_COMMAND_DATA && lengthLSB == 0x06) commandData = data; // TODO optional field
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lenghtMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum;
+	this->checksum = calculateChecksum();
 }
 
 /* -------- XBeeRXResponse -------- */
@@ -252,30 +263,6 @@ void XBeeATCommandResponse :: setData(byte data, byte field) {
 
 XBeeRXResponse :: XBeeRXResponse() : XBeeResponse() {
 	// Invoke base constractor
-}
-
-XBeeRXResponse :: XBeeRXResponse(unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte receiveOptions, byte* receiveData) : XBeeResponse() {
-	// Assemble RX_RESPONSE
-	this->apiId = RX_RESPONSE;
-	this->sourceAddress0 = (addressMSB >> 24) & 0xFF;
-	this->sourceAddress1 = (addressMSB >> 16) & 0xFF;
-	this->sourceAddress2 = (addressMSB >> 8) & 0xFF;  
-	this->sourceAddress3 = (addressMSB >> 0) & 0xFF;  
-	this->sourceAddress4 = (addressLSB >> 24) & 0xFF; 
-	this->sourceAddress5 = (addressLSB >> 16) & 0xFF;
-	this->sourceAddress6 = (addressLSB >> 8) & 0xFF;  
-	this->sourceAddress7 = (addressLSB >> 0) & 0xFF;  
-	this->networkAddress0 = networkAddress0;
-	this->networkAddress1 = networkAddress1;
-	this->receiveOptions = receiveOptions;
-	for (unsigned int i = 0; i < sizeof(receiveData); i++)
-		this->receiveData[i] = receiveData[i];
-
-	// Assemble FRAME
-	this->startDelimiter = START_DELIMITER;
-	this->lengthMSB = ((12 + sizeof(receiveData)) >> 8) & 0xFF; 
-	this->lengthLSB = ((12 + sizeof(receiveData)) >> 0) & 0xFF; 
-	this->checksum = calculateChecksum();
 }
 
 byte XBeeRXResponse :: getData(byte field) {
@@ -295,17 +282,17 @@ byte XBeeRXResponse :: getData(byte field) {
 	else if (field == RX_RESPONSE_NETWORK_ADDRESS_0) return networkAddress0;
 	else if (field == RX_RESPONSE_NETWORK_ADDRESS_1) return networkAddress1;
 	else if (field == RX_RESPONSE_RECEIVE_OPTIONS) return receiveOptions;
-	else if ((field >= RX_RESPONSE_RECEIVE_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) return receiveData[field]; 
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if ((field >= RX_RESPONSE_RECEIVE_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) return receiveData[field - RX_RESPONSE_RECEIVE_DATA]; // TODO error if lenghtMSB and lengthLSB are undefined
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
 void XBeeRXResponse :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-		setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeRXResponse :: setData(byte data, byte field) {
+void XBeeRXResponse :: setData(byte field, byte data) {
 	// Set field
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -322,9 +309,12 @@ void XBeeRXResponse :: setData(byte data, byte field) {
 	else if (field == RX_RESPONSE_NETWORK_ADDRESS_0) networkAddress0 = data;
 	else if (field == RX_RESPONSE_NETWORK_ADDRESS_1) networkAddress1 = data;
 	else if (field == RX_RESPONSE_RECEIVE_OPTIONS) receiveOptions = data;
-	else if ((field >= RX_RESPONSE_RECEIVE_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) receiveData[field] = data; 
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if ((field >= RX_RESPONSE_RECEIVE_DATA) && (field < ((lengthMSB << 8) + lengthLSB) + 3)) receiveData[field - RX_RESPONSE_RECEIVE_DATA] = data; // TODO error if lenghtMSB and lengthLSB are undefined
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lenghtMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum
+	this->checksum = calculateChecksum();
 }
 
 /* -------- XBeeRXIOResponse -------- */
@@ -333,36 +323,6 @@ void XBeeRXResponse :: setData(byte data, byte field) {
 
 XBeeRXIOResponse :: XBeeRXIOResponse() : XBeeResponse() {
 	// Invoke base constractor
-}
-
-XBeeRXIOResponse :: XBeeRXIOResponse(unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte receiveOptions, byte numberOfSamples, byte digitalChannelMask0, byte digitalChannelMask1, byte analogChannelMask, byte digitalSamples0, byte digitalSamples1, byte analogSamples0, byte analogSamples1) : XBeeResponse() {
-	// Assemble RX_IO_RESPONSE
-	this->apiId = RX_IO_RESPONSE;
-	this->sourceAddress0 = (addressMSB >> 24) & 0xFF;
-	this->sourceAddress1 = (addressMSB >> 16) & 0xFF;
-	this->sourceAddress2 = (addressMSB >> 8) & 0xFF;  
-	this->sourceAddress3 = (addressMSB >> 0) & 0xFF;  
-	this->sourceAddress4 = (addressLSB >> 24) & 0xFF; 
-	this->sourceAddress5 = (addressLSB >> 16) & 0xFF;
-	this->sourceAddress6 = (addressLSB >> 8) & 0xFF;  
-	this->sourceAddress7 = (addressLSB >> 0) & 0xFF;  
-	this->networkAddress0 = networkAddress0;
-	this->networkAddress1 = networkAddress1;
-	this->receiveOptions = receiveOptions;
-	this->numberOfSamples = numberOfSamples;
-	this->digitalChannelMask0 = digitalChannelMask0;
-	this->digitalChannelMask1 = digitalChannelMask1;
-	this->analogChannelMask = analogChannelMask;
-	this->digitalSamples0 = digitalSamples0;
-	this->digitalSamples1 = digitalSamples1;
-	this->analogSamples0 = analogSamples0;
-	this->analogSamples1 = analogSamples1;
-
-	// Assemble FRAME
-	this->startDelimiter = START_DELIMITER;
-	this->lengthMSB = 0x00;
-	this->lengthLSB = 0x20; 
-	this->checksum = calculateChecksum();
 }
 
 byte XBeeRXIOResponse :: getData(byte field) {
@@ -386,20 +346,20 @@ byte XBeeRXIOResponse :: getData(byte field) {
 	else if (field == RX_IO_RESPONSE_DIGITAL_CHANNEL_MASK_0) return digitalChannelMask0;
 	else if (field == RX_IO_RESPONSE_DIGITAL_CHANNEL_MASK_1) return digitalChannelMask1;
 	else if (field == RX_IO_RESPONSE_ANALOG_CHANNEL_MASK) return analogChannelMask;
-	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_0) return digitalSamples0;
-	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_1) return digitalSamples1;
+	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_0) return digitalSamples0; // TODO optional field 
+	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_1) return digitalSamples1; // TODO optional field
 	else if (field == RX_IO_RESPONSE_ANALOG_SAMPLES_0) return analogSamples0;
 	else if (field == RX_IO_RESPONSE_ANALOG_SAMPLES_1) return analogSamples1;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
 void XBeeRXIOResponse :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-		setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeRXIOResponse :: setData(byte data, byte field) {
+void XBeeRXIOResponse :: setData(byte field, byte data) {
 	// Set field
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -420,12 +380,15 @@ void XBeeRXIOResponse :: setData(byte data, byte field) {
 	else if (field == RX_IO_RESPONSE_DIGITAL_CHANNEL_MASK_0) digitalChannelMask0 = data;
 	else if (field == RX_IO_RESPONSE_DIGITAL_CHANNEL_MASK_1) digitalChannelMask1 = data;
 	else if (field == RX_IO_RESPONSE_ANALOG_CHANNEL_MASK) analogChannelMask = data;
-	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_0) digitalSamples0 = data;
-	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_1) digitalSamples1 = data;
+	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_0) digitalSamples0 = data; // TODO optional field
+	else if (field == RX_IO_RESPONSE_DIGITAL_SAMPLES_1) digitalSamples1 = data; // TODO optional field
 	else if (field == RX_IO_RESPONSE_ANALOG_SAMPLES_0) analogSamples0 = data;
 	else if (field == RX_IO_RESPONSE_ANALOG_SAMPLES_1) analogSamples1 = data;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lenghtMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum
+	this->checksum = calculateChecksum();
 }
 
 /* -------- XBeeTXStatusResponse -------- */
@@ -434,23 +397,6 @@ void XBeeRXIOResponse :: setData(byte data, byte field) {
 
 XBeeTXStatusResponse :: XBeeTXStatusResponse() : XBeeResponse() {
 	// Invoke base constractor
-}
-
-XBeeTXStatusResponse :: XBeeTXStatusResponse(byte frameId, byte networkAddress0, byte networkAddress1, byte transmitRetryCount, byte deliveryStatus, byte discoveryStatus) : XBeeResponse() {
-	// Assemble TX_STATUS_RESPONSE
-	this->apiId = TX_STATUS_RESPONSE;
-	this->frameId = frameId;
-	this->networkAddress0 = networkAddress0;
-	this->networkAddress1 = networkAddress1;
-	this->transmitRetryCount = transmitRetryCount;
-	this->deliveryStatus = deliveryStatus;
-	this->discoveryStatus = discoveryStatus;
-
-	// Assemble FRAME
-	this->startDelimiter = START_DELIMITER;
-	this->lengthMSB = 0x00;
-	this->lengthLSB = 0x07;
-	this->checksum = calculateChecksum();
 }
 
 byte XBeeTXStatusResponse :: getData(byte field) {
@@ -465,16 +411,16 @@ byte XBeeTXStatusResponse :: getData(byte field) {
 	else if (field == TX_STATUS_RESPONSE_TRANSMIT_RETRY_COUNT) return transmitRetryCount;
 	else if (field == TX_STATUS_RESPONSE_DELIVERY_STATUS) return deliveryStatus;
 	else if (field == TX_STATUS_RESPONSE_DISCOVERY_STATUS) return discoveryStatus;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum;
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) return checksum; // TODO error if lenghtMSB and lengthLSB are undefined
 	else return ERROR;
 }
 
 void XBeeTXStatusResponse :: setData(byte* data) {
 	for (int i = 0; i < ((data[1] << 8) + data[2]) + 4; i++)
-		setData(data[i], i);
+		setData((i & 0xFF), data[i]);
 }
 
-void XBeeTXStatusResponse :: setData(byte data, byte field) {
+void XBeeTXStatusResponse :: setData(byte field, byte data) {
 	// Set field
 	if (field == FRAME_START_DELIMITER) startDelimiter = data;
 	else if (field == FRAME_LENGTH_MSB) lengthMSB = data;
@@ -486,18 +432,24 @@ void XBeeTXStatusResponse :: setData(byte data, byte field) {
 	else if (field == TX_STATUS_RESPONSE_TRANSMIT_RETRY_COUNT) transmitRetryCount = data;
 	else if (field == TX_STATUS_RESPONSE_DELIVERY_STATUS) deliveryStatus = data;
 	else if (field == TX_STATUS_RESPONSE_DISCOVERY_STATUS) discoveryStatus = data;
-	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data;
+	else if ((field == FRAME_CHECKSUM) || (field == (((lengthMSB << 8) + lengthLSB) + 3))) checksum = data; // TODO error if lengthMSB and lengthLSB are undefined // TODO always overridden
 	else return;
+
+	// Calculate checksum
+	this->checksum = calculateChecksum();
 }
 
 /* -------- XBee -------- */
 
 /* Public */
+XBee :: XBee() {
+	// Do nothing
+}
 
 XBee :: XBee(HardwareSerial& serial, long baud) {
 	// Setup serial
-	// this->serial = &serial;
-	// this->serial->begin(baud);
+	this->serial = &serial;
+	this->serial->begin(baud);
 }
 
 void XBee :: send(XBeeFrame* request) {
@@ -505,7 +457,7 @@ void XBee :: send(XBeeFrame* request) {
 	sendByte(request->getData(FRAME_START_DELIMITER), false); // disable escape (START_DELIMITER)
 	sendByte(request->getData(FRAME_LENGTH_MSB), true); // enable escape (LENGTH_MSB)
 	sendByte(request->getData(FRAME_LENGTH_LSB), true); // enable escape (LENGTH_LSB)
-	for (int i = 0; i < ((request->getData(FRAME_LENGTH_MSB) << 8) + request->getData(FRAME_LENGTH_LSB)); i++)
+	for (int i = 0; i < ((request->getData(FRAME_LENGTH_MSB) << 8) | request->getData(FRAME_LENGTH_LSB)); i++)
 		sendByte(request->getData(i + 3), true); //enable escape (FRAME_DATA)
 	sendByte(request->getData(FRAME_CHECKSUM), true); // enable escape (CHECKSUM)
 
@@ -519,65 +471,64 @@ byte XBee :: receive() {
 	// Poll until frame is received
 	while (true) {
 		// Read frame
+
 		while (serial->available()) {
 			// Read byte
 			byte b = serial->read();
-
-			// Read escaped byte
-			if (field > 0 && b == ESCAPE) {
-				while (!serial->available()) {} // poll until escaped byte is available
-				b = serial->read();
-				b = 0x20 ^ b;
-			}
 
 			// Set byte
 			if (field == 0) { // waiting frame
 				if (b == START_DELIMITER) { // new frame
 					response[field] = b;
 					field++;
-
-				} else if (b != START_DELIMITER) { // no frame
+				} else { // no frame
 					continue;
 				} 
-
 			} else if (field > 0) { // reading frame
-				if (b == START_DELIMITER) { 
-					return ERROR; // incomplete frame
+				// Incomplete frame
+				if (b == START_DELIMITER) 
+					return ERROR;
 
-				} else if (b != START_DELIMITER) { // current frame
-					if (field > FRAME_SIZE)
-						return ERROR; // oversized frame
+				// Read escaped byte
+				if (b == ESCAPE) {
+					while (!serial->available()) {} // poll until escaped byte is available
+					b = serial->read();
+					b = 0x20 ^ b;
+				}
 
-					// Update buffer
-					response[field] = b; // set byte
-					checksum += b; // set checksum
-					field++; 
+				// Ovesized frame
+				if (field > FRAME_SIZE)
+					return ERROR; // oversized frame
 
-					// Complete frame
-					/*
-						 field = [0..n]
-						 length = [1..n]
-						 START_DELIMITER + LENGTH_MSB + LENGTH_LSB + CHECKSUM = 4
-						 --------
-						 max(field) + 1 = length + 4
-					 */
-					if (static_cast<int>(field) == (((response[1] << 8) + response[2]) + 4)) {
-						// Validate checksum
-						if ((checksum & 0xFF) == 0xFF) {
-							return response[3]; // return API_ID
-						} else {
-							return ERROR; // corrupted frame
-						}
+				// Update buffer
+				response[field] = b; // set byte
+				if (field >= 3) checksum += b; // set checksum
+				field++;
+
+				// Complete frame
+				/*
+					 field = [0..n]
+					 length = [1..n]
+					 START_DELIMITER + LENGTH_MSB + LENGTH_LSB + CHECKSUM = 4
+					 --------
+					 max(field) + 1 = length + 4
+				 */
+				if (static_cast<int>(field) == (((response[1] << 8) + response[2]) + 4)) {
+					// Validate checksum
+					if ((checksum & 0xFF) == 0xFF) {
+						return response[3]; // return API_ID
+					} else {
+						return ERROR; // corrupted frame
 					}
 				}
 			}
 		}
-	}
+	}   
 }
 
 byte* XBee :: getResponse() {
 	// Return frame buffer
-	return response; // frame->setData(getFrame());
+	return response; // frame->setData(getResponse());
 }
 
 /* Private */

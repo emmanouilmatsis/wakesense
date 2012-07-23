@@ -173,7 +173,7 @@
 
 /* -------- Settings -------- */
 #define FRAME_SIZE 110
-#define PAYLOAD_SIZE 72
+#define MAX_PAYLOAD_SIZE 72
 #define ERROR 0xFF
 
 /* -------- Data Types -------- */
@@ -185,7 +185,7 @@ class XBeeFrame {
 	XBeeFrame();
 	virtual byte getData(byte field) = 0; 
 	virtual void setData(byte* data) = 0;
-	virtual void setData(byte data, byte field) = 0;
+	virtual void setData(byte field, byte data) = 0;
 
 	protected:
 	byte startDelimiter;
@@ -207,10 +207,11 @@ class XBeeRequest : public XBeeFrame {
 class XBeeATCommandRequest : public XBeeRequest {
 	public:
 	XBeeATCommandRequest();
-	XBeeATCommandRequest(byte frameId,byte atCommand0, byte atCommand1, byte parameterValue); // TODO
+	XBeeATCommandRequest(byte frameId,byte atCommand0, byte atCommand1, byte parameterValue);
+	XBeeATCommandRequest(byte frameId,byte atCommand0, byte atCommand1);
 	byte getData(byte field);                                                
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
   byte apiId;
@@ -224,10 +225,10 @@ class XBeeATCommandRequest : public XBeeRequest {
 class XBeeTXRequest : public XBeeRequest {
 	public:
 	XBeeTXRequest();
-	XBeeTXRequest(byte frameId, unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte broadcastRadius, byte options, byte* rfData); // TODO
+	XBeeTXRequest(byte frameId, unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte broadcastRadius, byte options, byte rfDataSize);
 	byte getData(byte field); 
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
   byte apiId;
@@ -244,10 +245,10 @@ class XBeeTXRequest : public XBeeRequest {
 	byte networkAddress1;
 	byte broadcastRadius;
 	byte options;
-	byte rfData[PAYLOAD_SIZE];
+	byte rfData[MAX_PAYLOAD_SIZE];
 };
 
-/* -------- XBeeResponse -------- */
+/* ======== XBeeResponse ======== */
 class XBeeResponse : public XBeeFrame {
 	public:
 	XBeeResponse();
@@ -257,10 +258,9 @@ class XBeeResponse : public XBeeFrame {
 class XBeeATCommandResponse : public XBeeResponse {
 	public:
 	XBeeATCommandResponse();
-	XBeeATCommandResponse(byte frameId, byte atCommand0, byte atCommand1, byte commandStatus, byte commandData); // TODO
 	byte getData(byte field); 
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
   byte apiId;
@@ -275,10 +275,9 @@ class XBeeATCommandResponse : public XBeeResponse {
 class XBeeRXResponse : public XBeeResponse {
 	public:
 	XBeeRXResponse();
-	XBeeRXResponse(unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte receiveOptions, byte* receiveData); // TODO
 	byte getData(byte field); 
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
   byte apiId;
@@ -293,17 +292,16 @@ class XBeeRXResponse : public XBeeResponse {
   byte networkAddress0;
 	byte networkAddress1;
 	byte receiveOptions;
-	byte receiveData[PAYLOAD_SIZE];
+	byte receiveData[MAX_PAYLOAD_SIZE];
 };
 
 /* -------- XBeeRXIOResponse -------- */
 class XBeeRXIOResponse : public XBeeResponse {
 	public:
 	XBeeRXIOResponse();
-	XBeeRXIOResponse(unsigned long int addressMSB, unsigned long int addressLSB, byte networkAddress0, byte networkAddress1, byte receiveOptions, byte numberOfSamples, byte digitalChannelMask0, byte digitalChannelMask1, byte analogChannelMask, byte digitalSamples0, byte digitalSamples1, byte analogSamples0, byte analogSamples1); // TODO
 	byte getData(byte field); 
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
 	byte apiId;
@@ -332,10 +330,9 @@ class XBeeRXIOResponse : public XBeeResponse {
 class XBeeTXStatusResponse : public XBeeResponse {
 	public:
 	XBeeTXStatusResponse();
-	XBeeTXStatusResponse(byte frameId, byte networkAddress0, byte networkAddress1, byte transmitRetryCount, byte deliveryStatus, byte discoveryStatus); // TODO
 	byte getData(byte field); 
 	void setData(byte* data);
-	void setData(byte data, byte field);
+	void setData(byte field, byte data);
 
 	protected:
   byte apiId;
@@ -350,6 +347,7 @@ class XBeeTXStatusResponse : public XBeeResponse {
 /* -------- XBee -------- */
 class XBee {
 	public:
+	XBee();
 	XBee(HardwareSerial& serial, long baud);
 	void send(XBeeFrame* request); // send api frame
 	byte receive(); // receive api frame
