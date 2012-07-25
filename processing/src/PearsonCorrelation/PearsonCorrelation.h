@@ -7,7 +7,7 @@ template <class T>
 class PearsonCorrelation {
 	public:
 		PearsonCorrelation();
-		T calculate(T* arr1, T* arr2, int len);
+		double calculate(T* arr1, T* arr2, int len);
 
 	private:
 		T sum(T* arr, int len);
@@ -22,7 +22,7 @@ PearsonCorrelation<T> :: PearsonCorrelation() {
 }
 
 template <class T>
-T PearsonCorrelation<T> :: calculate(T* arr1, T* arr2, int len) {
+double PearsonCorrelation<T> :: calculate(T* arr1, T* arr2, int len) {
 	// Sum
 	T sumArr1 = sum(arr1, len);
 	T sumArr2 = sum(arr2, len);
@@ -35,8 +35,8 @@ T PearsonCorrelation<T> :: calculate(T* arr1, T* arr2, int len) {
 	T sumPr = sumProduct(arr1, arr2, len);
 
 	// Correlation coefficient 
-	T num = sumPr - (sumArr1 * sumArr2 / len);
-	T den = std::sqrt(( sumSqArr1 - pow(static_cast<double>(sumArr1), 2) / len) * (sumSqArr2 - pow(static_cast<double>(sumArr2), 2) / len));
+	double num = sumPr - (sumArr1 * sumArr2 / len);
+	double den = std::sqrt(( sumSqArr1 - pow(static_cast<double>(sumArr1), 2) / len) * (sumSqArr2 - pow(static_cast<double>(sumArr2), 2) / len));
 
 	// Return
 	if(den == 0) {
