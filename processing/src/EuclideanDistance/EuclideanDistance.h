@@ -6,25 +6,22 @@
 template <class T>
 class EuclideanDistance {
 	public:
-	EuclideanDistance();
-  T calculate(T* arr1, T* arr2, int len);
-
-	private:
-	T result;
-
+		EuclideanDistance();
+		double calculate(T* arr1, T* arr2, int len);
 };
 
 template <class T>
-EuclideanDistance<T> :: EuclideanDistance() : result(0) {
+EuclideanDistance<T> :: EuclideanDistance() {
 	// Do nothing
 }
 
 template <class T>
-T EuclideanDistance<T> :: calculate(T* arr1, T* arr2, int len){
+double EuclideanDistance<T> :: calculate(T* arr1, T* arr2, int len){
+	double result = 0;
 	for (int i = 0; i < len; i++) {
-  	result += std::pow(static_cast<double>(arr1[i] - arr2[i]), 2);
+		result += std::pow(static_cast<double>(arr1[i] - arr2[i]), 2);
 	}
-	return std::sqrt(result);
+	return 1 / (1 + std::sqrt(result));
 }
 
 #endif // EUCLIDEANDISTANCE_H
