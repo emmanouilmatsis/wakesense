@@ -80,21 +80,22 @@ double* TrickGenerator :: generateRoll(byte id) {
 }
 
 void TrickGenerator :: generateFile(double* yaw, double* pitch, double* roll) {
-	std::ofstream out;
-	out.open("output.dat");
+	std :: ofstream out;
+	out.open("data.dat");
+	if (out.fail()) 
+		exit(1);
 
-	// Header
-	out << "#" << static_cast<int>(id) << " " << size << std::endl;
+	// Trick type
+	out << '#' << static_cast<int>(id);
 	// Setup output format
 	out.setf(std :: ios :: fixed);
 	out.setf(std :: ios :: showpoint);
 	out.setf(std :: ios :: showpos);
 	out.precision(2);
-	// Data
-	if (out.fail()) 
-		exit(1);
+	// Trick data
 	for (unsigned int i = 0; i < size; i++)
-		out << yaw[i] << " " << pitch[i] << " " << roll[i] << std::endl;
+		out << '\t' << yaw[i] << ' ' << pitch[i] << ' ' << roll[i];
+	out << '\n';
 
 	out.close();
 }
