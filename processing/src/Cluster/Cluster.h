@@ -1,3 +1,6 @@
+#ifndef CLUSTER_H
+#define CLUSTER_H
+
 #include <cstdlib>
 
 /* ======== Cluster ======== */
@@ -5,11 +8,17 @@
 template <class T>
 class Cluster {
 	public:
-		Cluster();
-		Cluster(int id, T* data, unsigned int dataSize, Cluster<T>* rightCluster, Cluster<T>* leftCluster);
-		Cluster(const Cluster<T>& object);
+		Cluster(); // undefined cluster
+		Cluster(int id, T* data, unsigned int dataSize); // leaf cluster
+		Cluster(int id, Cluster<T>* rightCluster, Cluster<T>* leftCluster); // internal cluster
 		~Cluster();
-		void operator =(const Cluster<T>& object);
+		bool operator ==(const Cluster<T>& object);
+
+		int getId();
+		T* getData();
+		unsigned int getDataSize();
+		Cluster<T>* getRightCluster();
+		Cluster<T>* getLeftCluster();
 
 	private:
 		int id; // TODO static
@@ -31,62 +40,71 @@ Cluster<T> :: Cluster() : id(0), data(NULL), dataSize(0), rightCluster(NULL), le
 }
 
 template <class T>
-Cluster<T> :: Cluster(int id, T* data, unsigned int dataSize, Cluster<T>* rightCluster, Cluster<T>* leftCluster) : id(id), data(NULL), dataSize(dataSize), rightCluster(rightCluster), leftCluster(leftCluster) {
-	allocateData();
-	if ((rightCluster != NULL) && (leftCluster != NULL)) {
-		averageData();
-	} else {
-		copyData(data);
-	}
+Cluster<T> :: Cluster(int id, T* data, unsigned int dataSize) : id(id), data(NULL), dataSize(dataSize), rightCluster(NULL), leftCluster(NULL) {
+	// Copy data
+	copyData(data);
 }
 
 template <class T>
-Cluster<T> :: Cluster(const Cluster<T>& object) : id(object.id), data(NULL), dataSize(object.dataSize), rightCluster(object.rightCluster), leftCluster(object.leftCluster) {
-	allocateData();
-	copyData(object.data);
+Cluster<T> :: Cluster(int id, Cluster<T>* rightCluster, Cluster<T>* leftCluster) : id(id), data(NULL), dataSize(0), rightCluster(rightCluster), leftCluster(leftCluster) {
+	// Avarage data
+	averageData();
 }
 
 template <class T>
 Cluster<T> :: ~Cluster() {
+	// Deallocate data
 	deallocateData();
-	if (rightCluster != NULL)
-		delete rightCluster;
-	if (leftCluster != NULL)
-		delete leftCluster;
 }
 
 template <class T>
-void Cluster<T> :: operator =(const Cluster<T>& object) {
-	id = object.id;
-	if (dataSize != object.dataSize) {
-		deallocateData();
-		dataSize = object.dataSize;
-		allocateData();
-	}
-	copyData(object.data);
-	rightCluster = object.rightCluster;
-	leftCluster = object.leftCluster;
+bool Cluster<T> :: operator ==(const Cluster<T>& object) {
+	return (id == object.id);
 }
 
-/* -------- Protected -------- */
+template <class T>
+int Cluster<T> :: getId() {
+	return id;
+}
 
+template <class T>
+T* Cluster<T> :: getData() {
+	return data;
+}
+
+template <class T>
+unsigned int Cluster<T> :: getDataSize() {
+	return dataSize;
+}
+
+template <class T>
+Cluster<T>* Cluster<T> :: getRightCluster() {
+	return rightCluster;
+}
+
+template <class T>
+Cluster<T>* Cluster<T> :: getLeftCluster() {
+	return leftCluster;
+}
+
+/* -------- Private -------- */
 template <class T>
 void Cluster<T> :: allocateData() {
-	if ((data == NULL) && (dataSize != 0)) {
+	if (dataSize != 0)
 		data = new T[dataSize];
-	}
 }
 
 template <class T>
 void Cluster<T> :: deallocateData() {
-	if (data != NULL) {
+	if (data != NULL)
 		delete[] data;
-		data = NULL;
-	}
 }
 
 template <class T>
 void Cluster<T> :: copyData(T* data) {
+	allocateData();
+
+	// Copy data
 	if (this->data != NULL) {
 		for (unsigned int i = 0; i < dataSize; i++)
 			this->data[i] = data[i];
@@ -95,11 +113,17 @@ void Cluster<T> :: copyData(T* data) {
 
 template <class T>
 void Cluster<T> :: averageData() {
-	if (dataSize != rightCluster->dataSize) {
-		deallocateData();
+	if ((rightCluster != NULL) && (leftCluster != NULL)) {
+		// dataSize = leftCluster->dataSize;
 		dataSize = rightCluster->dataSize;
 		allocateData();
+
+    // Average data
+		if (this->data != NULL) {
+			for (unsigned int i = 0; i < dataSize; i++) 
+				data[i] = (rightCluster->data[i] + leftCluster->data[i]) / 2;
+		}
 	}
-	for (unsigned int i = 0; i < dataSize; i++) 
-		data[i] = (rightCluster->data[i] + leftCluster->data[i]) / 2;
 }
+
+#endif // CLUSTER_H

@@ -1,7 +1,7 @@
-#include <cmath>
-
 #ifndef EUCLIDEANDISTANCE_H
 #define EUCLIDEANDISTANCE_H
+
+#include <cmath>
 
 template <class T>
 class EuclideanDistance {

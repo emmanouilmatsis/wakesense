@@ -1,3 +1,6 @@
+#ifndef CLUSTERYPR_H
+#define CLUSTERYPR_H
+
 #include <cstdlib>
 
 /* ======== ClusterYPR ======== */
@@ -5,18 +8,24 @@
 template <class T>
 class ClusterYPR {
 	public:
-		ClusterYPR();
-		ClusterYPR(int id, T** data, unsigned int dataSize, ClusterYPR<T>* rightCluster, ClusterYPR<T>* leftCluster);
-		ClusterYPR(const ClusterYPR<T>& object);
+		ClusterYPR(); // undefined cluster
+		ClusterYPR(int id, T** data, unsigned int dataSize); // leaf cluster
+		ClusterYPR(int id, ClusterYPR<T>* rightCluster, ClusterYPR<T>* leftCluster); // internal cluster
 		~ClusterYPR();
-		void operator =(const ClusterYPR& object);
+		bool operator ==(const ClusterYPR<T>& object);
+
+		int getId();
+		T** getData();
+		unsigned int getDataSize();
+		ClusterYPR<T>* getRightCluster();
+		ClusterYPR<T>* getLeftCluster();
 
 	private:
 		int id; // TODO static
 		T** data;
 		unsigned int dataSize;
-		ClusterYPR* rightClusterYPR;
-		ClusterYPR* leftClusterYPR;
+		ClusterYPR<T>* rightCluster;
+		ClusterYPR<T>* leftCluster;
 
 		void allocateData();
 		void deallocateData();
@@ -27,52 +36,61 @@ class ClusterYPR {
 /* -------- Public -------- */
 
 template <class T>
-ClusterYPR<T> :: ClusterYPR() : id(0), data(NULL), dataSize(0), rightClusterYPR(NULL), leftClusterYPR(NULL) {
+ClusterYPR<T> :: ClusterYPR() : id(0), data(NULL), dataSize(0), rightCluster(NULL), leftCluster(NULL) {
 }
 
 template <class T>
-ClusterYPR<T> :: ClusterYPR(int id, T** data, unsigned int dataSize, ClusterYPR* rightClusterYPR, ClusterYPR* leftClusterYPR) : id(id), data(NULL), dataSize(dataSize), rightClusterYPR(rightClusterYPR), leftClusterYPR(leftClusterYPR) {
-	allocateData();
-	if ((rightClusterYPR != NULL) && (leftClusterYPR != NULL)) {
-		averageData();
-	} else {
-		copyData(data);
-	}
+ClusterYPR<T> :: ClusterYPR(int id, T** data, unsigned int dataSize) : id(id), data(NULL), dataSize(dataSize), rightCluster(NULL), leftCluster(NULL) {
+	// Copy data
+	copyData(data);
 }
 
 template <class T>
-ClusterYPR<T> :: ClusterYPR(const ClusterYPR& object) : id(object.id), data(NULL), dataSize(object.dataSize), rightClusterYPR(object.rightClusterYPR), leftClusterYPR(object.leftClusterYPR) {
-	allocateData();
-	copyData(object.data);
+ClusterYPR<T> :: ClusterYPR(int id, ClusterYPR<T>* rightCluster, ClusterYPR<T>* leftCluster) : id(id), data(NULL), dataSize(0), rightCluster(rightCluster), leftCluster(leftCluster) {
+	// Avarage data
+	averageData();
 }
 
 template <class T>
 ClusterYPR<T> :: ~ClusterYPR() {
+	// Deallocate data
 	deallocateData();
-	if (rightClusterYPR != NULL)
-		delete rightClusterYPR;
-	if (leftClusterYPR != NULL)
-		delete leftClusterYPR;
 }
 
 template <class T>
-void ClusterYPR<T> :: operator =(const ClusterYPR& object) {
-	id = object.id;
-	if (dataSize != object.dataSize) {
-		deallocateData();
-		dataSize = object.dataSize;
-		allocateData();
-	}
-	copyData(object.data);
-	rightClusterYPR = object.rightClusterYPR;
-	leftClusterYPR = object.leftClusterYPR;
+bool ClusterYPR<T> :: operator ==(const ClusterYPR<T>& object) {
+	return (id == object.id);
 }
 
-/* -------- Protected -------- */
+template <class T>
+int ClusterYPR<T> :: getId() {
+	return id;
+}
 
+template <class T>
+T** ClusterYPR<T> :: getData() {
+	return data;
+}
+
+template <class T>
+unsigned int ClusterYPR<T> :: getDataSize() {
+	return dataSize;
+}
+
+template <class T>
+ClusterYPR<T>* ClusterYPR<T> :: getRightCluster() {
+	return rightCluster;
+}
+
+template <class T>
+ClusterYPR<T>* ClusterYPR<T> :: getLeftCluster() {
+	return leftCluster;
+}
+
+/* -------- Private -------- */
 template <class T>
 void ClusterYPR<T> :: allocateData() {
-	if ((data == NULL) && (dataSize != 0)) {
+	if (dataSize != 0) {
 		data = new T*[dataSize];
 		for (unsigned int i = 0; i < dataSize; i++)
 			data[i] = new T[3];
@@ -85,12 +103,14 @@ void ClusterYPR<T> :: deallocateData() {
 		for (unsigned int i = 0; i < dataSize; i++)
 			delete[] data[i];
 		delete[] data;
-		data = NULL;
 	}
 }
 
 template <class T>
 void ClusterYPR<T> :: copyData(T** data) {
+	allocateData();
+
+	// Copy data
 	if (this->data != NULL) {
 		for (unsigned int i = 0; i < dataSize; i++)
 			for (unsigned int j = 0; j < 3; j++)
@@ -100,12 +120,18 @@ void ClusterYPR<T> :: copyData(T** data) {
 
 template <class T>
 void ClusterYPR<T> :: averageData() {
-	if (dataSize != rightClusterYPR->dataSize) {
-		deallocateData();
-		dataSize = rightClusterYPR->dataSize;
+	if ((rightCluster != NULL) && (leftCluster != NULL)) {
+		// dataSize = leftCluster->dataSize;
+		dataSize = rightCluster->dataSize;
 		allocateData();
+
+		// Average data
+		if (this->data != NULL) {
+			for (unsigned int i = 0; i < dataSize; i++) 
+				for (unsigned int j = 0; j < 3; j++)
+					data[i][j] = (rightCluster->data[i][j] + leftCluster->data[i][j]) / 2;
+		}
 	}
-	for (unsigned int i = 0; i < dataSize; i++)
-		for (unsigned int j = 0; j < 3; j++) 
-			data[i][j] = (rightClusterYPR->data[i][j] + leftClusterYPR->data[i][j]) / 2;
 }
+
+#define // CLUSTERYPR_H

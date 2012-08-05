@@ -1,3 +1,6 @@
+#ifndef TAMIMOTOCOEFFICIENT_H
+#define TAMIMOTOCOEFFICIENT_H
+
 #include <cmath>
 
 template <class T>
@@ -25,3 +28,5 @@ double TanimotoCoefficient <T> :: calculate(T* arr1, T* arr2, int len1, int len2
 	}
 	return static_cast<double>(len3) / (len1 + len2 - len3); 
 }
+
+#endif // TAMIMOTOCOEFFICIENT_H

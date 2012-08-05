@@ -1,7 +1,7 @@
-#include <cmath>
-
 #ifndef PEARSONCORRELATION_H
 #define PEARSONCORRELATION_H
+
+#include <cmath>
 
 template <class T>
 class PearsonCorrelation {

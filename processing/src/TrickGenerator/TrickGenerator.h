@@ -1,3 +1,6 @@
+#ifndef TRICKGENERATOR_H
+#define TRICKGENERATOR_H
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -29,3 +32,5 @@ class TrickGenerator {
 	double* generateRoll(byte id);
 	void generateFile(double* yaw, double* pitch, double* roll);
 };
+
+#endif // TRICKGENERATOR_H 

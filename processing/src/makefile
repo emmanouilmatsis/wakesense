@@ -1,10 +1,10 @@
 CXX = g++
-CFLAGS = -c -Wall
-LDFLAGS = -Wall
+CFLAGS = -Wall -g -c
+LDFLAGS = -Wall -g
 EXECUTABLE = exe
 OBJECTS = $(SOURCES:.cpp=.o)
-DEPS = Parser/Parser.h Cluster/Cluster.h PearsonCorrelation/PearsonCorrelation.h HierarchicalCluster/HierarchicalCluster.h 
-SOURCES = main.cpp Parser/Parser.cpp HierarchicalCluster/HierarchicalCluster.cpp
+DEPS = SetIdentifier/SetIdentifier.h Parser/Parser.h PearsonCorrelation/PearsonCorrelation.h
+SOURCES = main.cpp SetIdentifier/SetIdentifier.cpp Parser/Parser.cpp
 
 all: $(SOURCES) $(EXECUTABLE)
 	
