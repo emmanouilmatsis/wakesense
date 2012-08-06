@@ -4,9 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include "Cluster.h"
 #include "../Parser/Parser.h"
-#include "../Cluster/Cluster.h"
-#include "../PearsonCorrelation/PearsonCorrelation.h"
+#include "../PearsonCorrelationCoefficient/PearsonCorrelationCoefficient.h"
 
 #define DEBUG true
 
@@ -22,7 +22,7 @@ class HierarchicalCluster {
 		unsigned int columnSize;
 		unsigned int rowSize;
 		Cluster<T>* clusterRoot;
-		PearsonCorrelation <T> pearsonCorrelation;
+		PearsonCorrelationCoefficient <T> pcc;
 
 		void addCluster(Cluster<T>* cluster, Cluster<T>**& clusterPool, unsigned int& clusterPoolSize);
 		void removeCluster(int id, Cluster<T>**& clusterPool, unsigned int& clusterPoolSize);
@@ -80,13 +80,13 @@ Cluster<T>* HierarchicalCluster<T> :: run() {
 
 		// Initialize
 		Cluster<T>* clusterPair[2] = {clusterPool[0], clusterPool[1]};
-		double distanceMax = pearsonCorrelation.calculate(clusterPair[0]->getData(), clusterPair[1]->getData(), columnSize);
+		double distanceMax = pcc.calculate(clusterPair[0]->getData(), clusterPair[1]->getData(), columnSize);
 
 		// Get most correlated cluster pair
 		for (unsigned int i = 0; i < clusterPoolSize; i++) {
 			for (unsigned int j = i + 1; j < clusterPoolSize; j++ ) {
 
-				double distance = pearsonCorrelation.calculate(clusterPool[i]->getData(), clusterPool[j]->getData(), columnSize);
+				double distance = pcc.calculate(clusterPool[i]->getData(), clusterPool[j]->getData(), columnSize);
 
 				if (distance > distanceMax) {
 					clusterPair[0] = clusterPool[i];

@@ -1,10 +1,10 @@
-#include "SetIdentifier.h"
+#include "TrickIdentifier.h"
 
-/* ======== SetIdentifier ======== */
+/* ======== TrickIdentifier ======== */
 
 /* -------- Public -------- */
 
-SetIdentifier :: SetIdentifier() {
+TrickIdentifier :: TrickIdentifier() {
 	// Default file names
 	const char* inputFilenameDefault = "/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/input.dat";
 	const char* baseFilenameDefault = "/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/base.dat";
@@ -18,7 +18,7 @@ SetIdentifier :: SetIdentifier() {
 	strcpy(baseFilename, baseFilenameDefault);
 }
 
-SetIdentifier :: SetIdentifier(const char* inputFilename, const char* baseFilename) {
+TrickIdentifier :: TrickIdentifier(const char* inputFilename, const char* baseFilename) {
 	// Allocate file names
 	this->inputFilename = new char[strlen(inputFilename) + 1];
 	this->baseFilename = new char[strlen(baseFilename) + 1];
@@ -28,7 +28,7 @@ SetIdentifier :: SetIdentifier(const char* inputFilename, const char* baseFilena
 	strcpy(this->baseFilename, baseFilename);
 }
 
-SetIdentifier :: SetIdentifier(const SetIdentifier& object) {
+TrickIdentifier :: TrickIdentifier(const TrickIdentifier& object) {
 	// Allocate file names
 	inputFilename = new char[strlen(object.inputFilename) + 1];
 	baseFilename = new char[strlen(object.baseFilename) + 1];
@@ -38,19 +38,19 @@ SetIdentifier :: SetIdentifier(const SetIdentifier& object) {
 	strcpy(baseFilename, object.baseFilename);
 }
 
-SetIdentifier :: ~SetIdentifier() {
+TrickIdentifier :: ~TrickIdentifier() {
 	// Deallocate file names
 	delete[] inputFilename;
 	delete[] baseFilename;
 }
 
-void SetIdentifier :: operator =(const SetIdentifier& object) {
+void TrickIdentifier :: operator =(const TrickIdentifier& object) {
 	// Deallocate file names
 	delete[] inputFilename;
 	delete[] baseFilename;
 }
 
-int SetIdentifier :: run() {
+int TrickIdentifier :: run() {
 	// Parse default input file
 	Parser inputParser(inputFilename);
 
@@ -74,11 +74,11 @@ int SetIdentifier :: run() {
 	return setIndex;
 }
 
-/* ======== SetIdentifier2D ======== */
+/* ======== TrickIdentifier2D ======== */
 
 /* -------- Public -------- */
 
-SetIdentifier2D :: SetIdentifier2D() : SetIdentifier() {
+TrickIdentifier2D :: TrickIdentifier2D() : TrickIdentifier() {
 	// Parse default base file
 	Parser baseParser(baseFilename);
 
@@ -93,7 +93,7 @@ SetIdentifier2D :: SetIdentifier2D() : SetIdentifier() {
 	copyData(baseParser.getData(), baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier2D :: SetIdentifier2D(const char* inputFilename, const char* baseFilename) : SetIdentifier(inputFilename, baseFilename) {
+TrickIdentifier2D :: TrickIdentifier2D(const char* inputFilename, const char* baseFilename) : TrickIdentifier(inputFilename, baseFilename) {
 	// Parse base file
 	Parser baseParser(baseFilename);
 
@@ -109,7 +109,7 @@ SetIdentifier2D :: SetIdentifier2D(const char* inputFilename, const char* baseFi
 	copyData(baseParser.getData(), baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier2D :: SetIdentifier2D(const SetIdentifier2D& object) : SetIdentifier(object) {
+TrickIdentifier2D :: TrickIdentifier2D(const TrickIdentifier2D& object) : TrickIdentifier(object) {
 	// Initialize data size
 	baseDataRowSize = object.baseDataRowSize;
 	baseDataColumnSize = object.baseDataColumnSize;
@@ -121,14 +121,14 @@ SetIdentifier2D :: SetIdentifier2D(const SetIdentifier2D& object) : SetIdentifie
 	copyData(object.baseData, baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier2D :: ~SetIdentifier2D() {
+TrickIdentifier2D :: ~TrickIdentifier2D() {
 	// Deallocate base data
 	deallocateData(baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-void SetIdentifier2D :: operator =(const SetIdentifier2D& object) {
+void TrickIdentifier2D :: operator =(const TrickIdentifier2D& object) {
 	// Invoke superclass operator =
-	SetIdentifier :: operator =(object);
+	TrickIdentifier :: operator =(object);
 
 	// Allocate file names
 	char* inputFilenameTemp = new char[strlen(object.inputFilename) + 1];
@@ -157,7 +157,7 @@ void SetIdentifier2D :: operator =(const SetIdentifier2D& object) {
 
 /* -------- Private -------- */
 
-void SetIdentifier2D :: allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier2D :: allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	if (heigth > 0) {
 		target = new double**;
 		target[0] = new double*[heigth];
@@ -167,7 +167,7 @@ void SetIdentifier2D :: allocateData(double***& target, unsigned int heigth, uns
 	}
 }
 
-void SetIdentifier2D :: deallocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier2D :: deallocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	if (target != NULL) {
 		for (unsigned int i = 0; i < heigth; i++) {
 			delete[] target[0][i];                                       
@@ -177,7 +177,7 @@ void SetIdentifier2D :: deallocateData(double***& target, unsigned int heigth, u
 	}
 }
 
-void SetIdentifier2D :: copyData(double*** source, double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier2D :: copyData(double*** source, double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	// Natural copy
 	if (source != NULL) {
 		for (unsigned int i = 0; i < heigth; i++) {
@@ -188,16 +188,16 @@ void SetIdentifier2D :: copyData(double*** source, double***& target, unsigned i
 	}
 }
 
-int SetIdentifier2D :: identifySet(double*** source) {
+int TrickIdentifier2D :: identifySet(double*** source) {
 	// Initialize correlation max
 	int setIndex = 0;
-	double correlationMax = pearsonCorrelation.calculate(source[0][0], baseData[0][0], baseDataColumnSize);
+	double correlationMax = pcc.calculate(source[0][0], baseData[0][0], baseDataColumnSize);
 
 	// Correlate input data to each column of base data
 	for (unsigned int i = 0; i < baseDataRowSize; i++) {
 
 		// Correlate input data to column i of base data
-		double correlation = pearsonCorrelation.calculate(source[0][0], baseData[0][i], baseDataColumnSize);
+		double correlation = pcc.calculate(source[0][0], baseData[0][i], baseDataColumnSize);
 
 		// Update most correlated set index
 		if (correlationMax < correlation) {
@@ -209,11 +209,11 @@ int SetIdentifier2D :: identifySet(double*** source) {
 	return setIndex;
 }
 
-/* ======== SetIdentifier3D ======== */
+/* ======== TrickIdentifier3D ======== */
 
 /* -------- Public -------- */
 
-SetIdentifier3D :: SetIdentifier3D() : SetIdentifier() {
+TrickIdentifier3D :: TrickIdentifier3D() : TrickIdentifier() {
 	// Parse default base file
 	Parser baseParser(baseFilename);
 
@@ -228,7 +228,7 @@ SetIdentifier3D :: SetIdentifier3D() : SetIdentifier() {
 	copyData(baseParser.getData(), baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier3D :: SetIdentifier3D(const char* inputFilename, const char* baseFilename) : SetIdentifier(inputFilename, baseFilename) {
+TrickIdentifier3D :: TrickIdentifier3D(const char* inputFilename, const char* baseFilename) : TrickIdentifier(inputFilename, baseFilename) {
 	// Parse base file
 	Parser baseParser(baseFilename);
 
@@ -243,7 +243,7 @@ SetIdentifier3D :: SetIdentifier3D(const char* inputFilename, const char* baseFi
 	copyData(baseParser.getData(), baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier3D :: SetIdentifier3D(const SetIdentifier3D& object) : SetIdentifier(object) {
+TrickIdentifier3D :: TrickIdentifier3D(const TrickIdentifier3D& object) : TrickIdentifier(object) {
 	// Initialize data size
 	baseDataRowSize = object.baseDataRowSize;
 	baseDataColumnSize = object.baseDataColumnSize;
@@ -255,14 +255,14 @@ SetIdentifier3D :: SetIdentifier3D(const SetIdentifier3D& object) : SetIdentifie
 	copyData(object.baseData, baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-SetIdentifier3D :: ~SetIdentifier3D() {
+TrickIdentifier3D :: ~TrickIdentifier3D() {
 	// Deallocate base data
 	deallocateData(baseData, baseDataRowSize, baseDataColumnSize, 3);
 }
 
-void SetIdentifier3D :: operator =(const SetIdentifier3D& object) {
+void TrickIdentifier3D :: operator =(const TrickIdentifier3D& object) {
 	// Invoke superclass operator =
-	SetIdentifier :: operator =(object);
+	TrickIdentifier :: operator =(object);
 
 	// Allocate file names
 	char* inputFilenameTemp = new char[strlen(object.inputFilename) + 1];
@@ -291,7 +291,7 @@ void SetIdentifier3D :: operator =(const SetIdentifier3D& object) {
 
 /* -------- Private -------- */
 
-void SetIdentifier3D :: allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier3D :: allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	if (heigth > 0) {
 		target = new double**[depth];
 		for (unsigned int i = 0; i < depth; i++) {
@@ -303,7 +303,7 @@ void SetIdentifier3D :: allocateData(double***& target, unsigned int heigth, uns
 	}
 }
 
-void SetIdentifier3D :: deallocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier3D :: deallocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	if (target != NULL) {
 		for (unsigned int i = 0; i < depth; i++) {
 			for (unsigned int j = 0; j < heigth; j++) {
@@ -315,7 +315,7 @@ void SetIdentifier3D :: deallocateData(double***& target, unsigned int heigth, u
 	}
 }
 
-void SetIdentifier3D :: copyData(double*** source, double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
+void TrickIdentifier3D :: copyData(double*** source, double***& target, unsigned int heigth, unsigned int width, unsigned int depth) {
 	// Pivot copy
 	if (source != NULL) {
 		for (unsigned int i = 0; i < depth; i++) {
@@ -328,22 +328,22 @@ void SetIdentifier3D :: copyData(double*** source, double***& target, unsigned i
 	}
 }
 
-int SetIdentifier3D :: identifySet(double*** source) {
+int TrickIdentifier3D :: identifySet(double*** source) {
 	// Initialize correlation max
 	int setIndex = 0;
 	double correlationMax = (
-			pearsonCorrelation.calculate(source[0][0], baseData[0][0], baseDataColumnSize) +
-			pearsonCorrelation.calculate(source[1][0], baseData[1][0], baseDataColumnSize) +
-			pearsonCorrelation.calculate(source[2][0], baseData[2][0], baseDataColumnSize)) / 3;
+			pcc.calculate(source[0][0], baseData[0][0], baseDataColumnSize) +
+			pcc.calculate(source[1][0], baseData[1][0], baseDataColumnSize) +
+			pcc.calculate(source[2][0], baseData[2][0], baseDataColumnSize)) / 3;
 
 	// Correlate input data to each column of base data
 	for (unsigned int i = 0; i < baseDataRowSize; i++) {
 
 		// Correlate input data to column i of base data
 		double correlation = (
-				pearsonCorrelation.calculate(source[0][0], baseData[0][i], baseDataColumnSize) +
-				pearsonCorrelation.calculate(source[1][0], baseData[1][i], baseDataColumnSize) +
-				pearsonCorrelation.calculate(source[2][0], baseData[2][i], baseDataColumnSize)) / 3;
+				pcc.calculate(source[0][0], baseData[0][i], baseDataColumnSize) +
+				pcc.calculate(source[1][0], baseData[1][i], baseDataColumnSize) +
+				pcc.calculate(source[2][0], baseData[2][i], baseDataColumnSize)) / 3;
 
 		// Update most correlated set index
 		if (correlationMax < correlation) {

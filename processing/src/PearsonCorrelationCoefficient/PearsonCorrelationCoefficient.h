@@ -1,12 +1,12 @@
-#ifndef PEARSONCORRELATION_H
-#define PEARSONCORRELATION_H
+#ifndef PEARSONCORRELATIONCOEFFICIENT_H
+#define PEARSONCORRELATIONCOEFFICIENT_H
 
 #include <cmath>
 
 template <class T>
-class PearsonCorrelation {
+class PearsonCorrelationCoefficient {
 	public:
-		PearsonCorrelation();
+		PearsonCorrelationCoefficient();
 		double calculate(T* arr1, T* arr2, int len);
 
 	private:
@@ -17,12 +17,12 @@ class PearsonCorrelation {
 };
 
 template <class T>
-PearsonCorrelation<T> :: PearsonCorrelation() {
+PearsonCorrelationCoefficient<T> :: PearsonCorrelationCoefficient() {
 	// Do nothing
 }
 
 template <class T>
-double PearsonCorrelation<T> :: calculate(T* arr1, T* arr2, int len) {
+double PearsonCorrelationCoefficient<T> :: calculate(T* arr1, T* arr2, int len) {
 	// Sum
 	T sumArr1 = sum(arr1, len);
 	T sumArr2 = sum(arr2, len);
@@ -47,7 +47,7 @@ double PearsonCorrelation<T> :: calculate(T* arr1, T* arr2, int len) {
 }
 
 template <class T>
-T PearsonCorrelation<T> :: sum(T* arr, int len) {
+T PearsonCorrelationCoefficient<T> :: sum(T* arr, int len) {
 	T result = 0;
 	for(int i = 0; i < len; i++) {
 		result += arr[i];
@@ -56,7 +56,7 @@ T PearsonCorrelation<T> :: sum(T* arr, int len) {
 }
 
 template <class T>
-T PearsonCorrelation<T> :: sumSquare(T* arr, int len) {
+T PearsonCorrelationCoefficient<T> :: sumSquare(T* arr, int len) {
 	T result = 0;
 	for(int i = 0; i < len; i++) {
 		result += std::pow(static_cast<double>(arr[i]), 2);
@@ -65,7 +65,7 @@ T PearsonCorrelation<T> :: sumSquare(T* arr, int len) {
 }
 
 template <class T>
-T PearsonCorrelation<T> :: sumProduct(T* arr1, T* arr2, int len) {
+T PearsonCorrelationCoefficient<T> :: sumProduct(T* arr1, T* arr2, int len) {
 	T result = 0;
 	for(int i = 0; i < len; i++) {
 		result += arr1[i] * arr2[i];
@@ -73,4 +73,4 @@ T PearsonCorrelation<T> :: sumProduct(T* arr1, T* arr2, int len) {
 	return result;
 }
 
-#endif // PEARSONCORRELATION_H 
+#endif // PEARSONCORRELATIONCOEFFICIENT_H 
