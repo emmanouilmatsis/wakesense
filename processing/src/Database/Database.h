@@ -10,6 +10,7 @@ class Database {
 		void query(const char* statement);
 		void query(const char* statement, char*** result, int* resultRow, int* resultColumn);
 		void queryFree(char** result);
+		sqlite3* getDatabase();
 
 	private:
 		sqlite3* database;

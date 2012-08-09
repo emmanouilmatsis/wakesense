@@ -56,6 +56,10 @@ void Database :: queryFree(char** result) {
 	sqlite3_free_table(result);
 }
 
+sqlite3* Database :: getDatabase() {
+	return database;
+}
+
 /* -------- Private -------- */
 
 int Database :: callback(void *NotUsed, int argc, char** argv, char** name) {
