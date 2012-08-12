@@ -1,5 +1,6 @@
-#ifndef TRICKIDENTIFIER_H
-#define TRICKIDENTIFIER_H
+
+#ifndef PCCTID_H
+#define PCCTID_H
 
 #include <iostream>
 #include <cstring>
@@ -7,13 +8,13 @@
 #include "../../Parser/Parser.h"
 #include "../../PearsonCorrelationCoefficient/PearsonCorrelationCoefficient.h"
 
-class TrickIdentifier {
+class PCCTID {
 	public:
-		TrickIdentifier();
-		TrickIdentifier(const char* inputFileName, const char* baseFileName);
-		TrickIdentifier(const TrickIdentifier& object);
-		virtual ~TrickIdentifier();
-		void operator =(const TrickIdentifier& object);
+		PCCTID();
+		PCCTID(const char* inputFileName, const char* baseFileName);
+		PCCTID(const PCCTID& object);
+		virtual ~PCCTID();
+		void operator =(const PCCTID& object);
 		int run();
 
 	protected:
@@ -30,13 +31,13 @@ class TrickIdentifier {
 		virtual int identifySet(double*** source) = 0;
 };
 
-class TrickIdentifier2D : public TrickIdentifier {
+class PCCTID2D : public PCCTID {
 	public:
-		TrickIdentifier2D();
-		TrickIdentifier2D(const char* inputFilename, const char* baseFilename);
-		TrickIdentifier2D(const TrickIdentifier2D& object);
-		~TrickIdentifier2D();
-		void operator =(const TrickIdentifier2D& object);
+		PCCTID2D();
+		PCCTID2D(const char* inputFilename, const char* baseFilename);
+		PCCTID2D(const PCCTID2D& object);
+		~PCCTID2D();
+		void operator =(const PCCTID2D& object);
 
 	private:
 		void allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth);
@@ -45,13 +46,13 @@ class TrickIdentifier2D : public TrickIdentifier {
 		int identifySet(double*** source);
 };
 
-class TrickIdentifier3D : public TrickIdentifier {
+class PCCTID3D : public PCCTID {
 	public:
-		TrickIdentifier3D();
-		TrickIdentifier3D(const char* inputFilename, const char* baseFilename);
-		TrickIdentifier3D(const TrickIdentifier3D& object);
-		~TrickIdentifier3D();
-		void operator =(const TrickIdentifier3D& object);
+		PCCTID3D();
+		PCCTID3D(const char* inputFilename, const char* baseFilename);
+		PCCTID3D(const PCCTID3D& object);
+		~PCCTID3D();
+		void operator =(const PCCTID3D& object);
 
 	private:
 		void allocateData(double***& target, unsigned int heigth, unsigned int width, unsigned int depth);
@@ -60,7 +61,7 @@ class TrickIdentifier3D : public TrickIdentifier {
 		int identifySet(double*** source);
 };
 
-#endif // TRICKIDENTIFIER_H
+#endif // PCCTID_H
 
 /*
 #if EUCLIDEAN

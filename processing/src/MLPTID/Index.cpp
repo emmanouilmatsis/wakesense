@@ -2,91 +2,62 @@
 
 /* -------- Public -------- */
 
-Index :: Index() {
+Index :: Index()
+{
 	// Create index tables
 	createTables();
 }
 
-Index :: Index(const char* filename) : database(filename) {
+Index :: Index(const char* filename) : database(filename)
+{
 	// Create index tables
 	createTables();
 }
 
-void Index :: addEntry(const Entry& entry) {
-	// TODO
-	// struct Entry {};
-	// itoa();
-
+void Index :: addEntry(const Entry& entry)
+{
 	// Pre-exising entry
 	if (isEntry(entry.name))
 		return;
 
 	// Add trick
-	int trickId = idEntry("trick", "name", entry.name);
+	int trickIdTemp = idEntry("trick", 1, "name", entry.name);
 
 	// Add sample and location
-	for (int i = 0; i < entry.size; i++) {
-		int sampleId = idEntry("sample", 3, "yaw", entry.yaw[i], "pitch", entry.pitch[i], "roll", entry.roll[i]);
-		int locationId = idEntry("location", 3, "trickId", trickId, "sampleId", sampleId, "location", i);
+	for (int i = 0; i < entry.size; i++)
+	{
+		char yaw[8];
+		char pitch[8];
+		char roll[8];
+		sprintf(yaw, "%d", entry.yaw[i]);
+		sprintf(pitch, "%d", entry.pitch[i]);
+		sprintf(roll, "%d", entry.roll[i]);
+		int sampleIdTemp = idEntry("sample", 3, "yaw", yaw, "pitch", pitch, "roll", roll);
+
+		char trickId[8];
+		char sampleId[8];
+		char location[8];
+		sprintf(trickId, "%d", trickIdTemp);
+		sprintf(sampleId, "%d", sampleIdTemp);
+		sprintf(location, "%d", i);
+		idEntry("location", 3, "trickId", trickId, "sampleId", sampleId, "location", location);
 	}
 }
 
-int Index :: idEntry(const char* table, const char* attribute, const char* value) {
-	char* statement; 
-	char** result;
-	int resultRow;
-	int resultColumn;
-	int rowid;
-
-	// Query entry
-	statement = sqlite3_mprintf(
-			"SELECT rowid "
-			"FROM %q "
-			"WHERE %q='%q'"
-			, table, attribute, value);
-	database.query(statement, &result, &resultRow, &resultColumn);
-	sqlite3_free(statement);
-
-	if (resultRow == 0) {
-
-		// Free result
-		database.queryFree(result);
-
-		// Insert entry
-		statement = sqlite3_mprintf(
-				"INSERT INTO %q (%q) "
-				"VALUES ('%q')"
-				, table, attribute, value);
-		database.query(statement, &result, &resultRow, &resultColumn);
-		sqlite3_free(statement);
-
-		// Rowid
-		rowid = sqlite3_last_insert_rowid(database.getDatabase());
-	} else {
-
-		// Rowid
-		rowid = atoi(result[resultColumn]);
-	}
-
-	// Free result
-	database.queryFree(result);
-
-	return rowid;
-}
-
-int Index :: idEntry(const char* table, int argc, ...) {
+int Index :: idEntry(const char* table, int argc, ...)
+{
 	// Variables
 	va_list args;
 
 	char* statementFormat;
-	char* statement; 
+	char* statement;
 
 	char** result;
 	int resultRow;
 	int resultColumn;
 	int rowid;
 
-	// Format query
+	// Format statement
 	statementFormat = new char[256];
 	strcpy(statementFormat, "SELECT rowid FROM ");
 	strcat(statementFormat, table);
@@ -94,22 +65,23 @@ int Index :: idEntry(const char* table, int argc, ...) {
 	for (int i = 0; i < argc - 1; i++)
 		strcat(statementFormat, " AND %q='%q'");
 
-	// Query entry
 	va_start (args, argc);
 	statement = sqlite3_vmprintf(statementFormat, args);
+	va_end (args);
+
+	// Query entry
 	database.query(statement, &result, &resultRow, &resultColumn);
 
 	// Deallocate statement
 	delete[] statementFormat;
 	sqlite3_free(statement);
-	va_end (args);
 
-	if (resultRow == 0) {
-
+	if (resultRow == 0)
+	{
 		// Free result
 		database.queryFree(result);
 
-		// Format query
+		// Format statement
 		statementFormat = new char[256];
 		strcpy(statementFormat, "INSERT INTO ");
 		strcat(statementFormat, table);
@@ -121,20 +93,22 @@ int Index :: idEntry(const char* table, int argc, ...) {
 			strcat(statementFormat, ", '%q'");
 		strcat(statementFormat, ")");
 
-		// Insert entry
 		va_start (args, argc);
-		statement = sqlite3_mprintf(statementFormat, args);
+		statement = sqlite3_vmprintf(statementFormat, args);
+		va_end (args);
+
+		// Insert entry
 		database.query(statement, &result, &resultRow, &resultColumn);
 
 		// Deallocate statement
 		delete[] statementFormat;
 		sqlite3_free(statement);
-		va_end (args);
 
 		// Rowid
 		rowid = sqlite3_last_insert_rowid(database.getDatabase());
-	} else {
-
+	}
+	else
+	{
 		// Rowid
 		rowid = atoi(result[resultColumn]);
 	}
@@ -145,7 +119,8 @@ int Index :: idEntry(const char* table, int argc, ...) {
 	return rowid;
 }
 
-bool Index :: isEntry(const char* value) {
+bool Index :: isEntry(const char* value)
+{
 	char* statement;
 	char** result;
 	int resultRow;
@@ -168,30 +143,30 @@ bool Index :: isEntry(const char* value) {
 
 /* -------- Private -------- */
 
-void Index :: createTables() {
+void Index :: createTables()
+{
 	// Create index tables
-
 	database.query(
 			"CREATE TABLE IF NOT EXISTS trick("
-			"name TEXT," 
+			"name TEXT,"
 			"PRIMARY KEY(name))"
 			);
 
 	database.query(
 			"CREATE TABLE IF NOT EXISTS sample("
-			"yaw INTEGER," 
-			"pitch INTEGER," 
-			"roll INTEGER," 
+			"yaw INTEGER,"
+			"pitch INTEGER,"
+			"roll INTEGER,"
 			"PRIMARY KEY(yaw, pitch, roll))"
 			);
 
 	database.query(
 			"CREATE TABLE IF NOT EXISTS location("
-			"trickId INTEGER," 
-			"sampleId INTEGER," 
-			"location INTEGER," 
-			"PRIMARY KEY(trickId, sampleId, location)," 
-			"FOREIGN KEY(trickId) REFERENCES trick(rowid)," 
+			"trickId INTEGER,"
+			"sampleId INTEGER,"
+			"location INTEGER,"
+			"PRIMARY KEY(trickId, sampleId, location),"
+			"FOREIGN KEY(trickId) REFERENCES trick(rowid),"
 			"FOREIGN KEY(sampleId) REFERENCES sample(rowid))"
 			);
 }

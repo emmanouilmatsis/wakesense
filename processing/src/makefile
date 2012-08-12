@@ -5,8 +5,8 @@ LIBS = -L /usr/local/lib -l sqlite3
 
 EXECUTABLE = exe
 OBJECTS = $(SOURCES:.cpp=.o)
-DEPS = TrickIdentifier/MLPTID/Index.h Database/Database.h
-SOURCES = main.cpp TrickIdentifier/MLPTID/Index.cpp Database/Database.cpp
+DEPS = MLPTID/MLP.h Database/Database.h
+SOURCES = main.cpp MLPTID/MLP.cpp Database/Database.cpp
 
 all: $(SOURCES) $(EXECUTABLE)
 	

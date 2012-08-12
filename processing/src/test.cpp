@@ -1,23 +1,16 @@
-#include <stdio.h>
-#include <stdarg.h>
+#include <iostream>
+#include <vector>
+using namespace std;
 
-void WriteFormatted (const char * format, ...)
+int main()
 {
-	va_list args;
-	va_start (args, format);
-	vprintf (format, args);
-	va_end (args);
+	cout.setf(ios :: fixed);
+	cout.setf(ios :: showpoint);
+	cout.precision(2);
 
-	va_start (args, format);
-	vprintf (format, args);
-	va_end (args);
-
-}
-
-int main ()
-{
-	WriteFormatted ("Call with %d variable argument.\n",1);
-	WriteFormatted ("Call with %d variable %s.\n",2,"arguments");
-
+  vector<double> vec(10, 0.0);
+	for (unsigned int i = 0; i < vec.size(); i++)
+		cout << vec[i] << endl;
+	
 	return 0;
 }
