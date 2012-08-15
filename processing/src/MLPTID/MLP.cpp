@@ -18,7 +18,7 @@ MLP :: MLP(const char* filename) : database(filename)
 
 /* ---------------- */
 
-vector<double> MLP :: queryNetwork(vector<int> sampleIds, vector<int> trickIds)
+std :: vector<double> MLP :: queryNetwork(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 {
 	setup(sampleIds, trickIds);
 	return feedForward();
@@ -26,7 +26,7 @@ vector<double> MLP :: queryNetwork(vector<int> sampleIds, vector<int> trickIds)
 
 /* ---------------- */
 
-void MLP :: trainNetwork(vector<int> sampleIds, vector<int> trickIds, int trickId)
+void MLP :: trainNetwork(std :: vector<int> sampleIds, std :: vector<int> trickIds, int trickId)
 {
 	// Generate hidden
 	generateHidden(sampleIds, trickIds);
@@ -34,12 +34,47 @@ void MLP :: trainNetwork(vector<int> sampleIds, vector<int> trickIds, int trickI
 	// Train
 	setup(sampleIds, trickIds);
 	feedForward();
-	vector<double> targets(trickIds.size(), 0.0);
-	for (unsigned int i = 0; i < trickIds.size(); i++) 
+	std :: vector<double> targets(trickIds.size(), 0.0);
+	for (unsigned int i = 0; i < trickIds.size(); i++)
 		if (trickIds[i] == trickId)
 			targets[i] = 1.0;
 	backPropagate(targets);
-	update();
+	updateDatabase();
+}
+
+/* ------------------------- */
+
+void MLP :: print()
+{
+	char* statement;
+	char** result;
+	int resultRow;
+	int resultColumn;
+	Database database;
+
+	// Get nodes from samples
+	const char* tables[] = {"hiddenLeft", "hidden", "trick"};
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		statement = sqlite3_mprintf("SELECT * FROM %q", tables[i]);
+
+		database.query(statement, &result, &resultRow, &resultColumn);
+
+		std :: cout << std :: endl;
+		std :: cout << "---------------- TABLE ----------------[" << tables[i] << std :: endl;
+		for (int i = 0; i < ((resultRow + 1) * resultColumn); i++)
+		{
+			std :: cout << result[i] << "\t";
+			if (!((i + 1) % resultColumn))
+				std :: cout << std :: endl;
+		}
+		std :: cout << "----------------------------------------" << std :: endl;
+		std :: cout << std :: endl;
+
+		sqlite3_free(statement);
+		database.queryFree(result);
+	}
 }
 
 /* -------- Private -------- */
@@ -72,7 +107,7 @@ void MLP :: createTables()
 
 /* ---------------- */
 
-void MLP :: setup(vector<int> sampleIds, vector<int> trickIds)
+void MLP :: setup(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 {
 	// Value lists
 	this->sampleIds = sampleIds;
@@ -80,29 +115,26 @@ void MLP :: setup(vector<int> sampleIds, vector<int> trickIds)
 	this->trickIds = trickIds;
 
 	// Node outputs
-	ai = vector<double>(sampleIds.size(), 1.0);
-	ah = vector<double>(hiddenIds.size(), 1.0);
-	ao = vector<double>(trickIds.size(), 1.0);
+	ai = std :: vector<double>(sampleIds.size(), 1.0);
+	ah = std :: vector<double>(hiddenIds.size(), 1.0);
+	ao = std :: vector<double>(trickIds.size(), 1.0);
 
-	// Weight matrix
-  for (unsigned int i = 0; i < sampleIds.size(); i++)
-	{
-		wi.push_back(vector<double>());
+	// Weight input matrix
+	wi = std :: vector<std :: vector<double> > (sampleIds.size(), std :: vector<double> (hiddenIds.size(), 0.0));
+	for (unsigned int i = 0; i < sampleIds.size(); i++)
 		for (unsigned int j = 0; j < hiddenIds.size(); j++)
-			wi[i].push_back(getStrength("hiddenLeft", sampleIds[i], hiddenIds[j]));
-	}
+			wi[i][j] = getStrength("hiddenLeft", sampleIds[i], hiddenIds[j]);
 
-  for (unsigned int i = 0; i < hiddenIds.size(); i++)
-	{
-		wo.push_back(vector<double>());
+	// Weight output matrix
+	wo = std :: vector<std :: vector<double> > (hiddenIds.size(), std :: vector<double> (trickIds.size(), 0.0));
+	for (unsigned int i = 0; i < hiddenIds.size(); i++)
 		for (unsigned int j = 0; j < trickIds.size(); j++)
-			wo[i].push_back(getStrength("hiddenRight", hiddenIds[i], trickIds[j]));
-	}
+			wo[i][j] = getStrength("hiddenRight", hiddenIds[i], trickIds[j]);
 }
 
 /* ---------------- */
 
-vector<double> MLP :: feedForward()
+std :: vector<double> MLP :: feedForward()
 {
 	// Input activations
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
@@ -113,9 +145,7 @@ vector<double> MLP :: feedForward()
 	{
 		double sum = 0.0;
 		for (unsigned int j = 0; j < sampleIds.size(); j++)
-		{
 			sum += ai[j] * wi[j][i];
-		}
 		ah[i] = tanh(sum);
 	}
 
@@ -124,9 +154,7 @@ vector<double> MLP :: feedForward()
 	{
 		double sum = 0.0;
 		for (unsigned int j = 0; j < hiddenIds.size(); j++)
-		{
-			sum += ah[j] * wo[j][i];                  
-		}
+			sum += ah[j] * wo[j][i];
 		ao[i] = tanh(sum);
 	}
 
@@ -135,10 +163,10 @@ vector<double> MLP :: feedForward()
 
 /* ---------------- */
 
-void MLP :: backPropagate(vector<double> targets, double N)
+void MLP :: backPropagate(std :: vector<double> targets, double N)
 {
 	// Calculate ouput errors
-	vector<double> output_deltas(trickIds.size(), 0.0);
+	std :: vector<double> output_deltas(trickIds.size(), 0.0);
 	for (unsigned int i = 0; i < trickIds.size(); i++)
 	{
 		double error = targets[i] - ao[i];
@@ -146,7 +174,7 @@ void MLP :: backPropagate(vector<double> targets, double N)
 	}
 
 	// Calculate hidden layer errors
-	vector<double> hidden_deltas(hiddenIds.size(), 0.0);
+	std :: vector<double> hidden_deltas(hiddenIds.size(), 0.0);
 	for (unsigned int i = 0; i < hiddenIds.size(); i++)
 	{
 		double error = 0.0;
@@ -174,13 +202,14 @@ void MLP :: backPropagate(vector<double> targets, double N)
 
 /* ---------------- */
 
-void MLP :: update()
+void MLP :: updateDatabase()
 {
-	// Update database
+	// Update hiddenLeft strength
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
 		for (unsigned int j = 0; j < hiddenIds.size(); j++)
 			setStrength("hiddenLeft", sampleIds[i], hiddenIds[j], wi[i][j]);
 
+	// Update hiddenRight strength
 	for (unsigned int i = 0; i < hiddenIds.size(); i++)
 		for (unsigned int j = 0; j < trickIds.size(); j++)
 			setStrength("hiddenRight", hiddenIds[i], trickIds[j], wo[i][j]);
@@ -188,7 +217,7 @@ void MLP :: update()
 
 /* ---------------- */
 
-vector<int> MLP :: getAllHiddenIds(vector<int> sampleIds, vector<int> trickIds)
+std :: vector<int> MLP :: getAllHiddenIds(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 {
 	std :: set<int> hiddenIdsSet;
 
@@ -232,14 +261,14 @@ vector<int> MLP :: getAllHiddenIds(vector<int> sampleIds, vector<int> trickIds)
 		sqlite3_free(statement);
 		database.queryFree(result);
 	}
-	
- 	vector<int> hiddenIds(hiddenIdsSet.begin(), hiddenIdsSet.end());
+
+	std :: vector<int> hiddenIds(hiddenIdsSet.begin(), hiddenIdsSet.end());
 	return hiddenIds;
 }
 
 /* ---------------- */
 
-void MLP :: generateHidden(vector<int> sampleIds, vector<int> trickIds)
+void MLP :: generateHidden(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 {
 	if (sampleIds.size() > 3) // TODO
 		return;
@@ -253,10 +282,10 @@ void MLP :: generateHidden(vector<int> sampleIds, vector<int> trickIds)
 	node[0] = '\0';
 	for (int i = 0; i < sampleIds.size(); i++)
 	{
-		if (i < sampleIds.size() - 1)
-			sprintf(node + strlen(node), "%d_", sampleIds[i]);
-		else
-			sprintf(node + strlen(node), "%d", sampleIds[i]);
+	if (i < sampleIds.size() - 1)
+	sprintf(node + strlen(node), "%d_", sampleIds[i]);
+	else
+	sprintf(node + strlen(node), "%d", sampleIds[i]);
 	}
 	 */
 
@@ -278,8 +307,7 @@ void MLP :: generateHidden(vector<int> sampleIds, vector<int> trickIds)
 		else
 			sprintf(node + strlen(node), "%d", *iter);
 	}
-	
-	cout << "node = " << node << endl; // TODO
+
 
 	// Query
 	char* statement;
@@ -378,6 +406,7 @@ void MLP :: setStrength(const char* table, int fromId, int toId, double strength
 			"WHERE fromId='%d' "
 			"AND toId='%d'"
 			, table, fromId, toId);
+
 	database.query(statement, &result, &resultRow, &resultColumn);
 	sqlite3_free(statement);
 
@@ -390,20 +419,27 @@ void MLP :: setStrength(const char* table, int fromId, int toId, double strength
 				"(fromId, toId, strength) "
 				"VALUES (%d, %d, %f) "
 				, table, fromId, toId, strength);
+
 		database.query(statement, &result, &resultRow, &resultColumn);
 		sqlite3_free(statement);
 	}
 	else
 	{
+		char* rowid = new char[strlen(result[resultColumn]) + 1];
+		strcpy(rowid, result[resultColumn]);
+
 		database.queryFree(result);
 
 		statement = sqlite3_mprintf(
 				"UPDATE %q "
 				"SET strength=%f "
-				"WHERE rowid=%d "
-				, table, strength, result[resultColumn]);
+				"WHERE rowid=%q"
+				, table, strength, rowid);
+
 		database.query(statement, &result, &resultRow, &resultColumn);
+
 		sqlite3_free(statement);
+		delete[] rowid;
 	}
 
 	database.queryFree(result);
@@ -414,19 +450,4 @@ void MLP :: setStrength(const char* table, int fromId, int toId, double strength
 double MLP :: dtanh(double input)
 {
 	return (1.0 - (input * input));
-}
-
-// TODO delete
-void MLP :: print(vector<double> input)
-{
-	cout << endl;
-	for (unsigned int i = 0; i < input.size(); i++)
-		cout << input[i] << endl;
-}
-
-void MLP :: print(vector<int> input)
-{
-	cout << endl;
-	for (unsigned int i = 0; i < input.size(); i++)
-		cout << input[i] << endl;
 }

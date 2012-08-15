@@ -1,3 +1,6 @@
+#ifndef DATABASE_H
+#define DATABASE_H
+
 #include <cstdlib>
 #include <iostream>
 #include <sqlite3.h>
@@ -19,3 +22,5 @@ class Database {
 
 		static int callback(void *NotUsed, int argc, char** argv, char** name);
 };
+
+#endif // DATABASE_H

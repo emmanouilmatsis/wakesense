@@ -8,61 +8,260 @@ Index :: Index()
 	createTables();
 }
 
+/* ------------------------- */
+
 Index :: Index(const char* filename) : database(filename)
 {
 	// Create index tables
 	createTables();
 }
 
-void Index :: addEntry(const Entry& entry)
+/* ------------------------- */
+
+Entry Index :: getEntry(const char* name, int version)
 {
-	// Pre-exising entry
-	if (isEntry(entry.name))
-		return;
+	Entry entry;
 
-	// Add trick
-	int trickIdTemp = idEntry("trick", 1, "name", entry.name);
+	char* statement;
+	char** result;
+	int resultRow;
+	int resultColumn;
 
-	// Add sample and location
-	for (int i = 0; i < entry.size; i++)
+	// Is entry
+	statement = sqlite3_mprintf(
+			"SELECT * "
+			"FROM trick "
+			"JOIN location "
+			"ON trick.rowid=location.trickId "
+			"AND trick.name='%q'"
+			"AND trick.version=%d"
+			, name, version);
+	database.query(statement, &result, &resultRow, &resultColumn);
+	sqlite3_free(statement);
+	database.queryFree(result);
+
+	if (resultRow == 0)
+		return entry;
+
+	// Entry name
+	strcpy(entry.name, name);
+
+	char versionTemp[8];
+
+	// Entry trickId
+	sprintf(versionTemp, "%d", 0);
+	entry.trickId = getId("trick", 2, "name", name, "version", versionTemp);
+	 
+	// Entry version
+	entry.version = version;
+
+	// Entry versionId
+	sprintf(versionTemp, "%d", version);
+	entry.versionId = getId("trick", 2, "name", name, "version", versionTemp);
+
+	// Entry size, samples and sampleIds
+	statement = sqlite3_mprintf(
+			"SELECT sample.yaw, sample.pitch, sample.roll, sample.rowid, location.location "
+			"FROM sample "
+			"JOIN location "
+			"ON sample.rowid = location.sampleId "
+			"JOIN trick "
+			"ON location.trickId = trick.rowId "
+			"WHERE trick.name='%q'"
+			"AND trick.version=%d"
+			, name, version);
+	database.query(statement, &result, &resultRow, &resultColumn);
+	sqlite3_free(statement);
+
+	entry.size = resultRow;
+	entry.yaw.resize(resultRow);
+	entry.pitch.resize(resultRow);
+	entry.roll.resize(resultRow);
+	entry.sampleIds.resize(resultRow);
+
+	for (int i = 0; i < resultRow; i++)
 	{
-		char yaw[8];
-		char pitch[8];
-		char roll[8];
-		sprintf(yaw, "%d", entry.yaw[i]);
-		sprintf(pitch, "%d", entry.pitch[i]);
-		sprintf(roll, "%d", entry.roll[i]);
-		int sampleIdTemp = idEntry("sample", 3, "yaw", yaw, "pitch", pitch, "roll", roll);
+		int location = atoi(result[((i + 1) * resultColumn) + 4]);
 
-		char trickId[8];
-		char sampleId[8];
-		char location[8];
-		sprintf(trickId, "%d", trickIdTemp);
-		sprintf(sampleId, "%d", sampleIdTemp);
-		sprintf(location, "%d", i);
-		idEntry("location", 3, "trickId", trickId, "sampleId", sampleId, "location", location);
+		entry.yaw[location] = atoi(result[((i + 1) * resultColumn) + 0]);
+		entry.pitch[location] = atoi(result[((i + 1) * resultColumn) + 1]);
+		entry.roll[location] = atoi(result[((i + 1) * resultColumn) + 2]);
+		entry.sampleIds[location] = atoi(result[((i + 1) * resultColumn) + 3]);
+	}
+
+	database.queryFree(result);
+
+	return entry;
+}
+
+/* ------------------------- */
+
+void Index :: setEntry(Entry& entry)
+{
+	// Get trick version
+	char* statement;
+	char** result;
+	int resultRow;
+	int resultColumn;
+
+	statement = sqlite3_mprintf(
+			"SELECT * "
+			"FROM trick "
+			"WHERE name='%q'"
+			, entry.name);
+	database.query(statement, &result, &resultRow, &resultColumn);
+	sqlite3_free(statement);
+	database.queryFree(result);
+
+	char versionTemp[8];
+
+	// Entry trickId
+	sprintf(versionTemp, "%d", 0);
+	entry.trickId = getId("trick", 2, "name", entry.name, "version", versionTemp);
+	 
+	// Entry version
+	entry.version = resultRow;
+
+	// Entry versionId
+	sprintf(versionTemp, "%d", entry.version);
+	entry.versionId = getId("trick", 2, "name", entry.name, "version", versionTemp);
+
+	for (unsigned int i = 0; i < entry.size; i++)
+	{
+		// Entry sampleIds
+		char yawTemp[8];
+		char pitchTemp[8];
+		char rollTemp[8];
+		sprintf(yawTemp, "%d", entry.yaw[i]);
+		sprintf(pitchTemp, "%d", entry.pitch[i]);
+		sprintf(rollTemp, "%d", entry.roll[i]);
+		entry.sampleIds[i] = getId("sample", 3, "yaw", yawTemp, "pitch", pitchTemp, "roll", rollTemp);
+
+		// Entry location
+		char versionIdTemp[8];
+		char sampleIdTemp[8];
+		char locationTemp[8];
+		sprintf(versionIdTemp, "%d", entry.versionId);
+		sprintf(sampleIdTemp, "%d", entry.sampleIds[i]);
+		sprintf(locationTemp, "%d", i);
+		getId("location", 3, "trickId", versionIdTemp, "sampleId", sampleIdTemp, "location", locationTemp);
 	}
 }
 
-int Index :: idEntry(const char* table, int argc, ...)
+/* ------------------------- */
+
+std :: vector<int> Index :: getEntryIds(int version)
+{
+	// Get trickIds
+	char* statement;
+	char** result;
+	int resultRow;
+	int resultColumn;
+
+	statement = sqlite3_mprintf(
+			"SELECT rowid "
+			"FROM trick "
+			"WHERE version=%d"
+			, version);
+	database.query(statement, &result, &resultRow, &resultColumn);
+	sqlite3_free(statement);
+
+	std :: vector<int> entryIds(resultRow, 0);
+	for (int i = 0; i < resultRow; i++)
+		entryIds[i] = atoi(result[resultColumn + i]);
+
+	database.queryFree(result);
+
+	return entryIds;
+}
+
+/* ------------------------- */
+
+void Index :: print()
+{
+	char* statement;
+	char** result;
+	int resultRow;
+	int resultColumn;
+	Database database;
+
+	// Get nodes from samples
+	const char* tables[] = {"sample", "location", "trick"};
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		statement = sqlite3_mprintf("SELECT * FROM %q", tables[i]);
+
+		database.query(statement, &result, &resultRow, &resultColumn);
+
+		std :: cout << std :: endl;
+		std :: cout << "---------------- TABLE ----------------[" << tables[i] << std :: endl;
+		for (int i = 0; i < ((resultRow + 1) * resultColumn); i++)
+		{
+			std :: cout << result[i] << "\t";
+			if (!((i + 1) % resultColumn))
+				std :: cout << std :: endl;
+		}
+		std :: cout << "----------------------------------------" << std :: endl;
+		std :: cout << std :: endl;
+
+		sqlite3_free(statement);
+		database.queryFree(result);
+	}
+}
+
+/* -------- Private -------- */
+
+void Index :: createTables()
+{
+	// Create index tables
+	database.query(
+			"CREATE TABLE IF NOT EXISTS trick("
+			"name TEXT,"
+			"version INTEGER,"
+			"UNIQUE (name, version))"
+			);
+
+	database.query(
+			"CREATE TABLE IF NOT EXISTS sample("
+			"yaw INTEGER,"
+			"pitch INTEGER,"
+			"roll INTEGER,"
+			"UNIQUE (yaw, pitch, roll))"
+			);
+
+	database.query(
+			"CREATE TABLE IF NOT EXISTS location("
+			"trickId INTEGER,"
+			"sampleId INTEGER,"
+			"location INTEGER,"
+			"PRIMARY KEY(trickId, sampleId, location),"
+			"FOREIGN KEY(trickId) REFERENCES trick(rowid),"
+			"FOREIGN KEY(sampleId) REFERENCES sample(rowid))"
+			);
+}
+
+/* ------------------------- */
+
+int Index :: getId(const char* table, int argc, ...)
 {
 	// Variables
 	va_list args;
 
+	int rowid;
+
 	char* statementFormat;
 	char* statement;
-
 	char** result;
 	int resultRow;
 	int resultColumn;
-	int rowid;
 
 	// Format statement
 	statementFormat = new char[256];
 	strcpy(statementFormat, "SELECT rowid FROM ");
 	strcat(statementFormat, table);
 	strcat(statementFormat, " WHERE %q='%q'");
-	for (int i = 0; i < argc - 1; i++)
+	for (int i = 1; i < argc; i++)
 		strcat(statementFormat, " AND %q='%q'");
 
 	va_start (args, argc);
@@ -82,27 +281,35 @@ int Index :: idEntry(const char* table, int argc, ...)
 		database.queryFree(result);
 
 		// Format statement
-		statementFormat = new char[256];
-		strcpy(statementFormat, "INSERT INTO ");
-		strcat(statementFormat, table);
-		strcat(statementFormat, " (%q");
-		for (int i = 0; i < argc - 1; i++)
-			strcat(statementFormat, ", %q");
-		strcat(statementFormat, ") VALUES ('%q'");
-		for (int i = 0; i < argc - 1; i++)
-			strcat(statementFormat, ", '%q'");
-		strcat(statementFormat, ")");
-
 		va_start (args, argc);
-		statement = sqlite3_vmprintf(statementFormat, args);
+		char** argsTemp = new char*[argc * 2];
+		for (int i = 0; i < argc * 2; i++)
+		{
+			argsTemp[i] = new char[64]; // TODO argument string size
+			strcpy(argsTemp[i], va_arg(args, char*));
+		}
 		va_end (args);
+
+		statement = new char[256];
+		int length = 0;
+		length += sprintf(statement + length, "INSERT INTO %s ", table);
+		length += sprintf(statement + length, "(%s", argsTemp[0]);
+		for (int i = 1; i < argc; i++)
+			length += sprintf(statement + length, ", %s", argsTemp[2 * i]);
+		length += sprintf(statement + length, ") VALUES ('%s'", argsTemp[1]);
+		for (int i = 1; i < argc; i++)
+			length += sprintf(statement + length, ", '%s'", argsTemp[(2 * i) + 1]);
+		length += sprintf(statement + length, ")");
+
+		for (int i = 0; i < argc * 2; i++)
+			delete[] argsTemp[i];
+		delete[] argsTemp;
 
 		// Insert entry
 		database.query(statement, &result, &resultRow, &resultColumn);
 
 		// Deallocate statement
-		delete[] statementFormat;
-		sqlite3_free(statement);
+		delete[] statement;
 
 		// Rowid
 		rowid = sqlite3_last_insert_rowid(database.getDatabase());
@@ -117,56 +324,4 @@ int Index :: idEntry(const char* table, int argc, ...)
 	database.queryFree(result);
 
 	return rowid;
-}
-
-bool Index :: isEntry(const char* value)
-{
-	char* statement;
-	char** result;
-	int resultRow;
-	int resultColumn;
-
-	statement = sqlite3_mprintf(
-			"SELECT * "
-			"FROM trick JOIN location "
-			"ON trick.rowid=location.trickId "
-			"AND trick.name='%q'"
-			, value);
-	database.query(statement, &result, &resultRow, &resultColumn);
-	sqlite3_free(statement);
-	database.queryFree(result);
-
-	if (resultRow != 0)
-		return true;
-	return false;
-}
-
-/* -------- Private -------- */
-
-void Index :: createTables()
-{
-	// Create index tables
-	database.query(
-			"CREATE TABLE IF NOT EXISTS trick("
-			"name TEXT,"
-			"PRIMARY KEY(name))"
-			);
-
-	database.query(
-			"CREATE TABLE IF NOT EXISTS sample("
-			"yaw INTEGER,"
-			"pitch INTEGER,"
-			"roll INTEGER,"
-			"PRIMARY KEY(yaw, pitch, roll))"
-			);
-
-	database.query(
-			"CREATE TABLE IF NOT EXISTS location("
-			"trickId INTEGER,"
-			"sampleId INTEGER,"
-			"location INTEGER,"
-			"PRIMARY KEY(trickId, sampleId, location),"
-			"FOREIGN KEY(trickId) REFERENCES trick(rowid),"
-			"FOREIGN KEY(sampleId) REFERENCES sample(rowid))"
-			);
 }
