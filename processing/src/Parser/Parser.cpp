@@ -7,11 +7,11 @@ Parser :: Parser(const char* file) : file(file) {
 	parseDataSize();
 
 	// Allocate 3D dynamic array
-	data = new double**[rowSize];
+	data = new int**[rowSize];
 	for (unsigned int i = 0; i < rowSize; i++) {
-		data[i] = new double*[columnSize];
+		data[i] = new int*[columnSize];
 		for (unsigned int j = 0; j < columnSize; j++)
-			data[i][j] = new double[3];
+			data[i][j] = new int[3];
 	}
 
 	// Parse
@@ -28,7 +28,7 @@ Parser :: ~Parser() {
 	delete [] data;
 }
 
-double*** Parser :: getData() {
+int*** Parser :: getData() {
 	return data;
 }
 

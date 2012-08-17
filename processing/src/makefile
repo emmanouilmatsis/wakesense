@@ -1,12 +1,13 @@
 CXX = g++
 CFLAGS = -Wall -g -c
 LDFLAGS = -Wall -g
-LIBS = -L /usr/local/lib -l sqlite3
+LIBS = -L /usr/local/lib -l sqlite3 -lboost_system
+INC = -I /user/local/include
 
 EXECUTABLE = exe
 OBJECTS = $(SOURCES:.cpp=.o)
-DEPS = Parser/Parser.h MLPTID/Entry.h MLPTID/Index.h Database/Database.h
-SOURCES = main.cpp Parser/Parser.cpp MLPTID/Entry.cpp MLPTID/Index.cpp Database/Database.cpp
+DEPS = Receiver/Receiver.h XBee/XBee.h SerialTimeout/SerialTimeout.h
+SOURCES = main.cpp Receiver/Receiver.cpp XBee/XBee.cpp SerialTimeout/SerialTimeout.cpp
 
 all: $(SOURCES) $(EXECUTABLE)
 	
@@ -14,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(LIBS) $^ -o $@
 
 %.o: %.cpp $(DEPS)
-	$(CXX) $(CFLAGS) $< -o $@ 
+	$(CXX) $(CFLAGS) $(INC) $< -o $@ 
 
 clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE) $(EXECUTABLE).* ../data/database.db
+	rm -rf $(OBJECTS) $(EXECUTABLE) $(EXECUTABLE).*
