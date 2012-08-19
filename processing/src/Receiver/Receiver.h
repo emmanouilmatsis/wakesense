@@ -1,14 +1,16 @@
 #ifndef RECEIVER_H
 #define RECEIVER_H
 
-#include <iostream>
+#include <ostream>
 #include <fstream>
+#include <iomanip>
 #include "../BTOI/BTOI.h"
 #include "../XBee/XBee.h"
 
 /* -------- Constant -------- */
 
 #define RX_RESPONSE_NON_PAYLOAD 12
+#define RX_RESPONSE_PAYLOAD_DATATYPE short int
 
 /* -------- Type definition -------- */
 
@@ -20,27 +22,18 @@ class Receiver
 {
 	public:
 		Receiver(const char* port, int baud, int interval, int duration);
-		~Receiver();
-		int** getData();
-		void getData(const char* filename, const char* id);
-		unsigned int getColumnSize();
-		unsigned int getRowSize();
-		bool isReady();
+		std::vector<std::vector<int> > getData();
+		void getData(const char* filename, const char* id = NULL);
+		void print(std::ostream& out);
 
 	private:
 		XBee xbee;
 		XBeeRXResponse rxResponse;
-		const char* file;
-		int** data;
-		unsigned int columnSize;
-		unsigned int rowSize;
-		bool ready;
+		std::vector<std::vector<int> > data;
 		unsigned int interval;
 		unsigned int duration;
 
 		void receive();
-		void allocateData();
-		void deallocateData();
 };
 
 #endif // RECEIVER_H

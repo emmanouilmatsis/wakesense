@@ -3,6 +3,8 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <ostream>
+#include <iomanip>
 #include <cstring>
 #include <vector>
 #include <stdarg.h>
@@ -15,10 +17,11 @@ class Index
 	public:
 		Index();
 		Index(const char* filename);
-		Entry getEntry(const char* name, int version);
+		Entry getEntry(const char* name, int version = 0);
+		Entry getEntry(int entryId, int version = 0);
 		void setEntry(Entry& entry);
-		std :: vector<int> getEntryIds(int version = 0);
-		void print();
+		std::vector<int> getEntryIds(int version = 0);
+		void print(std::ostream& out);
 
 	private:
 		Database database;

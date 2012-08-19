@@ -1,8 +1,8 @@
-#include "MLP.h"
+#include "MLPTID.h"
 
 /* -------- Public -------- */
 
-MLP :: MLP()
+MLPTID :: MLPTID()
 {
 	// Create tables
 	createTables();
@@ -10,7 +10,7 @@ MLP :: MLP()
 
 /* ---------------- */
 
-MLP :: MLP(const char* filename) : database(filename)
+MLPTID :: MLPTID(const char* filename) : database(filename)
 {
 	// Create tables
 	createTables();
@@ -18,7 +18,7 @@ MLP :: MLP(const char* filename) : database(filename)
 
 /* ---------------- */
 
-std :: vector<double> MLP :: queryNetwork(std :: vector<int> sampleIds, std :: vector<int> trickIds)
+std::vector<double> MLPTID :: queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	setup(sampleIds, trickIds);
 	return feedForward();
@@ -26,7 +26,7 @@ std :: vector<double> MLP :: queryNetwork(std :: vector<int> sampleIds, std :: v
 
 /* ---------------- */
 
-void MLP :: trainNetwork(std :: vector<int> sampleIds, std :: vector<int> trickIds, int trickId)
+void MLPTID :: trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId)
 {
 	// Generate hidden
 	generateHidden(sampleIds, trickIds);
@@ -34,7 +34,7 @@ void MLP :: trainNetwork(std :: vector<int> sampleIds, std :: vector<int> trickI
 	// Train
 	setup(sampleIds, trickIds);
 	feedForward();
-	std :: vector<double> targets(trickIds.size(), 0.0);
+	std::vector<double> targets(trickIds.size(), 0.0);
 	for (unsigned int i = 0; i < trickIds.size(); i++)
 		if (trickIds[i] == trickId)
 			targets[i] = 1.0;
@@ -44,7 +44,7 @@ void MLP :: trainNetwork(std :: vector<int> sampleIds, std :: vector<int> trickI
 
 /* ------------------------- */
 
-void MLP :: print()
+void MLPTID :: print(std::ostream& out)
 {
 	char* statement;
 	char** result;
@@ -53,24 +53,30 @@ void MLP :: print()
 	Database database;
 
 	// Get nodes from samples
-	const char* tables[] = {"hiddenLeft", "hidden", "trick"};
+	const char* tableName[] = {"HiddenLeft", "Hidden", "HiddenRight"};
+	const char* table[] = {"hiddenLeft", "hidden", "hiddenRight"};
 
 	for (unsigned int i = 0; i < 3; i++)
 	{
-		statement = sqlite3_mprintf("SELECT * FROM %q", tables[i]);
-
+		statement = sqlite3_mprintf("SELECT * FROM %q", table[i]);
 		database.query(statement, &result, &resultRow, &resultColumn);
 
-		std :: cout << std :: endl;
-		std :: cout << "---------------- TABLE ----------------[" << tables[i] << std :: endl;
-		for (int i = 0; i < ((resultRow + 1) * resultColumn); i++)
-		{
-			std :: cout << result[i] << "\t";
-			if (!((i + 1) % resultColumn))
-				std :: cout << std :: endl;
+    out.setf(std::ios::showpos);
+    out
+        << std::endl
+        << "--------------------------------------------------------" << std::endl
+        << "class : MLPTID" << std::endl
+        << "table : " << tableName[i] << std::endl
+        << "--------------------------------------------------------" << std::endl
+        << std::endl;
+    for (int i = 0; i < ((resultRow + 1) * resultColumn); i++)
+    {
+      out
+          << std::setw(10) << std::left
+          << result[i];
+      if (!((i + 1) % resultColumn))
+        out << std::endl;
 		}
-		std :: cout << "----------------------------------------" << std :: endl;
-		std :: cout << std :: endl;
 
 		sqlite3_free(statement);
 		database.queryFree(result);
@@ -79,9 +85,9 @@ void MLP :: print()
 
 /* -------- Private -------- */
 
-void MLP :: createTables()
+void MLPTID :: createTables()
 {
-	// Create MLP tables
+	// Create MLPTID tables
 	database.query(
 			"CREATE TABLE IF NOT EXISTS hidden("
 			"node TEXT,"
@@ -107,7 +113,7 @@ void MLP :: createTables()
 
 /* ---------------- */
 
-void MLP :: setup(std :: vector<int> sampleIds, std :: vector<int> trickIds)
+void MLPTID :: setup(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	// Value lists
 	this->sampleIds = sampleIds;
@@ -115,18 +121,18 @@ void MLP :: setup(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 	this->trickIds = trickIds;
 
 	// Node outputs
-	ai = std :: vector<double>(sampleIds.size(), 1.0);
-	ah = std :: vector<double>(hiddenIds.size(), 1.0);
-	ao = std :: vector<double>(trickIds.size(), 1.0);
+	ai = std::vector<double>(sampleIds.size(), 1.0);
+	ah = std::vector<double>(hiddenIds.size(), 1.0);
+	ao = std::vector<double>(trickIds.size(), 1.0);
 
 	// Weight input matrix
-	wi = std :: vector<std :: vector<double> > (sampleIds.size(), std :: vector<double> (hiddenIds.size(), 0.0));
+	wi = std::vector<std::vector<double> > (sampleIds.size(), std::vector<double> (hiddenIds.size(), 0.0));
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
 		for (unsigned int j = 0; j < hiddenIds.size(); j++)
 			wi[i][j] = getStrength("hiddenLeft", sampleIds[i], hiddenIds[j]);
 
 	// Weight output matrix
-	wo = std :: vector<std :: vector<double> > (hiddenIds.size(), std :: vector<double> (trickIds.size(), 0.0));
+	wo = std::vector<std::vector<double> > (hiddenIds.size(), std::vector<double> (trickIds.size(), 0.0));
 	for (unsigned int i = 0; i < hiddenIds.size(); i++)
 		for (unsigned int j = 0; j < trickIds.size(); j++)
 			wo[i][j] = getStrength("hiddenRight", hiddenIds[i], trickIds[j]);
@@ -134,7 +140,7 @@ void MLP :: setup(std :: vector<int> sampleIds, std :: vector<int> trickIds)
 
 /* ---------------- */
 
-std :: vector<double> MLP :: feedForward()
+std::vector<double> MLPTID :: feedForward()
 {
 	// Input activations
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
@@ -163,10 +169,10 @@ std :: vector<double> MLP :: feedForward()
 
 /* ---------------- */
 
-void MLP :: backPropagate(std :: vector<double> targets, double N)
+void MLPTID :: backPropagate(std::vector<double> targets, double N)
 {
 	// Calculate ouput errors
-	std :: vector<double> output_deltas(trickIds.size(), 0.0);
+	std::vector<double> output_deltas(trickIds.size(), 0.0);
 	for (unsigned int i = 0; i < trickIds.size(); i++)
 	{
 		double error = targets[i] - ao[i];
@@ -174,7 +180,7 @@ void MLP :: backPropagate(std :: vector<double> targets, double N)
 	}
 
 	// Calculate hidden layer errors
-	std :: vector<double> hidden_deltas(hiddenIds.size(), 0.0);
+	std::vector<double> hidden_deltas(hiddenIds.size(), 0.0);
 	for (unsigned int i = 0; i < hiddenIds.size(); i++)
 	{
 		double error = 0.0;
@@ -202,7 +208,7 @@ void MLP :: backPropagate(std :: vector<double> targets, double N)
 
 /* ---------------- */
 
-void MLP :: updateDatabase()
+void MLPTID :: updateDatabase()
 {
 	// Update hiddenLeft strength
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
@@ -217,9 +223,9 @@ void MLP :: updateDatabase()
 
 /* ---------------- */
 
-std :: vector<int> MLP :: getAllHiddenIds(std :: vector<int> sampleIds, std :: vector<int> trickIds)
+std::vector<int> MLPTID :: getAllHiddenIds(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
-	std :: set<int> hiddenIdsSet;
+	std::set<int> hiddenIdsSet;
 
 	char* statement;
 	char** result;
@@ -262,21 +268,21 @@ std :: vector<int> MLP :: getAllHiddenIds(std :: vector<int> sampleIds, std :: v
 		database.queryFree(result);
 	}
 
-	std :: vector<int> hiddenIds(hiddenIdsSet.begin(), hiddenIdsSet.end());
+	std::vector<int> hiddenIds(hiddenIdsSet.begin(), hiddenIdsSet.end());
 	return hiddenIds;
 }
 
 /* ---------------- */
 
-void MLP :: generateHidden(std :: vector<int> sampleIds, std :: vector<int> trickIds)
+void MLPTID :: generateHidden(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
-	if (sampleIds.size() > 3) // TODO
-		return;
+	//if (sampleIds.size() > 3) // TODO
+		//return;
 
 	/*
 	// Node
 	// Sorted with duplicates
-	std :: sort (sampleIds.begin(), sampleIds.end());
+	std::sort (sampleIds.begin(), sampleIds.end());
 
 	char* node = new char[sampleIds.size() * 8];
 	node[0] = '\0';
@@ -291,8 +297,8 @@ void MLP :: generateHidden(std :: vector<int> sampleIds, std :: vector<int> tric
 
 	// Node
 	// Sorted without duplicates
-	std :: set<int> sampleIdsSet;
-	std :: set<int> :: const_iterator iter;
+	std::set<int> sampleIdsSet;
+	std::set<int> :: const_iterator iter;
 
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
 		sampleIdsSet.insert(sampleIds[i]);
@@ -357,7 +363,7 @@ void MLP :: generateHidden(std :: vector<int> sampleIds, std :: vector<int> tric
 
 /* ---------------- */
 
-double MLP :: getStrength(const char* table, int fromId, int toId)
+double MLPTID :: getStrength(const char* table, int fromId, int toId)
 {
 	char* statement;
 	char** result;
@@ -393,7 +399,7 @@ double MLP :: getStrength(const char* table, int fromId, int toId)
 
 /* ---------------- */
 
-void MLP :: setStrength(const char* table, int fromId, int toId, double strength)
+void MLPTID :: setStrength(const char* table, int fromId, int toId, double strength)
 {
 	char* statement;
 	char** result;
@@ -447,7 +453,7 @@ void MLP :: setStrength(const char* table, int fromId, int toId, double strength
 
 /* ---------------- */
 
-double MLP :: dtanh(double input)
+double MLPTID :: dtanh(double input)
 {
 	return (1.0 - (input * input));
 }

@@ -1,16 +1,24 @@
 #include "TrickGenerator.h"
+                        
+/* -------- Public -------- */
 
 TrickGenerator :: TrickGenerator()
   : duration(1000), period(20), size(1000 / 20)
 {
-  // Do nothing
+  // Initialize random number generator 
+  srand(static_cast<unsigned int>(time(0)));
 }
+
+/* ---------------- */
 
 TrickGenerator :: TrickGenerator(unsigned int duration, unsigned int period)
   : duration(duration), period(period), size(duration / period)
 {
-  // Do nothing
+  // Initialize random number generator 
+  srand(static_cast<unsigned int>(time(0)));
 }
+
+/* ---------------- */
 
 void TrickGenerator :: generate(byte id)
 {
@@ -32,6 +40,8 @@ void TrickGenerator :: generate(byte id)
   delete[] pitch;
   delete[] roll;
 }
+
+/* -------- Private -------- */
 
 int* TrickGenerator :: generateYaw()
 {
@@ -57,10 +67,12 @@ int* TrickGenerator :: generateYaw()
   {
     // Return 0.0 yaw array
     for (unsigned int i = 0; i > size; i++)
-      yaw[i] = 0.0;
+      yaw[i] = DEFAULT_VALUE;
   }
   return yaw;
 }
+
+/* ---------------- */
 
 int* TrickGenerator :: generatePitch()
 {
@@ -86,10 +98,12 @@ int* TrickGenerator :: generatePitch()
   {
     // Return 0.0 yaw array
     for (unsigned int i = 0; i < size; i++)
-      pitch[i] = 0.0;
+      pitch[i] = DEFAULT_VALUE;
   }
   return pitch;
 }
+
+/* ---------------- */
 
 int* TrickGenerator :: generateRoll()
 {
@@ -115,10 +129,12 @@ int* TrickGenerator :: generateRoll()
   {
     // Return 0.0 yaw array
     for (unsigned int i = 0; i < size; i++)
-      roll[i] = 0.0;
+      roll[i] = DEFAULT_VALUE;
   }
   return roll;
 }
+
+/* ---------------- */
 
 void TrickGenerator :: generateFile()
 {
@@ -132,7 +148,7 @@ void TrickGenerator :: generateFile()
     exit(1);
 
   // Trick type
-  out << '#' << generateName();
+  out << generateName();
   // Trick data
   for (unsigned int i = 0; i < size; i++)
     out << '\t' << yaw[i] << ' ' << pitch[i] << ' ' << roll[i];
@@ -140,6 +156,8 @@ void TrickGenerator :: generateFile()
 
   out.close();
 }
+
+/* ---------------- */
 
 const char* TrickGenerator :: generateName()
 {

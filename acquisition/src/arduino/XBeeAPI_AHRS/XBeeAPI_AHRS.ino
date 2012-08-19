@@ -92,6 +92,9 @@ float Temporary_Matrix[3][3] = {
 float yaw;
 float pitch;
 float roll;
+float yawStart;
+float pitchStart;
+float rollStart;
 
 // PCC variables
 float random_distribution[10];
@@ -159,12 +162,18 @@ void loop()
 
     // Update PPC
     PCC_Update();     
-
+   
     // Run PCC algorithm (interval)
     ///if((PCC_THRESHOLD_MIN < PCC() && PCC() < PCC_THRESHOLD_MAX) || airborn) {
     if((PCC_THRESHOLD_MIN > PCC() || PCC() > PCC_THRESHOLD_MAX) || airborn) {
-
+       
       // Output data for SAMPLING_AIRBORN_DURATION period
+      if (!airborn) {
+        yawStart = yaw;
+        pitchStart = pitch;
+        rollStart = roll;
+      }
+      
       airborn = true;  
       airborn_timestamp += SAMPLING_DATA_INTERVAL; // update aiborn timestamp
       output(); // output data

@@ -1,7 +1,8 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
-#include <iostream>
+#include <ostream>
+#include <iomanip>
 #include <cstring>
 #include <vector>
 
@@ -12,17 +13,17 @@ struct Entry
 	int version;
 	int versionId;
 	unsigned int size;
-	std :: vector<int> yaw;
-	std :: vector<int> pitch;
-	std :: vector<int> roll;
-	std :: vector<int> sampleIds;
+	std::vector<int> yaw;
+	std::vector<int> pitch;
+	std::vector<int> roll;
+	std::vector<int> sampleIds;
 
 	Entry();
-	Entry(const char* name, std :: vector<int> yaw, std :: vector<int> pitch, std :: vector<int> roll);
+	Entry(const char* name, std::vector<int> yaw, std :: vector<int> pitch, std :: vector<int> roll);
 	Entry(const Entry& structure);
 	~Entry();
 	void operator =(const Entry& structure);
-	void print();
+	void print(std::ostream& out);
 };
 
 #endif // ENTRY_H

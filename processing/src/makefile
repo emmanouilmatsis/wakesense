@@ -6,8 +6,8 @@ INC = -I /user/local/include
 
 EXECUTABLE = exe
 OBJECTS = $(SOURCES:.cpp=.o)
-DEPS = Receiver/Receiver.h XBee/XBee.h SerialTimeout/SerialTimeout.h
-SOURCES = main.cpp Receiver/Receiver.cpp XBee/XBee.cpp SerialTimeout/SerialTimeout.cpp
+DEPS = MLPTID/MLPTID.h PCCTID/PCCTID.h Parser/Parser.h Index/Index.h Index/Entry.h Database/Database.h Receiver/Receiver.h XBee/XBee.h SerialTimeout/SerialTimeout.h PearsonCorrelationCoefficient/PearsonCorrelationCoefficient.h BTOI/BTOI.h
+SOURCES = main.cpp MLPTID/MLPTID.cpp PCCTID/PCCTID.cpp Parser/Parser.cpp Index/Index.cpp Index/Entry.cpp Database/Database.cpp Receiver/Receiver.cpp XBee/XBee.cpp SerialTimeout/SerialTimeout.cpp
 
 all: $(SOURCES) $(EXECUTABLE)
 	
@@ -18,4 +18,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CFLAGS) $(INC) $< -o $@ 
 
 clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE) $(EXECUTABLE).*
+	rm -rf $(OBJECTS) $(EXECUTABLE) $(EXECUTABLE).* ../data/database.db

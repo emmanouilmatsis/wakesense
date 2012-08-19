@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <ctime>
 
 /* -------- Trick List -------- */
 
@@ -16,8 +17,7 @@
 
 /* -------- Constant -------- */
 
-#define PI 3.14159265
-
+#define DEFAULT_VALUE (rand() % 10) + 1
 
 /* -------- Type Definition -------- */
 
@@ -48,3 +48,12 @@ class TrickGenerator
 };
 
 #endif // TRICKGENERATOR_H 
+
+/*
+	 TrickGenerator tg;
+	 tg.generate(FRONTSIDE_360);
+	 tg.generate(BACKROLL);
+	 tg.generate(TANTRUM);
+	 tg.generate(MOBE);
+	 tg.generate(MOBY_DICK);
+ */

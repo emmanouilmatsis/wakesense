@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 #include "Cluster.h"
-#include "../Parser/Parser.h"
+#include "Parser.h"
 #include "../PearsonCorrelationCoefficient/PearsonCorrelationCoefficient.h"
 
 #define DEBUG true

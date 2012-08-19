@@ -10,7 +10,7 @@ Database :: Database() {
 	constantMessage = sqlite3_open(filename, &database);
 
 	if (constantMessage) {
-		std :: cerr << "Can't open database: " << sqlite3_errmsg(database) << std :: endl;
+		std::cerr << "Can't open database: " << sqlite3_errmsg(database) << std::endl;
 		sqlite3_close(database);
 		exit(1);
 	}
@@ -21,7 +21,7 @@ Database :: Database(const char* filename) {
 	constantMessage = sqlite3_open(filename, &database);
 
 	if (constantMessage) {
-		std :: cerr << "Can't open database: " << sqlite3_errmsg(database) << std :: endl;
+		std::cerr << "Can't open database: " << sqlite3_errmsg(database) << std::endl;
 		sqlite3_close(database);
 		exit(1);
 	}
@@ -37,7 +37,7 @@ void Database :: query(const char* statement) {
 	constantMessage = sqlite3_exec(database, statement, Database :: callback, 0, &errorMessage);
 	
 	if (constantMessage != SQLITE_OK) {
-		std :: cerr << "SQL error: " << errorMessage << std :: endl;
+		std::cerr << "SQL error: " << errorMessage << std::endl;
 		sqlite3_free(errorMessage);
 	}
 }
@@ -47,7 +47,7 @@ void Database :: query(const char* statement, char*** result, int* resultRow, in
 	constantMessage = sqlite3_get_table(database, statement, result, resultRow, resultColumn, &errorMessage);
 	
 	if (constantMessage != SQLITE_OK) {
-		std :: cerr << "SQL error: " << errorMessage << std :: endl;
+		std::cerr << "SQL error: " << errorMessage << std::endl;
 		sqlite3_free(errorMessage);
 	}
 }
@@ -65,7 +65,7 @@ sqlite3* Database :: getDatabase() {
 int Database :: callback(void *NotUsed, int argc, char** argv, char** name) {
 	// Print data
 	for (int i = 0; i < argc; i++)
-		std :: cout << name[i] << " = " << (argv[i] ? argv[i] : "NULL") << std :: endl;
-	std :: cout << std :: endl;
+		std::cout << name[i] << " = " << (argv[i] ? argv[i] : "NULL") << std::endl;
+	std::cout << std::endl;
 	return 0;
 }

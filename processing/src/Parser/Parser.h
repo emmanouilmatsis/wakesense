@@ -1,22 +1,25 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <fstream>
 #include <cstdlib>
+#include <fstream>
+#include <cstring>
+#include <vector>
+#include <string>
 
 class Parser {
 	public:
-		Parser(const char* file);
-		~Parser();
-		int*** getData();
-		unsigned int getColumnSize();
-		unsigned int getRowSize();
+		Parser(std::string filename);
+		std::vector<std::string> getId();
+		std::vector<std::vector<std::vector<int> > > getData();
 
 	private:
-		const char* file;
-		int*** data;
-		unsigned int columnSize;
-		unsigned int rowSize;
+		std::string filename;
+		std::vector<std::string> id;
+		std::vector<std::vector<std::vector<int> > > data;
+		unsigned int heigth;
+		unsigned int width; 
+		unsigned int depth;
 		void parseDataSize();
 		void parseData();
 };

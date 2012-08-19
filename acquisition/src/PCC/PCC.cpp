@@ -18,14 +18,12 @@ int main() {
   float set1[] = {2.0, -1.5, 0.0, 1.0, -1.0}; // original
   float set2[] = {2.0, -1.5, 0.0, 1.0, -1.0}; // equal
   float set3[] = {-1.0, 1.0, 0.0, -1.5, 2.0}; // reverse
-	float set4[] = {0.0, 1.0, 1.5, 2.0, 0.0}; // positive
+	float set4[] = {0.0, 1.0, 2.0, 1.5, 0.0}; // positive
 	float set5[] = {-2.0, 0.0, 1.0, 1.5, -1.5}; // random
 
 	cout.setf(ios::showpoint);
 	cout.setf(ios::fixed);
 	cout.precision(5);
-	cout << PCC(set1, set2, 4) << endl;
-
 	cout << PCC(set1, set2, 5) << endl;
 	cout << PCC(set1, set3, 5) << endl;
 	cout << PCC(set1, set4, 5) << endl;

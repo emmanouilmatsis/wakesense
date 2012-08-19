@@ -1,0 +1,69 @@
+bash-3.2$ 
+bash-3.2$ cat base_1.dat > base.dat
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = FRONTSIDE_360
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = BACKROLL
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = TANTRUM
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBE
+Correlated trick (3D) = MOBE
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBY_DICK
+Correlated trick (3D) = MOBE
+bash-3.2$ 
+bash-3.2$ cat base_rand_1-5.dat > base.dat
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = FRONTSIDE_360
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = BACKROLL
+bash-3.2$ ./exe
+Correlated trick (2D) = TANTRUM
+Correlated trick (3D) = TANTRUM
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBE
+Correlated trick (3D) = MOBE
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBY_DICK
+Correlated trick (3D) = MOBY_DICK
+bash-3.2$ 
+bash-3.2$ cat base_rand_1-10.dat > base.dat
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = FRONTSIDE_360
+bash-3.2$ ./exe
+Correlated trick (2D) = BACKROLL
+Correlated trick (3D) = BACKROLL
+bash-3.2$ ./exe
+Correlated trick (2D) = TANTRUM
+Correlated trick (3D) = TANTRUM
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBE
+Correlated trick (3D) = MOBE
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBY_DICK
+Correlated trick (3D) = MOBY_DICK
+bash-3.2$ 
+bash-3.2$ cat base_receiver.dat > base.dat
+bash-3.2$ ./exe
+Correlated trick (2D) = FRONTSIDE_360
+Correlated trick (3D) = FRONTSIDE_360
+bash-3.2$ ./exe
+Correlated trick (2D) = BACKROLL
+Correlated trick (3D) = BACKROLL
+bash-3.2$ ./exe
+Correlated trick (2D) = TANTRUM
+Correlated trick (3D) = TANTRUM
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBE
+Correlated trick (3D) = MOBE
+bash-3.2$ ./exe
+Correlated trick (2D) = MOBY_DICK
+Correlated trick (3D) = MOBY_DICK
+bash-3.2$ 

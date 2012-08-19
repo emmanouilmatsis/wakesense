@@ -2,98 +2,77 @@
 
 /* -------- Public -------- */
 
-Parser :: Parser(const char* file) : file(file) {
+Parser :: Parser(std::string filename) : filename(filename)
+{
 	// Set column and row size
 	parseDataSize();
 
-	// Allocate 3D dynamic array
-	data = new int**[rowSize];
-	for (unsigned int i = 0; i < rowSize; i++) {
-		data[i] = new int*[columnSize];
-		for (unsigned int j = 0; j < columnSize; j++)
-			data[i][j] = new int[3];
-	}
+	// Initialize id
+  id = std::vector<std::string>(heigth, std::string());
+
+	// Initialize data
+	data = std::vector<std::vector<std::vector<int> > >(heigth, std::vector<std::vector<int> > (width, std::vector<int> (depth, 0)));
 
 	// Parse
 	parseData();
 }
 
-Parser :: ~Parser() {
-	// Deallocate 3D dynamic array
-	for (unsigned int i = 0; i < rowSize; i++) {
-		for (unsigned int j = 0; j < columnSize; j++)
-			delete [] data[i][j];
-		delete [] data[i];
-	}
-	delete [] data;
+std::vector<std::string> Parser :: getId()
+{
+	return id;
 }
 
-int*** Parser :: getData() {
+std::vector<std::vector<std::vector<int> > > Parser :: getData()
+{
 	return data;
-}
-
-unsigned int Parser :: getColumnSize() {
-	return columnSize;
-}
-
-unsigned int Parser :: getRowSize() {
-	return rowSize;
 }
 
 /* -------- Private -------- */
 
-void Parser :: parseDataSize() {
+void Parser :: parseDataSize()
+{
 	std :: ifstream in;
-	in.open(file);
+	in.open(filename.c_str());
 	if (in.fail())
 		exit(1);
 
-	columnSize = 0;
-	rowSize = 0;
+	heigth = 0;
+	width = 0;
+	depth = 1;
 
 	char character;
 	in.get(character);
-	while (!in.eof()) {
+	while (!in.eof())
+	{
 		if ((character == '\n'))
-			rowSize++;
-		if ((character == '\t') && (rowSize == 0))
-			columnSize++;
+			heigth++;
+		if ((character == '\t') && (heigth == 0))
+			width++;
+		if ((character == ' ') && (width == 1))
+			depth++;
 		in.get(character);
 	}
 
 	in.close();
 }
 
-void Parser :: parseData() {
+void Parser :: parseData()
+{
 	std :: ifstream in;
-	in.open(file);
+	in.open(filename.c_str());
 	if (in.fail())
 		exit(1);
 
-	// Parse
-	int columnCount = 0;
-	int rowCount = 0;
-	char character;
-	in.get(character);
-	while(!in.eof()) {
-		// Parse trick type
-		if (character == '#') {
-			in.get(character);
-			// TODO : parse trick type character;
-		}
-		// Parse trick data
-		if (character == '\t') {
-			in >> data[rowCount][columnCount][0];
-			in >> data[rowCount][columnCount][1];
-			in >> data[rowCount][columnCount][2];
-			columnCount++; // increment column
-		}
-		if (character == '\n') {
-			columnCount = 0;
-			rowCount++; // increment row
-		}
-		// Get next character
-		in.get(character);
+	for (unsigned int i = 0; i < heigth; i++)
+	{
+		// Parse id
+		in >> id[i];
+
+		// Parse data
+		for (unsigned int j = 0; j < width; j++)
+			for (unsigned int k = 0; k < depth; k++)
+				in >> data[i][j][k];
 	}
+
 	in.close();
 }
