@@ -196,6 +196,8 @@ void SerialTimeout::read(unsigned char byte)
 				delete[] data;
 				throw(boost::system::system_error(boost::system::error_code(),
 							"Error while reading"));
+			case resultInProgress:
+				continue;
 				//if resultInProgress remain in the loop
 		}
 	}
@@ -242,6 +244,8 @@ void SerialTimeout::read(char *data, size_t size)
 				port.cancel();
 				throw(boost::system::system_error(boost::system::error_code(),
 							"Error while reading"));
+			case resultInProgress:
+				continue;
 				//if resultInProgress remain in the loop
 		}
 	}
@@ -302,6 +306,8 @@ std::string SerialTimeout::readStringUntil(const std::string& delim)
 				port.cancel();
 				throw(boost::system::system_error(boost::system::error_code(),
 							"Error while reading"));
+			case resultInProgress:
+				continue;
 				//if resultInProgress remain in the loop
 		}
 	}

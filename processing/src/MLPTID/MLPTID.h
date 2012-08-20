@@ -20,6 +20,8 @@ class MLPTID
 		MLPTID(const char* filename);
 		std::vector<double> queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds);
 		void trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId);
+		int getId();
+		double getCorrelation();
 		void print(std::ostream& out);
 
 	private:
@@ -32,6 +34,7 @@ class MLPTID
 		std::vector<double> ao;
 		std::vector<std::vector<double> > wi;
 		std::vector<std::vector<double> > wo;
+		std::vector<double> result;
 
 		void setup(std::vector<int> sampleIds, std::vector<int> trickIds);
 		std::vector<double> feedForward();

@@ -21,7 +21,8 @@ MLPTID :: MLPTID(const char* filename) : database(filename)
 std::vector<double> MLPTID :: queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	setup(sampleIds, trickIds);
-	return feedForward();
+	result = feedForward();
+	return result;
 }
 
 /* ---------------- */
@@ -44,6 +45,36 @@ void MLPTID :: trainNetwork(std::vector<int> sampleIds, std::vector<int> trickId
 
 /* ------------------------- */
 
+int MLPTID :: getId()
+{
+	int index = 0;
+	double resultMax = result[0];
+	
+	for (unsigned int i = 0; i < result.size(); i++)
+		if (resultMax < result[i])
+		{
+			resultMax = result[i];
+			index = static_cast<int>(i);
+		}
+	
+	return index;
+}
+
+/* ------------------------- */
+
+double MLPTID :: getCorrelation()
+{
+	double resultMax = result[0];
+	
+	for (unsigned int i = 0; i < result.size(); i++)
+		if (resultMax < result[i])
+			resultMax = result[i];
+	
+	return resultMax;
+}
+
+/* ------------------------- */
+
 void MLPTID :: print(std::ostream& out)
 {
 	char* statement;
@@ -52,7 +83,6 @@ void MLPTID :: print(std::ostream& out)
 	int resultColumn;
 	Database database;
 
-	// Get nodes from samples
 	const char* tableName[] = {"HiddenLeft", "Hidden", "HiddenRight"};
 	const char* table[] = {"hiddenLeft", "hidden", "hiddenRight"};
 

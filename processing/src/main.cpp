@@ -12,10 +12,11 @@
 /* -------- Constant -------- */
 
 #define MIN_ARGC 2
-
-/* -------- Using -------- */
-
-using namespace std;
+#define DEFAULT_BASE_FILENAME "../data/base.dat"
+#define PORT "/dev/tty.usbserial-A501B6XH"
+#define BAUD 9600
+#define INTERVAL 20
+#define DURATION 1000
 
 /* -------- Main -------- */
 
@@ -72,25 +73,25 @@ int main(int argc, char** argv)
     if (in) // from file
     {
       std::string filename;
-      cout << "Enter input filename: ";
-      cin >> filename;
+      std::cout << "Enter input filename: ";
+      std::cin >> filename;
 
       Parser inputParser(filename);
-      data = inputParser.getData()[0];
+      data = inputParser.getData()[0]; // get the first row of the matrix
     }
     else // from xbee
     {
-      Receiver receiver("/dev/tty.usbserial-A501B6XH", 9600, 20, 1000);
+      Receiver receiver(PORT, BAUD, INTERVAL, DURATION);
 
       if (out) // to file
       {
-        string filename;
-        cout << "Enter output filename: ";
-        cin >> filename;
+        std::string filename;
+        std::cout << "Enter output filename: ";
+        std::cin >> filename;
 
         receiver.getData(filename.c_str());
         Parser inputParser(filename);
-        data = inputParser.getData()[0];
+        data = inputParser.getData()[0]; // get the first row of the matrix
       }
       else // not to file
       {
@@ -101,43 +102,56 @@ int main(int argc, char** argv)
     // Run data
 		int id;
     std::string name;
+		double correlation;
 		int grade;
 
     if (type == "PCC2D")
     {
+			// Parse base file
       PCCTID pcctid;
-      Parser parser("../data/base.dat");
+      Parser parser(DEFAULT_BASE_FILENAME);
 
+			// From vector 2D to vector 3D
       std::vector<std::vector<std::vector<int> > > dataTemp;
       dataTemp.push_back(data);
 
-			id = pcctid.run(true, dataTemp);
-      name = parser.getId()[id];
-			grade = 10;
+			// Run PCCTID2D
+			pcctid.run(true, dataTemp);
 
+			// Get results
+			id = pcctid.getId();
+      name = parser.getId()[id];
+			correlation = pcctid.getCorrelation();
+			grade = -1;
+
+      // Print results
       if (print) pcctid.print(std::cout);
     }
     else if (type == "PCC3D")
     {
+			// Parse base file
       PCCTID pcctid;
-      Parser parser("../data/base.dat");
+      Parser parser(DEFAULT_BASE_FILENAME);
 
+			// From vector 2D to vector 3D
       std::vector<std::vector<std::vector<int> > > dataTemp;
       dataTemp.push_back(data);
 
-			id = pcctid.run(false, dataTemp);
-      name = parser.getId()[id];
-			grade = 10;
+			// Run PCCTID3D
+			pcctid.run(false, dataTemp);
 
+			// Get results
+			id = pcctid.getId();
+      name = parser.getId()[id];
+			correlation = pcctid.getCorrelation();
+			grade = -1;
+
+      // Print results
       if (print) pcctid.print(std::cout);
     }
     else if (type == "MLPQuery")
     {
-			// Prepare entry
-			std::string filename;
-			std::cout << "Enter entry name: ";
-			std::cin >> filename;
-
+			// Format data
 			std::vector<int> yaw(data.size(), 0);
 			std::vector<int> pitch(data.size(), 0);
 			std::vector<int> roll(data.size(), 0);
@@ -148,7 +162,8 @@ int main(int argc, char** argv)
 				roll[i] = data[i][2];
 			}
 
-			Entry entry(filename.c_str(), yaw, pitch, roll);
+			// Construct entry
+			Entry entry("QUERY", yaw, pitch, roll);
 
 			// Add entry to index
 			Index index;
@@ -156,23 +171,15 @@ int main(int argc, char** argv)
 
 			// Query network
       MLPTID mlptid;
-			std::vector<double> result(mlptid.queryNetwork(entry.sampleIds, index.getEntryIds())); // TODO test results
+			mlptid.queryNetwork(entry.sampleIds, index.getEntryIds());
 
-			double resultMin = result[0];
-			for (unsigned int i = 0; i < result.size(); i++)
-			{
-					std::cout << "resultMin = " << resultMin << std::endl;
-					std::cout << "result = " << result[i] << std::endl;
-				if (resultMin > result[i])
-				{
-					resultMin = result[i];
-					id = i;
-				}
-			}
+			// Get results
+			id = mlptid.getId();
+			name = index.getEntry(index.getEntryIds()[id]).name; // rowid starts from 1
+		  correlation = mlptid.getCorrelation();
+			grade = -1;
 
-			name = index.getEntry(id).name; // TODO find bug
-			grade = +10;
-
+			// Print results
       if (print) 
 			{          
 				entry.print(std::cout);
@@ -182,11 +189,11 @@ int main(int argc, char** argv)
     }
     else if (type == "MLPTrain")
     {
-			// Prepare entry
-			std::string filename;
+			// Get entry name
 			std::cout << "Enter entry name: ";
-			std::cin >> filename;
+			std::cin >> name;
 
+			// Format data
 			std::vector<int> yaw(data.size(), 0);
 			std::vector<int> pitch(data.size(), 0);
 			std::vector<int> roll(data.size(), 0);
@@ -197,21 +204,25 @@ int main(int argc, char** argv)
 				roll[i] = data[i][2];
 			}
 
-			Entry entry(filename.c_str(), yaw, pitch, roll);
+			// Construct entry
+			Entry entry(name.c_str(), yaw, pitch, roll);
 
 			// Add entry to index
 			Index index;
 			index.setEntry(entry);
 			std::vector<int> trickIds = index.getEntryIds();
 
-			// Query network
+			// Train network
       MLPTID mlptid;
 			mlptid.trainNetwork(entry.sampleIds, trickIds, entry.trickId);
 
+			// Get results
 			id = entry.trickId;
 			name = entry.name;
+			correlation = -1;
 			grade = -1;
 
+			// Print results
       if (print) 
 			{          
 				entry.print(std::cout);
@@ -225,7 +236,7 @@ int main(int argc, char** argv)
         << std::endl
         << "--------------------------------------------------------" << std::endl
         << "class : Main" << std::endl
-        << "field : Id, Name, Grade" << std::endl
+        << "field : Id, Name, Correlation, Grade" << std::endl
         << "--------------------------------------------------------" << std::endl
         << std::endl;
 
@@ -235,12 +246,16 @@ int main(int argc, char** argv)
 				<< std::setw(20) << std::left
         << "Name"
 				<< std::setw(20) << std::left
+        << "Correlation"
+				<< std::setw(20) << std::left
         << "Grade"
 				<< std::endl
 				<< std::setw(20) << std::left
 				<< id
 				<< std::setw(20) << std::left
 				<< name
+				<< std::setw(20) << std::left
+				<< correlation
 				<< std::setw(20) << std::left
 				<< grade
 				<< std::endl

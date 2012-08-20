@@ -18,7 +18,7 @@ class Index
 		Index();
 		Index(const char* filename);
 		Entry getEntry(const char* name, int version = 0);
-		Entry getEntry(int entryId, int version = 0);
+		Entry getEntry(int entryId);
 		void setEntry(Entry& entry);
 		std::vector<int> getEntryIds(int version = 0);
 		void print(std::ostream& out);

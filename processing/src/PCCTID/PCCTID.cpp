@@ -5,7 +5,7 @@
 /* -------- Public -------- */
 
 PCCTID :: PCCTID()
-  : inputFilename("/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/input.dat"), baseFilename("/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/base.dat")
+  : baseFilename("/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/base.dat")
 {
   // Parse base file
   Parser baseParser(baseFilename);
@@ -19,8 +19,8 @@ PCCTID :: PCCTID()
 
 /* ---------------- */
 
-PCCTID :: PCCTID(std::string inputFilename, std::string baseFilename)
-  : inputFilename(inputFilename), baseFilename(baseFilename)
+PCCTID :: PCCTID(std::string baseFilename)
+  : baseFilename(baseFilename)
 {
   // Parse base file
   Parser baseParser(baseFilename);
@@ -34,8 +34,13 @@ PCCTID :: PCCTID(std::string inputFilename, std::string baseFilename)
 
 /* ---------------- */
 
-int PCCTID :: run(bool type)
+void PCCTID :: run(bool type)
 {
+	// Get input filename
+	std::string inputFilename;
+  std::cout << "Enter input filename: ";
+	std::cin >> inputFilename;
+
   // Parse input file
   Parser inputParser(inputFilename);
 
@@ -47,12 +52,15 @@ int PCCTID :: run(bool type)
     exit(1);
 
   // Identify set
-  return type ? identifySet2D() : identifySet3D();
+	if (type)
+		identifySet2D();
+	else
+		identifySet3D();
 }
 
 /* ---------------- */
 
-int PCCTID :: run(bool type, std::vector<std::vector<std::vector<int> > > inputData)
+void PCCTID :: run(bool type, std::vector<std::vector<std::vector<int> > > inputData)
 {
   // Verify equal number of samples
   if (inputData[0].size() != baseData[0].size())
@@ -62,7 +70,24 @@ int PCCTID :: run(bool type, std::vector<std::vector<std::vector<int> > > inputD
   this->inputData = inputData;
 
   // Identify set
-  return type ? identifySet2D() : identifySet3D();
+	if (type)
+		identifySet2D();
+	else
+		identifySet3D();
+}
+
+/* ---------------- */
+
+int PCCTID :: getId()
+{
+	return correlationMaxIndex;
+}
+
+/* ---------------- */
+
+double PCCTID :: getCorrelation()
+{
+	return correlationMax;
 }
 
 /* ---------------- */
@@ -74,9 +99,13 @@ void PCCTID :: print(std::ostream& out)
       << std::endl
       << "--------------------------------------------------------" << std::endl
       << "class : PCCTID" << std::endl
-      << "field : InputData" << std::endl
+      << "field : Id, Correlation, InputData" << std::endl
       << "--------------------------------------------------------" << std::endl
       << std::endl;
+	out
+			<< "Id : " << correlationMaxIndex << std::endl
+			<< "Correlation : " << correlationMax << std::endl
+			<< std::endl;
   for (unsigned int i = 0; i < baseDataWidth; i++)
   {
     out
@@ -134,7 +163,7 @@ void PCCTID :: print(std::ostream& out)
 
 /* -------- Private -------- */
 
-int PCCTID :: identifySet2D()
+void PCCTID :: identifySet2D()
 {
   // Initialize input data
   std::vector<int> inputDataTemp(baseDataWidth, 0);
@@ -150,7 +179,7 @@ int PCCTID :: identifySet2D()
       baseDataTemp[i][j] = std::sqrt(std::pow(static_cast<double>(baseData[i][j][0]), 2) + std::pow(static_cast<double>(baseData[i][j][1]), 2) + std::pow(static_cast<double>(baseData[i][j][2]), 2));
 
   // Initialize correlation max
-  setIndex = 0;
+  correlationMaxIndex = 0;
   correlationMax = pcc.calculate(inputDataTemp, baseDataTemp[0]);
 
   // Correlate input data to each column of base data
@@ -163,16 +192,14 @@ int PCCTID :: identifySet2D()
     if (correlationMax < correlation)
     {
       correlationMax = correlation;
-      setIndex = i;
+      correlationMaxIndex = i;
     }
   }
-
-  return setIndex;
 }
 
 /* ---------------- */
 
-int PCCTID :: identifySet3D()
+void PCCTID :: identifySet3D()
 {
   // Initialize input data
   std::vector<std::vector<int> > inputDataTemp(baseDataDepth, std::vector<int>(baseDataWidth, 0));
@@ -190,7 +217,7 @@ int PCCTID :: identifySet3D()
         baseDataTemp[i][j][k] =	baseData[i][k][j];
 
   // Initialize correlation max
-  setIndex = 0;
+  correlationMaxIndex = 0;
   correlationMax = (
                      pcc.calculate(inputDataTemp[0], baseDataTemp[0][0]) +
                      pcc.calculate(inputDataTemp[1], baseDataTemp[0][1]) +
@@ -208,10 +235,8 @@ int PCCTID :: identifySet3D()
     // Update most correlated set index
     if (correlationMax < correlation)
     {
+      correlationMaxIndex = i;
       correlationMax = correlation;
-      setIndex = i;
     }
   }
-
-  return setIndex;
 }

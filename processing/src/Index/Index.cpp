@@ -27,39 +27,7 @@ Entry Index :: getEntry(const char* name, int version)
   int resultRow;
   int resultColumn;
 
-  // Is entry
-  statement = sqlite3_mprintf(
-                "SELECT * "
-                "FROM trick "
-                "JOIN location "
-                "ON trick.rowid=location.trickId "
-                "AND trick.name='%q'"
-                "AND trick.version=%d"
-                , name, version);
-  database.query(statement, &result, &resultRow, &resultColumn);
-  sqlite3_free(statement);
-  database.queryFree(result);
-
-  if (resultRow == 0)
-    return entry;
-
-  // Entry name
-  strcpy(entry.name, name);
-
-  char versionTemp[8];
-
-  // Entry trickId
-  sprintf(versionTemp, "%d", 0);
-  entry.trickId = getId("trick", 2, "name", name, "version", versionTemp);
-
-  // Entry version
-  entry.version = version;
-
-  // Entry versionId
-  sprintf(versionTemp, "%d", version);
-  entry.versionId = getId("trick", 2, "name", name, "version", versionTemp);
-
-  // Entry size, samples and sampleIds
+  // Query
   statement = sqlite3_mprintf(
                 "SELECT sample.yaw, sample.pitch, sample.roll, sample.rowid, location.location "
                 "FROM sample "
@@ -73,30 +41,55 @@ Entry Index :: getEntry(const char* name, int version)
   database.query(statement, &result, &resultRow, &resultColumn);
   sqlite3_free(statement);
 
-  entry.size = resultRow;
-  entry.yaw.resize(resultRow);
-  entry.pitch.resize(resultRow);
-  entry.roll.resize(resultRow);
-  entry.sampleIds.resize(resultRow);
-
-  for (int i = 0; i < resultRow; i++)
+  if (resultRow == 0)
   {
-    int location = atoi(result[((i + 1) * resultColumn) + 4]);
-
-    entry.yaw[location] = atoi(result[((i + 1) * resultColumn) + 0]);
-    entry.pitch[location] = atoi(result[((i + 1) * resultColumn) + 1]);
-    entry.roll[location] = atoi(result[((i + 1) * resultColumn) + 2]);
-    entry.sampleIds[location] = atoi(result[((i + 1) * resultColumn) + 3]);
+    database.queryFree(result);
+    return entry;
   }
+  else
+  {
+    // Entry name
+    strcpy(entry.name, name);
 
-  database.queryFree(result);
+    char versionTemp[8];
 
-  return entry;
+    // Entry trickId
+    sprintf(versionTemp, "%d", 0);
+    entry.trickId = getId("trick", 2, "name", name, "version", versionTemp);
+
+    // Entry version
+    entry.version = version;
+
+    // Entry versionId
+    sprintf(versionTemp, "%d", version);
+    entry.versionId = getId("trick", 2, "name", name, "version", versionTemp);
+
+    // Entry size, samples and sampleIds
+    entry.size = resultRow;
+    entry.yaw.resize(resultRow);
+    entry.pitch.resize(resultRow);
+    entry.roll.resize(resultRow);
+    entry.sampleIds.resize(resultRow);
+
+    for (int i = 0; i < resultRow; i++)
+    {
+      int location = atoi(result[((i + 1) * resultColumn) + 4]);
+
+      entry.yaw[location] = atoi(result[((i + 1) * resultColumn) + 0]);
+      entry.pitch[location] = atoi(result[((i + 1) * resultColumn) + 1]);
+      entry.roll[location] = atoi(result[((i + 1) * resultColumn) + 2]);
+      entry.sampleIds[location] = atoi(result[((i + 1) * resultColumn) + 3]);
+    }
+
+    database.queryFree(result);
+
+    return entry;
+  }
 }
 
 /* ------------------------- */
 
-Entry Index :: getEntry(int entryId, int version)
+Entry Index :: getEntry(int entryId)
 {
   Entry entry;
 
@@ -105,74 +98,64 @@ Entry Index :: getEntry(int entryId, int version)
   int resultRow;
   int resultColumn;
 
-  // Is entry
   statement = sqlite3_mprintf(
-                "SELECT trick.name "
-                "FROM trick "
-                "JOIN location "
-                "ON trick.rowid=location.trickId "
-                "AND trick.rowid=%d"
-                "AND trick.version=%d"
-                , entryId, version);
-  database.query(statement, &result, &resultRow, &resultColumn);
-  sqlite3_free(statement);
-
-  if (resultRow == 0)
-	{
-  	database.queryFree(result);
-    return entry;
-	}
-
-  // Entry name
-  strcpy(entry.name, result[resultColumn]);
-  database.queryFree(result);
-
-  char versionTemp[8];
-
-  // Entry trickId
-  sprintf(versionTemp, "%d", 0);
-  entry.trickId = entryId;
-
-  // Entry version
-  entry.version = version;
-
-  // Entry versionId
-  sprintf(versionTemp, "%d", version);
-  entry.versionId = getId("trick", 2, "name", entry.name, "version", versionTemp);
-
-  // Entry size, samples and sampleIds
-  statement = sqlite3_mprintf(
-                "SELECT sample.yaw, sample.pitch, sample.roll, sample.rowid, location.location "
+                "SELECT trick.name, trick.version, sample.yaw, sample.pitch, sample.roll, sample.rowid, location.location "
                 "FROM sample "
                 "JOIN location "
                 "ON sample.rowid = location.sampleId "
                 "JOIN trick "
                 "ON location.trickId = trick.rowId "
-                "WHERE trick.rowid=%d"
-                "AND trick.version=%d"
-                , entryId, version);
+                "AND trick.rowid=%d"
+                , entryId);
   database.query(statement, &result, &resultRow, &resultColumn);
   sqlite3_free(statement);
 
-  entry.size = resultRow;
-  entry.yaw.resize(resultRow);
-  entry.pitch.resize(resultRow);
-  entry.roll.resize(resultRow);
-  entry.sampleIds.resize(resultRow);
-
-  for (int i = 0; i < resultRow; i++)
+#include <iostream>>
+  using namespace std;
+  cout << "entryId = " << entryId << endl;
+  cout << "resultRow = " << resultRow << endl;
+  if (resultRow == 0)
   {
-    int location = atoi(result[((i + 1) * resultColumn) + 4]);
-
-    entry.yaw[location] = atoi(result[((i + 1) * resultColumn) + 0]);
-    entry.pitch[location] = atoi(result[((i + 1) * resultColumn) + 1]);
-    entry.roll[location] = atoi(result[((i + 1) * resultColumn) + 2]);
-    entry.sampleIds[location] = atoi(result[((i + 1) * resultColumn) + 3]);
+    database.queryFree(result);
+    return entry;
   }
+  else
+  {
+    // Entry name
+    strcpy(entry.name, result[resultColumn + 0]);
 
-  database.queryFree(result);
+    // Entry trickId
+    char versionTemp[8];
+    sprintf(versionTemp, "%d", 0);
+    entry.trickId = getId("trick", 2, "name", result[resultColumn + 0], "version", versionTemp);
 
-  return entry;
+    // Entry version
+    entry.version = atoi(result[resultColumn + 1]);
+
+    // Entry versionId
+    entry.versionId = entryId;
+
+    // Entry size, samples and sampleIds
+    entry.size = resultRow;
+    entry.yaw.resize(resultRow);
+    entry.pitch.resize(resultRow);
+    entry.roll.resize(resultRow);
+    entry.sampleIds.resize(resultRow);
+
+    for (int i = 0; i < resultRow; i++)
+    {
+      int location = atoi(result[((i + 1) * resultColumn) + 6]);
+
+      entry.yaw[location] = atoi(result[((i + 1) * resultColumn) + 2]);
+      entry.pitch[location] = atoi(result[((i + 1) * resultColumn) + 3]);
+      entry.roll[location] = atoi(result[((i + 1) * resultColumn) + 4]);
+      entry.sampleIds[location] = atoi(result[((i + 1) * resultColumn) + 5]);
+    }
+
+    database.queryFree(result);
+
+    return entry;
+  }
 }
 
 /* ------------------------- */
@@ -242,7 +225,8 @@ std::vector<int> Index :: getEntryIds(int version)
   statement = sqlite3_mprintf(
                 "SELECT rowid "
                 "FROM trick "
-                "WHERE version=%d"
+                "WHERE version=%d "
+                "AND name!='QUERY'"
                 , version);
   database.query(statement, &result, &resultRow, &resultColumn);
   sqlite3_free(statement);
