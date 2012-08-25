@@ -1,59 +1,22 @@
 #ifndef TRICKGENERATOR_H
 #define TRICKGENERATOR_H
 
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <cmath>
-#include <ctime>
+#include <vector>
 
-/* -------- Trick List -------- */
-
-#define FRONTSIDE_360 0x01 // yaw = 360, pitch = 0, roll = 0
-#define BACKROLL 0x02 // yaw = 0, pitch = 360, roll = 0
-#define TANTRUM 0x04 // yaw = 0, pitch = 0, roll = 360
-#define MOBE 0x06 // yaw = 360, pitch = 360, roll = 0
-#define MOBY_DICK 0x05 // yaw = -360, pitch = 0, roll = 360
-
-/* -------- Constant -------- */
-
-#define DEFAULT_VALUE (rand() % 10) + 1
-
-/* -------- Type Definition -------- */
-
-typedef unsigned char byte;
-
-/* -------- Class Definition -------- */
+#define DURATION 1000
+#define INTERVAL 20
 
 class TrickGenerator
 {
 	public:
 		TrickGenerator();
-		TrickGenerator(unsigned int duration, unsigned int period);
-		void generate(byte id);
+		TrickGenerator(unsigned int duration, unsigned int interval);
+		std::vector<int> run(int input);
 
 	private:
-		byte id;
-		int* yaw;
-		int* pitch;
-		int* roll;
 		unsigned int duration;
-		unsigned int period;
-		unsigned int size;
-		int* generateYaw();
-		int* generatePitch();
-		int* generateRoll();
-		void generateFile();
-		const char* generateName();
+		unsigned int interval;
 };
 
-#endif // TRICKGENERATOR_H 
-
-/*
-	 TrickGenerator tg;
-	 tg.generate(FRONTSIDE_360);
-	 tg.generate(BACKROLL);
-	 tg.generate(TANTRUM);
-	 tg.generate(MOBE);
-	 tg.generate(MOBY_DICK);
- */
+#endif // TRICKGENERATOR_H
