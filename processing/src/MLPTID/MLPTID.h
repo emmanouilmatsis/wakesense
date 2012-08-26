@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cmath>
+#include <string>
 #include <vector>
 #include <set>
 #include <algorithm>
@@ -22,7 +23,7 @@ class MLPTID
 		void trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId);
 		int getId();
 		double getCorrelation();
-		void print(std::ostream& out);
+		friend std::ostream& operator <<(std::ostream& out, const MLPTID& object);
 
 	private:
 		Database database;

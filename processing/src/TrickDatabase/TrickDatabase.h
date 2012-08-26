@@ -12,7 +12,6 @@
 #include "../Converter/Converter.h"
 #include "../TrickGenerator/TrickGenerator.h"
 
-
 class TrickDatabase
 {
 	public:
@@ -21,7 +20,7 @@ class TrickDatabase
 		Trick get(int rowid);
 		Trick get(std::string name);
 		void set(Trick trick);
-		void print(std::ostream& out);
+		friend std::ostream& operator <<(std::ostream& out, TrickDatabase& object);
 
 	private:
 		sqlite3* database;

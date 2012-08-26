@@ -61,7 +61,7 @@ void Entry :: operator =(const Entry& structure)
   this->sampleIds = structure.sampleIds;
 }
 
-void Entry :: print(std::ostream& out)
+std::ostream& operator <<(std::ostream& out, const Entry& object)
 {
 
   out.setf(std::ios::showpos);
@@ -73,24 +73,27 @@ void Entry :: print(std::ostream& out)
       << "        Yaw, Pitch, Roll, SampleIds" << std::endl
       << "--------------------------------------------------------" << std::endl
       << std::endl
-      << "Name : " << name << std::endl
-      << "TrickId : " << trickId << std::endl
-      << "Version : " << version << std::endl
-      << "VersionId : " << versionId << std::endl
-      << "Size : " << size << std::endl
+      << "Name : " << object.name << std::endl
+      << "TrickId : " << object.trickId << std::endl
+      << "Version : " << object.version << std::endl
+      << "VersionId : " << object.versionId << std::endl
+      << "Size : " << object.size << std::endl
       << std::endl
       << std::setw(10) << std::left << "Yaw"
       << std::setw(10) << std::left << "Pitch"
       << std::setw(10) << std::left << "Roll"
       << std::setw(10) << std::left << "SampleIds"
       << std::endl;
-  for (unsigned int i = 0; i < size; i++)
+
+  for (unsigned int i = 0; i < object.size; i++)
   {
     out
-        << std::setw(10) << std::left << yaw[i]
-        << std::setw(10) << std::left << pitch[i]
-        << std::setw(10) << std::left << roll[i]
-        << std::setw(10) << std::left << sampleIds[i]
+        << std::setw(10) << std::left << object.yaw[i]
+        << std::setw(10) << std::left << object.pitch[i]
+        << std::setw(10) << std::left << object.roll[i]
+        << std::setw(10) << std::left << object.sampleIds[i]
         << std::endl;
   }
+
+	return out;
 }

@@ -4,7 +4,7 @@
 #include <ostream>
 #include <fstream>
 #include <iomanip>
-#include "../BTOI/BTOI.h"
+#include "../Converter/Converter.h"
 #include "../XBee/XBee.h"
 
 /* -------- Constant -------- */

@@ -21,7 +21,7 @@ class Index
 		Entry getEntry(int entryId);
 		void setEntry(Entry& entry);
 		std::vector<int> getEntryIds(int version = 0);
-		void print(std::ostream& out);
+		friend std::ostream& operator <<(std::ostream& out, const Index& object);
 
 	private:
 		Database database;

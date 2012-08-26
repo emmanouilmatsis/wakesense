@@ -3,9 +3,16 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <ctime>
+
+/* -------- Constant -------- */
 
 #define DURATION 1000
 #define INTERVAL 20
+#define DEFAULT_VALUE_MIN -5
+#define DEFAULT_VALUE_MAX 5
+#define DEFAULT_VALUE (DEFAULT_VALUE_MIN + (rand() % (int)(DEFAULT_VALUE_MAX - DEFAULT_VALUE_MIN + 1)))
 
 class TrickGenerator
 {

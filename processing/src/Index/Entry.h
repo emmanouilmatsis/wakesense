@@ -23,7 +23,7 @@ struct Entry
 	Entry(const Entry& structure);
 	~Entry();
 	void operator =(const Entry& structure);
-	void print(std::ostream& out);
+	friend std::ostream& operator <<(std::ostream& out, const Entry& object);
 };
 
 #endif // ENTRY_H

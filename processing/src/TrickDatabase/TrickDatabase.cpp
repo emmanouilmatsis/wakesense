@@ -172,7 +172,7 @@ void TrickDatabase :: set(Trick trick)
 
 /* ------------------------- */
 
-void TrickDatabase :: print(std::ostream& out)
+std::ostream& operator <<(std::ostream& out, TrickDatabase& object)
 {
   std::string tableName[] = {"Trick", "Location", "Sample"};
   std::string attributeName[][8] = {{"Name", "Type", "Division", "Difficulty", "YawMax", "PitchMax", "RollMax"}, {"TrickRowid", "SampleRowid", "Location"}, {"Yaw", "Pitch", "Roll"}};
@@ -181,12 +181,12 @@ void TrickDatabase :: print(std::ostream& out)
   for (unsigned int i = 0; i < 3; i++)
   {
     std::string statement = "SELECT * FROM " + table[i];
-    std::vector<std::vector<std::string> > result = queryDatabase(statement);
+    std::vector<std::vector<std::string> > result = object.queryDatabase(statement);
 
     out
         << std::endl
         << "--------------------------------------------------------" << std::endl
-        << "class : Index" << std::endl
+        << "class : TrickDatabase" << std::endl
         << "table : " << tableName[i] << std::endl
         << "--------------------------------------------------------" << std::endl
         << std::endl;
@@ -208,6 +208,7 @@ void TrickDatabase :: print(std::ostream& out)
       out << std::endl;
     }
   }
+	return out;
 }
 
 /* -------- Private -------- */
@@ -234,7 +235,7 @@ void TrickDatabase :: initializeDatabase()
   // Advanced
   container.push_back(Trick("BACKROLL_TO_REVERT", "180_INVERT", "ADVANCED", 0.48, 180, 360, 0, trickGenerator.run(180), trickGenerator.run(360), trickGenerator.run(0)));
   container.push_back(Trick("TANTRUM_TO_REVERT", "180_INVERT", "ADVANCED", 0.48, 180, 0, 360, trickGenerator.run(180), trickGenerator.run(0), trickGenerator.run(360)));
-  container.push_back(Trick("RALEY", "RALEY", "ADVANCED", 0.5, 0, 0, -90, trickGenerator.run(0), trickGenerator.run(0), trickGenerator.run(-90)));
+  ///container.push_back(Trick("RALEY", "RALEY", "ADVANCED", 0.5, 0, 0, -90, trickGenerator.run(0), trickGenerator.run(0), trickGenerator.run(-90)));
 
   // Expert
   container.push_back(Trick("FRONTSIDE_540", "SPIN", "EXPERT", 0.52, 540, 0, 0, trickGenerator.run(540), trickGenerator.run(0), trickGenerator.run(0)));

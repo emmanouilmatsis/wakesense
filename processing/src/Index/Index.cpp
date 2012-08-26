@@ -242,7 +242,7 @@ std::vector<int> Index :: getEntryIds(int version)
 
 /* ------------------------- */
 
-void Index :: print(std::ostream& out)
+std::ostream& operator <<(std::ostream& out, const Index& object)
 {
   char* statement;
   char** result;
@@ -259,7 +259,6 @@ void Index :: print(std::ostream& out)
     statement = sqlite3_mprintf("SELECT * FROM %q", table[i]);
     database.query(statement, &result, &resultRow, &resultColumn);
 
-    out.setf(std::ios::showpos);
     out
         << std::endl
         << "--------------------------------------------------------" << std::endl
@@ -267,6 +266,9 @@ void Index :: print(std::ostream& out)
         << "table : " << tableName[i] << std::endl
         << "--------------------------------------------------------" << std::endl
         << std::endl;
+
+    out.setf(std::ios::showpos);
+
     for (int i = 0; i < ((resultRow + 1) * resultColumn); i++)
     {
       out
@@ -279,6 +281,8 @@ void Index :: print(std::ostream& out)
     sqlite3_free(statement);
     database.queryFree(result);
   }
+
+	return out;
 }
 
 /* -------- Private -------- */
