@@ -1,5 +1,5 @@
-#ifndef MLPTIDTID_H
-#define MLPTIDTID_H
+#ifndef SUPERVISEDTRICKIDENTIFIERTID_H
+#define SUPERVISEDTRICKIDENTIFIERTID_H
 
 #include <cstdlib>
 #include <ostream>
@@ -14,16 +14,16 @@
 #include <sqlite3.h>
 #include "../Database/Database.h"
 
-class MLPTID
+class SupervisedTrickIdentifier
 {
 	public:
-		MLPTID();
-		MLPTID(const char* filename);
+		SupervisedTrickIdentifier();
+		SupervisedTrickIdentifier(const char* filename);
 		std::vector<double> queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds);
 		void trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId);
 		int getId();
 		double getCorrelation();
-		friend std::ostream& operator <<(std::ostream& out, const MLPTID& object);
+		friend std::ostream& operator <<(std::ostream& out, const SupervisedTrickIdentifier& object);
 
 	private:
 		Database database;
@@ -49,4 +49,4 @@ class MLPTID
 		void createTables();
 };
 
-#endif // MLPTIDTID_H
+#endif // SUPERVISEDTRICKIDENTIFIERTID_H

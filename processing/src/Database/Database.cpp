@@ -4,7 +4,7 @@
 
 Database :: Database() {
 	// Default filename
-	const char* filename = "/Users/em/Documents/Imperial/Dissertation/implementation/processing/data/database.db";
+	const char* filename = "./database.db";
 
 	// Open connection
 	constantMessage = sqlite3_open(filename, &database);

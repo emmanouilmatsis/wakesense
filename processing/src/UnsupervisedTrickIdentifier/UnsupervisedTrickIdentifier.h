@@ -1,5 +1,5 @@
-#ifndef PCCTID_H
-#define PCCTID_H
+#ifndef UNSUPERVISEDTRICKIDENTIFIER_H
+#define UNSUPERVISEDTRICKIDENTIFIER_H
 
 #include <ostream>
 #include <iomanip>
@@ -9,16 +9,15 @@
 #include "../TrickDatabase/TrickDatabase.h"
 #include "../PearsonCorrelationCoefficient/PearsonCorrelationCoefficient.h"
 
-#include <iostream>
-
-class PCCTID {
+class UnsupervisedTrickIdentifier {
 	public:
-		PCCTID(std::string filename);
-		void run2D(std::vector<std::vector<int> > inputData);
-		void run3D(std::vector<std::vector<int> > inputData);
+		UnsupervisedTrickIdentifier(std::string filename);
+		void runPCC2D(std::vector<std::vector<int> > inputData);
+		void runPCC3D(std::vector<std::vector<int> > inputData);
+		void runSD(std::vector<std::vector<int> > inputData);
 		std::string getName();
 		double getCorrelation();
-		friend std::ostream& operator <<(std::ostream& out, const PCCTID& object);
+		friend std::ostream& operator <<(std::ostream& out, UnsupervisedTrickIdentifier& object);
 
 	protected:
 		TrickDatabase trickDatabase;
@@ -30,6 +29,7 @@ class PCCTID {
 		int correlationMaxIndex;
 		double correlationMax;
 		PearsonCorrelationCoefficient<int> pcc;
+		double standardDiviation(std::vector<int> input);
 };
 
-#endif // PCCTID_H
+#endif // UNSUPERVISEDTRICKIDENTIFIER_H

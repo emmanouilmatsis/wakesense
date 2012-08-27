@@ -2,7 +2,7 @@
 
 /* -------- Public -------- */
 
-Index :: Index()
+Index :: Index() : database("./indexDatabase.db")
 {
   // Create index tables
   createTables();
@@ -110,10 +110,6 @@ Entry Index :: getEntry(int entryId)
   database.query(statement, &result, &resultRow, &resultColumn);
   sqlite3_free(statement);
 
-#include <iostream>>
-  using namespace std;
-  cout << "entryId = " << entryId << endl;
-  cout << "resultRow = " << resultRow << endl;
   if (resultRow == 0)
   {
     database.queryFree(result);

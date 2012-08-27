@@ -1,8 +1,8 @@
-#include "PCCTID.h"
+#include "UnsupervisedTrickIdentifier.h"
 
 /* -------- Public -------- */
 
-PCCTID :: PCCTID(std::string filename)
+UnsupervisedTrickIdentifier :: UnsupervisedTrickIdentifier(std::string filename)
   : trickDatabase(filename)
 {
   // Initialize base data
@@ -22,7 +22,7 @@ PCCTID :: PCCTID(std::string filename)
       baseData[rowid - 1][i][2] = trick.roll[i];
     }
 
-		trick = trickDatabase.get(++rowid);
+    trick = trickDatabase.get(++rowid);
   }
 
   baseDataHeigth = baseData.size();
@@ -32,7 +32,7 @@ PCCTID :: PCCTID(std::string filename)
 
 /* ---------------- */
 
-void PCCTID :: run2D(std::vector<std::vector<int> > inputData)
+void UnsupervisedTrickIdentifier :: runPCC2D(std::vector<std::vector<int> > inputData)
 {
   // Verify equal number of samples
   if (inputData.size() != baseData[0].size())
@@ -75,7 +75,7 @@ void PCCTID :: run2D(std::vector<std::vector<int> > inputData)
 
 /* ---------------- */
 
-void PCCTID :: run3D(std::vector<std::vector<int> > inputData)
+void UnsupervisedTrickIdentifier :: runPCC3D(std::vector<std::vector<int> > inputData)
 {
   // Verify equal number of samples
   if (inputData.size() != baseData[0].size())
@@ -126,28 +126,102 @@ void PCCTID :: run3D(std::vector<std::vector<int> > inputData)
 
 /* ---------------- */
 
-std::string PCCTID :: getName()
+void UnsupervisedTrickIdentifier :: runSD(std::vector<std::vector<int> > inputData)
+{
+  // Verify equal number of samples
+  if (inputData.size() != baseData[0].size())
+    exit(1);
+
+  // Get parsed input data
+  this->inputData = inputData;
+
+  // Initialize input data
+  std::vector<std::vector<int> > inputDataTemp(baseDataDepth, std::vector<int>(baseDataWidth, 0));
+
+  for (unsigned int i = 0; i < baseDataDepth; i++)
+    for (unsigned int k = 0; k < baseDataWidth; k++)
+      inputDataTemp[i][k] = inputData[k][i];
+
+  // Standard diviation input data
+  double inputYawSD = standardDiviation(inputDataTemp[0]);
+  double inputPitchSD = standardDiviation(inputDataTemp[1]);
+  double inputRollSD = standardDiviation(inputDataTemp[2]);
+
+  // Initialize base data
+  std::vector<std::vector<std::vector<int> > > baseDataTemp(baseDataHeigth, std::vector<std::vector<int> >(baseDataDepth, std::vector<int>(baseDataWidth, 0)));
+
+  for (unsigned int i = 0; i < baseDataHeigth; i++)
+    for (unsigned int j = 0; j < baseDataDepth; j++)
+      for (unsigned int k = 0; k < baseDataWidth; k++)
+        baseDataTemp[i][j][k] =	baseData[i][k][j];
+
+	// Initialize 
+  correlationMaxIndex = 0;
+
+  // Standard diviation base data
+  for (unsigned int i = 0; i < baseDataHeigth; i++)
+  {
+    int yawSD = abs(inputYawSD - standardDiviation(baseDataTemp[i][0]));
+    int pitchSD = abs(inputPitchSD - standardDiviation(baseDataTemp[i][1]));
+    int rollSD = abs(inputRollSD - standardDiviation(baseDataTemp[i][2]));
+
+    if ((yawSD == 0) && (pitchSD == 0) && (rollSD == 0))
+    {
+      correlationMaxIndex = i;
+			correlationMax = 1;
+			return;
+    }
+  }
+}
+
+/* ---------------- */
+
+double UnsupervisedTrickIdentifier :: standardDiviation(std::vector<int> input)
+{
+  double size = input.size();
+
+  // Mean
+  double mean = 0;
+  for (unsigned int i = 0; i < input.size(); i++)
+    mean += input[i];
+  mean /= size;
+
+  // Standard diviation
+  double standardDiviation = 0;
+
+  for (unsigned int i = 0; i < input.size(); i++)
+    standardDiviation += ((input[i] - mean) * (input[i] - mean));
+  standardDiviation = sqrt(standardDiviation / size);
+
+  return standardDiviation;
+}
+
+/* ---------------- */
+
+std::string UnsupervisedTrickIdentifier :: getName()
 {
   return trickDatabase.get(correlationMaxIndex + 1).name;
 }
 
 /* ---------------- */
 
-double PCCTID :: getCorrelation()
+double UnsupervisedTrickIdentifier :: getCorrelation()
 {
   return correlationMax;
 }
 
 /* ---------------- */
 
-std::ostream& operator <<(std::ostream& out, const PCCTID& object)
+std::ostream& operator <<(std::ostream& out, UnsupervisedTrickIdentifier& object)
 {
   out.setf(std::ios::showpos);
+  out.setf(std::ios::fixed);
+  out.precision(3);
 
   out
       << std::endl
       << "--------------------------------------------------------" << std::endl
-      << "class : PCCTID" << std::endl
+      << "class : UnsupervisedTrickIdentifier" << std::endl
       << "field : Id, Correlation, InputData" << std::endl
       << "--------------------------------------------------------" << std::endl
       << std::endl;
@@ -175,13 +249,15 @@ std::ostream& operator <<(std::ostream& out, const PCCTID& object)
   out
       << std::endl
       << "--------------------------------------------------------" << std::endl
-      << "class : PCCTID" << std::endl
+      << "class : UnsupervisedTrickIdentifier" << std::endl
       << "field : BaseData" << std::endl
       << "--------------------------------------------------------" << std::endl
       << std::endl;
 
   for (unsigned int i = 0; i < object.baseDataHeigth; i++)
   {
+		out 
+				<< object.trickDatabase.get(i + 1).name << std::endl;
     for (unsigned int j = 0; j < object.baseDataWidth; j++)
     {
       out

@@ -1,8 +1,8 @@
-#include "MLPTID.h"
+#include "SupervisedTrickIdentifier.h"
 
 /* -------- Public -------- */
 
-MLPTID :: MLPTID()
+SupervisedTrickIdentifier :: SupervisedTrickIdentifier()
 {
 	// Create tables
 	createTables();
@@ -10,7 +10,7 @@ MLPTID :: MLPTID()
 
 /* ---------------- */
 
-MLPTID :: MLPTID(const char* filename) : database(filename)
+SupervisedTrickIdentifier :: SupervisedTrickIdentifier(const char* filename) : database(filename)
 {
 	// Create tables
 	createTables();
@@ -18,7 +18,7 @@ MLPTID :: MLPTID(const char* filename) : database(filename)
 
 /* ---------------- */
 
-std::vector<double> MLPTID :: queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds)
+std::vector<double> SupervisedTrickIdentifier :: queryNetwork(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	setup(sampleIds, trickIds);
 	result = feedForward();
@@ -27,7 +27,7 @@ std::vector<double> MLPTID :: queryNetwork(std::vector<int> sampleIds, std::vect
 
 /* ---------------- */
 
-void MLPTID :: trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId)
+void SupervisedTrickIdentifier :: trainNetwork(std::vector<int> sampleIds, std::vector<int> trickIds, int trickId)
 {
 	// Generate hidden
 	generateHidden(sampleIds, trickIds);
@@ -45,7 +45,7 @@ void MLPTID :: trainNetwork(std::vector<int> sampleIds, std::vector<int> trickId
 
 /* ------------------------- */
 
-int MLPTID :: getId()
+int SupervisedTrickIdentifier :: getId()
 {
 	int index = 0;
 	double resultMax = result[0];
@@ -62,7 +62,7 @@ int MLPTID :: getId()
 
 /* ------------------------- */
 
-double MLPTID :: getCorrelation()
+double SupervisedTrickIdentifier :: getCorrelation()
 {
 	double resultMax = result[0];
 	
@@ -75,7 +75,7 @@ double MLPTID :: getCorrelation()
 
 /* ------------------------- */
 
-std::ostream& operator <<(std::ostream& out, const MLPTID& object)
+std::ostream& operator <<(std::ostream& out, const SupervisedTrickIdentifier& object)
 {
 	char* statement;
 	char** result;
@@ -94,7 +94,7 @@ std::ostream& operator <<(std::ostream& out, const MLPTID& object)
     out
         << std::endl
         << "--------------------------------------------------------" << std::endl
-        << "class : MLPTID" << std::endl
+        << "class : SupervisedTrickIdentifier" << std::endl
         << "table : " << tableName[i] << std::endl
         << "--------------------------------------------------------" << std::endl
         << std::endl;
@@ -119,9 +119,9 @@ std::ostream& operator <<(std::ostream& out, const MLPTID& object)
 
 /* -------- Private -------- */
 
-void MLPTID :: createTables()
+void SupervisedTrickIdentifier :: createTables()
 {
-	// Create MLPTID tables
+	// Create SupervisedTrickIdentifier tables
 	database.query(
 			"CREATE TABLE IF NOT EXISTS hidden("
 			"node TEXT,"
@@ -147,7 +147,7 @@ void MLPTID :: createTables()
 
 /* ---------------- */
 
-void MLPTID :: setup(std::vector<int> sampleIds, std::vector<int> trickIds)
+void SupervisedTrickIdentifier :: setup(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	// Value lists
 	this->sampleIds = sampleIds;
@@ -174,7 +174,7 @@ void MLPTID :: setup(std::vector<int> sampleIds, std::vector<int> trickIds)
 
 /* ---------------- */
 
-std::vector<double> MLPTID :: feedForward()
+std::vector<double> SupervisedTrickIdentifier :: feedForward()
 {
 	// Input activations
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
@@ -203,7 +203,7 @@ std::vector<double> MLPTID :: feedForward()
 
 /* ---------------- */
 
-void MLPTID :: backPropagate(std::vector<double> targets, double N)
+void SupervisedTrickIdentifier :: backPropagate(std::vector<double> targets, double N)
 {
 	// Calculate ouput errors
 	std::vector<double> output_deltas(trickIds.size(), 0.0);
@@ -242,7 +242,7 @@ void MLPTID :: backPropagate(std::vector<double> targets, double N)
 
 /* ---------------- */
 
-void MLPTID :: updateDatabase()
+void SupervisedTrickIdentifier :: updateDatabase()
 {
 	// Update hiddenLeft strength
 	for (unsigned int i = 0; i < sampleIds.size(); i++)
@@ -257,7 +257,7 @@ void MLPTID :: updateDatabase()
 
 /* ---------------- */
 
-std::vector<int> MLPTID :: getAllHiddenIds(std::vector<int> sampleIds, std::vector<int> trickIds)
+std::vector<int> SupervisedTrickIdentifier :: getAllHiddenIds(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	std::set<int> hiddenIdsSet;
 
@@ -308,7 +308,7 @@ std::vector<int> MLPTID :: getAllHiddenIds(std::vector<int> sampleIds, std::vect
 
 /* ---------------- */
 
-void MLPTID :: generateHidden(std::vector<int> sampleIds, std::vector<int> trickIds)
+void SupervisedTrickIdentifier :: generateHidden(std::vector<int> sampleIds, std::vector<int> trickIds)
 {
 	//if (sampleIds.size() > 3) // TODO
 		//return;
@@ -397,7 +397,7 @@ void MLPTID :: generateHidden(std::vector<int> sampleIds, std::vector<int> trick
 
 /* ---------------- */
 
-double MLPTID :: getStrength(const char* table, int fromId, int toId)
+double SupervisedTrickIdentifier :: getStrength(const char* table, int fromId, int toId)
 {
 	char* statement;
 	char** result;
@@ -433,7 +433,7 @@ double MLPTID :: getStrength(const char* table, int fromId, int toId)
 
 /* ---------------- */
 
-void MLPTID :: setStrength(const char* table, int fromId, int toId, double strength)
+void SupervisedTrickIdentifier :: setStrength(const char* table, int fromId, int toId, double strength)
 {
 	char* statement;
 	char** result;
@@ -487,7 +487,7 @@ void MLPTID :: setStrength(const char* table, int fromId, int toId, double stren
 
 /* ---------------- */
 
-double MLPTID :: dtanh(double input)
+double SupervisedTrickIdentifier :: dtanh(double input)
 {
 	return (1.0 - (input * input));
 }
