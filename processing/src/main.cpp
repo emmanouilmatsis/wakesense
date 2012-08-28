@@ -7,6 +7,7 @@
 #include "UnsupervisedTrickIdentifier/UnsupervisedTrickIdentifier.h"
 #include "SupervisedTrickIdentifier/SupervisedTrickIdentifier.h"
 #include "Score/Score.h"
+#include "Visualizer/Visualizer.h"
 
 /* -------- Constant -------- */
 
@@ -26,11 +27,12 @@ int main(int argc, char** argv)
   bool in = false;
   bool out = false;
   bool print = false;
+  bool visualize = false;
 
   // Parse command line arguments
   if (argc < MIN_ARGC)
   {
-    std::cout << "Usage: [-t <PCC2D | PCC3D | SD | MLPQuery | MLPTrain>] [-i] [-o] [-p] " << std::endl;
+    std::cout << "Usage: [-t <PCC2D | PCC3D | SD | MLPQuery | MLPTrain>] [-i] [-o] [-p] [-v]" << std::endl;
     exit(0);
   }
   else
@@ -54,6 +56,10 @@ int main(int argc, char** argv)
       else if (arg == "-p")
       {
         print = true;
+      }
+      else if (arg == "-v")
+      {
+        visualize = true;
       }
       else
       {
@@ -110,10 +116,10 @@ int main(int argc, char** argv)
 
       if (type == "PCC2D")
         utid.runPCC2D(data);
-			else if (type == "PCC3D")
+      else if (type == "PCC3D")
         utid.runPCC3D(data);
-			else
-				utid.runSD(data);
+      else
+        utid.runSD(data);
 
       // Print results
       if (print)
@@ -122,10 +128,18 @@ int main(int argc, char** argv)
             << std::endl;
 
       // Get score
+      //score.run(utid.getName(), utid.getCorrelation(), data);
       score.run(utid.getName(), utid.getCorrelation(), data);
       std::cout
           << score
           << std::endl;
+
+      // Visualize data
+      if (visualize)
+      {
+        Visualizer visualizer(argc, argv);
+        visualizer.run(DEFAULT_DATABASE_FILENAME, utid.getName(), data);
+      }
     }
     else if (type == "MLPQuery")
     {
@@ -165,6 +179,13 @@ int main(int argc, char** argv)
       std::cout
           << score
           << std::endl;
+
+      // Visualize data
+      if (visualize)
+      {
+        Visualizer visualizer(argc, argv);
+        visualizer.run(DEFAULT_DATABASE_FILENAME, name, data);
+      }
     }
     else if (type == "MLPTrain")
     {
@@ -203,6 +224,13 @@ int main(int argc, char** argv)
             << index
             << stid
             << std::endl;
+
+      // Visualize data
+      if (visualize)
+      {
+        Visualizer visualizer(argc, argv);
+        visualizer.run(DEFAULT_DATABASE_FILENAME, name, data);
+      }
     }
   }
 
