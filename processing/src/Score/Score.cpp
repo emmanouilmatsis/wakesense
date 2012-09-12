@@ -54,7 +54,7 @@ std::ostream& operator <<(std::ostream& out, const Score& object)
       << std::setw(20) << std::left << "Rotation"
       << std::setw(20) << std::left << "Division Score"
       << std::setw(20) << std::left << "Execution Score"
-      << std::setw(20) << std::left << "Intenity Score"
+      << std::setw(20) << std::left << "Intensity Score"
       << std::setw(20) << std::left << "Composition Score"
       << std::setw(20) << std::left << "Total Score"
       << std::endl
@@ -64,12 +64,15 @@ std::ostream& operator <<(std::ostream& out, const Score& object)
       << std::setw(20) << std::left << object.trick.back().difficulty
       << std::setw(5) << std::left << object.trick.back().yawMax 
       << std::setw(5) << std::left << object.trick.back().pitchMax 
-      << std::setw(10) << std::left << object.trick.back().rollMax
+      << std::setw(10) << std::left << object.trick.back().rollMax;
+
+	out.unsetf(std::ios::showpos);
+	out	
       << std::setw(20) << std::left << object.division
-      << std::setw(20) << std::left << object.execution
-      << std::setw(20) << std::left << object.intensity
-      << std::setw(20) << std::left << object.composition
-      << std::setw(20) << std::left << object.total
+      << std::setw(5) << std::left << object.execution * 100 << std::setw(15) << std::left << "%"
+      << std::setw(5) << std::left << object.intensity * 100 << std::setw(15) << std::left << "%"
+      << std::setw(5) << std::left << object.composition * 100 << std::setw(15) << std::left << "%"
+      << std::setw(5) << std::left << object.total * 100 << std::setw(15) << std::left << "%"
       << std::endl
       << std::endl;
 

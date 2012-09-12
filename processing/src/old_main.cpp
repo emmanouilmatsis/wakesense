@@ -32,7 +32,7 @@ int main(int argc, char** argv)
   // Parse command line arguments
   if (argc < MIN_ARGC)
   {
-    std::cout << "Usage: [-t <utid | stidQuery | stidTrain>] [-i] [-o] [-p] [-v]" << std::endl;
+    std::cout << "Usage: [-t <PCC2D | PCC3D | SD | ED | MLPQuery | MLPTrain>] [-i] [-o] [-p] [-v]" << std::endl;
     exit(0);
   }
   else
@@ -109,11 +109,19 @@ int main(int argc, char** argv)
     }
 
     // Run data
-    if (type == "utid")
+    if ((type == "PCC2D") || (type == "PCC3D") || (type == "SD") || (type == "ED"))
     {
       // Run UnsupervisedTrickIdentifier2D
       UnsupervisedTrickIdentifier utid(DEFAULT_DATABASE_FILENAME);
-			utid.run(data);
+
+      if (type == "PCC2D")
+        utid.runPCC2D(data);
+      else if (type == "PCC3D")
+        utid.runPCC3D(data);
+      else if (type == "SD")
+        utid.runSD(data);
+			else
+				utid.runED(data);
 
       // Print results
       if (print)
@@ -122,6 +130,7 @@ int main(int argc, char** argv)
             << std::endl;
 
       // Get score
+      //score.run(utid.getName(), utid.getCorrelation(), data);
       score.run(utid.getName(), utid.getCorrelation(), data);
       std::cout
           << score
@@ -134,7 +143,7 @@ int main(int argc, char** argv)
         visualizer.run(DEFAULT_DATABASE_FILENAME, utid.getName(), data);
       }
     }
-    else if (type == "stidQuery")
+    else if (type == "MLPQuery")
     {
       // Format data
       std::vector<int> yaw(data.size(), 0);
@@ -180,7 +189,7 @@ int main(int argc, char** argv)
         visualizer.run(DEFAULT_DATABASE_FILENAME, name, data);
       }
     }
-    else if (type == "stidTrain")
+    else if (type == "MLPTrain")
     {
       // Get entry name
       std::string name;

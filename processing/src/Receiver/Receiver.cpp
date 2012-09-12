@@ -34,7 +34,7 @@ void Receiver :: getData(const char* filename, const char* id)
   else
   {
     char id[64];
-    std::cout << "Enter id: ";
+    std::cout << "Enter trick name: ";
     std::cin >> id;
     out << id;
   }

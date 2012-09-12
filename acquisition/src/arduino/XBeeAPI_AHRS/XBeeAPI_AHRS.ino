@@ -40,8 +40,8 @@
 #define PCC_SAMPLES 10
 //#define PCC_THRESHOLD_MIN -0.3
 //#define PCC_THRESHOLD_MAX 0.3
-#define PCC_THRESHOLD_MIN -0.7
-#define PCC_THRESHOLD_MAX 0.7
+#define PCC_THRESHOLD_MIN -0.5
+#define PCC_THRESHOLD_MAX 0.5
 
 // Various
 #define STATUS_LED_PIN 13  // pin number of status LED

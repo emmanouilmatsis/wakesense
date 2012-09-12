@@ -32,168 +32,113 @@ UnsupervisedTrickIdentifier :: UnsupervisedTrickIdentifier(std::string filename)
 
 /* ---------------- */
 
-void UnsupervisedTrickIdentifier :: runPCC2D(std::vector<std::vector<int> > inputData)
+void UnsupervisedTrickIdentifier :: run(std::vector<std::vector<int> > inputData)
 {
   // Verify equal number of samples
   if (inputData.size() != baseData[0].size())
     exit(1);
 
-  // Get parsed input data
+  // Get input data
   this->inputData = inputData;
 
-  // Initialize input data
-  std::vector<int> inputDataTemp(baseDataWidth, 0);
-
-  for (unsigned int i = 0; i < baseDataWidth; i++)
-    inputDataTemp[i] = std::sqrt(std::pow(static_cast<double>(inputData[i][0]), 2) + std::pow(static_cast<double>(inputData[i][1]), 2) + std::pow(static_cast<double>(inputData[i][2]), 2));
-
-  // Initialize base data
-  std::vector<std::vector<int> > baseDataTemp(baseDataHeigth, std::vector<int>(baseDataWidth, 0));
-
-  for (unsigned int i = 0; i < baseDataHeigth; i++)
-    for (unsigned int j = 0; j < baseDataWidth; j++)
-      baseDataTemp[i][j] = std::sqrt(std::pow(static_cast<double>(baseData[i][j][0]), 2) + std::pow(static_cast<double>(baseData[i][j][1]), 2) + std::pow(static_cast<double>(baseData[i][j][2]), 2));
-
-  // Initialize correlation max
-  correlationMaxIndex = 0;
-  correlationMax = pcc.calculate(inputDataTemp, baseDataTemp[0]);
-
-  // Correlate input data to each column of base data
-  for (unsigned int i = 0; i < baseDataHeigth; i++)
-  {
-    // Correlate input data to column i of base data
-    double correlation = pcc.calculate(inputDataTemp, baseDataTemp[i]);
-
-    // Update most correlated set index
-    if (correlationMax < correlation)
-    {
-      correlationMax = correlation;
-      correlationMaxIndex = i;
-    }
-  }
-}
-
-/* ---------------- */
-
-void UnsupervisedTrickIdentifier :: runPCC3D(std::vector<std::vector<int> > inputData)
-{
-  // Verify equal number of samples
-  if (inputData.size() != baseData[0].size())
-    exit(1);
-
-  // Get parsed input data
-  this->inputData = inputData;
-
-  // Initialize input data
+  // Format input data
   std::vector<std::vector<int> > inputDataTemp(baseDataDepth, std::vector<int>(baseDataWidth, 0));
 
   for (unsigned int i = 0; i < baseDataDepth; i++)
-    for (unsigned int k = 0; k < baseDataWidth; k++)
-      inputDataTemp[i][k] = inputData[k][i];
-
-  // Initialize base data
-  std::vector<std::vector<std::vector<int> > > baseDataTemp(baseDataHeigth, std::vector<std::vector<int> >(baseDataDepth, std::vector<int>(baseDataWidth, 0)));
-
-  for (unsigned int i = 0; i < baseDataHeigth; i++)
-    for (unsigned int j = 0; j < baseDataDepth; j++)
-      for (unsigned int k = 0; k < baseDataWidth; k++)
-        baseDataTemp[i][j][k] =	baseData[i][k][j];
-
-  // Initialize correlation max
-  correlationMaxIndex = 0;
-  correlationMax = (
-                     pcc.calculate(inputDataTemp[0], baseDataTemp[0][0]) +
-                     pcc.calculate(inputDataTemp[1], baseDataTemp[0][1]) +
-                     pcc.calculate(inputDataTemp[2], baseDataTemp[0][2])) / 3;
-
-  // Correlate input data to each column of base data
-  for (unsigned int i = 0; i < baseDataHeigth; i++)
   {
-    // Correlate input data to column i of base data
-    double correlation = (
-                           pcc.calculate(inputDataTemp[0], baseDataTemp[i][0]) +
-                           pcc.calculate(inputDataTemp[1], baseDataTemp[i][1]) +
-                           pcc.calculate(inputDataTemp[2], baseDataTemp[i][2])) / 3;
+    inputDataTemp[i][0] = inputData[0][i];
 
-    // Update most correlated set index
-    if (correlationMax < correlation)
+    for (unsigned int j = 1; j < baseDataWidth; j++)
     {
-      correlationMaxIndex = i;
-      correlationMax = correlation;
+      // Non-transitional
+      if ((inputData[j][i] >= 0 && inputData[j - 1][i] >= 0) || (inputData[j][i] <= 0 && inputData[j - 1][i] <= 0))
+      {
+        inputDataTemp[i][j] = inputDataTemp[i][j - 1] + (inputData[j][i] - inputData[j - 1][i]);
+      }
+      // Transitional
+      else
+      {
+        double integer, fraction;
+        fraction = modf((inputDataTemp[i][j - 1] / 180.0), &integer);
+
+        // High
+        if ((0.5 > fraction && fraction > -0.5) || (static_cast<int>(integer) % 2))
+          inputDataTemp[i][j] = inputDataTemp[i][j - 1] + (inputData[j][i] - inputData[j - 1][i]);
+        // Low
+        else
+          // Positive
+          if (inputDataTemp[i][j - 1] > 0)
+            inputDataTemp[i][j] = inputDataTemp[i][j - 1] + (360 + (inputData[j][i] - inputData[j - 1][i]));
+        	// Negative
+          else
+            inputDataTemp[i][j] = inputDataTemp[i][j - 1] + (-360 + (inputData[j][i] - inputData[j - 1][i]));
+      }
     }
   }
-}
 
-/* ---------------- */
-
-void UnsupervisedTrickIdentifier :: runSD(std::vector<std::vector<int> > inputData)
-{
-  // Verify equal number of samples
-  if (inputData.size() != baseData[0].size())
-    exit(1);
-
-  // Get parsed input data
-  this->inputData = inputData;
-
-  // Initialize input data
-  std::vector<std::vector<int> > inputDataTemp(baseDataDepth, std::vector<int>(baseDataWidth, 0));
-
-  for (unsigned int i = 0; i < baseDataDepth; i++)
-    for (unsigned int k = 0; k < baseDataWidth; k++)
-      inputDataTemp[i][k] = inputData[k][i];
-
-  // Standard diviation input data
-  double inputYawSD = standardDiviation(inputDataTemp[0]);
-  double inputPitchSD = standardDiviation(inputDataTemp[1]);
-  double inputRollSD = standardDiviation(inputDataTemp[2]);
-
-  // Initialize base data
+  // Format base data
   std::vector<std::vector<std::vector<int> > > baseDataTemp(baseDataHeigth, std::vector<std::vector<int> >(baseDataDepth, std::vector<int>(baseDataWidth, 0)));
 
   for (unsigned int i = 0; i < baseDataHeigth; i++)
+  {
     for (unsigned int j = 0; j < baseDataDepth; j++)
-      for (unsigned int k = 0; k < baseDataWidth; k++)
-        baseDataTemp[i][j][k] =	baseData[i][k][j];
+    {
+      baseDataTemp[i][j][0] = baseData[i][0][j];
 
-	// Initialize 
+      for (unsigned int k = 1; k < baseDataWidth; k++)
+      {
+        // Non-transitional
+        if ((baseData[i][k - 1][j] >= 0 && baseData[i][k][j] >= 0) || (baseData[i][k - 1][j] <= 0 && baseData[i][k][j] <= 0))
+        {
+          baseDataTemp[i][j][k] = baseDataTemp[i][j][k - 1] + (baseData[i][k][j] - baseData[i][k - 1][j]);
+        }
+        // Transitional
+        else
+        {
+          double integer, fraction;
+          fraction = modf((baseDataTemp[i][j][k - 1] / 180.0), &integer);
+
+          // High
+          if ((0.5 > fraction && fraction > -0.5) || (static_cast<int>(integer) % 2))
+            baseDataTemp[i][j][k] = baseDataTemp[i][j][k - 1] + (baseData[i][k][j] - baseData[i][k - 1][j]);
+          // Low
+          else
+            // Positive
+            if (baseDataTemp[i][j][k - 1] > 0)
+              baseDataTemp[i][j][k] = baseDataTemp[i][j][k - 1] + (360 + (baseData[i][k][j] - baseData[i][k - 1][j]));
+          	// Negative
+            else
+              baseDataTemp[i][j][k] = baseDataTemp[i][j][k - 1] + (-360 + (baseData[i][k][j] - baseData[i][k - 1][j]));
+        }
+      }
+    }
+  }
+
+  // Initialize
   correlationMaxIndex = 0;
+  correlationMax = ((ed.calculate(inputDataTemp[0], baseDataTemp[0][0]) +
+                     ed.calculate(inputDataTemp[1], baseDataTemp[0][1]) +
+                     ed.calculate(inputDataTemp[2], baseDataTemp[0][2])) / 3);
 
   // Standard diviation base data
   for (unsigned int i = 0; i < baseDataHeigth; i++)
   {
-    int yawSD = abs(inputYawSD - standardDiviation(baseDataTemp[i][0]));
-    int pitchSD = abs(inputPitchSD - standardDiviation(baseDataTemp[i][1]));
-    int rollSD = abs(inputRollSD - standardDiviation(baseDataTemp[i][2]));
+    double correlation = ((ed.calculate(inputDataTemp[0], baseDataTemp[i][0]) +
+                           ed.calculate(inputDataTemp[1], baseDataTemp[i][1]) +
+                           ed.calculate(inputDataTemp[2], baseDataTemp[i][2])) / 3);
 
-    if ((yawSD == 0) && (pitchSD == 0) && (rollSD == 0))
+    if (correlation > correlationMax)
     {
       correlationMaxIndex = i;
-			correlationMax = 1;
-			return;
+      correlationMax = correlation;
     }
   }
-}
 
-/* ---------------- */
-
-double UnsupervisedTrickIdentifier :: standardDiviation(std::vector<int> input)
-{
-  double size = input.size();
-
-  // Mean
-  double mean = 0;
-  for (unsigned int i = 0; i < input.size(); i++)
-    mean += input[i];
-  mean /= size;
-
-  // Standard diviation
-  double standardDiviation = 0;
-
-  for (unsigned int i = 0; i < input.size(); i++)
-    standardDiviation += ((input[i] - mean) * (input[i] - mean));
-  standardDiviation = sqrt(standardDiviation / size);
-
-  return standardDiviation;
+  //cout << endl;
+  //cout << "Input Data:" << "\t\t" << "Base Data: "<< endl;
+  //for (unsigned int i = 0; i < baseDataWidth; i++)
+  //  cout << inputDataTemp[0][i] << '\t' << inputDataTemp[1][i] << '\t' << inputDataTemp[2][i] << '\t'
+  //       << baseDataTemp[correlationMaxIndex][0][i] << '\t' << baseDataTemp[correlationMaxIndex][1][i] << '\t' << baseDataTemp[correlationMaxIndex][2][i] << endl;
 }
 
 /* ---------------- */
@@ -256,8 +201,8 @@ std::ostream& operator <<(std::ostream& out, UnsupervisedTrickIdentifier& object
 
   for (unsigned int i = 0; i < object.baseDataHeigth; i++)
   {
-		out 
-				<< object.trickDatabase.get(i + 1).name << std::endl;
+    out
+        << object.trickDatabase.get(i + 1).name << std::endl;
     for (unsigned int j = 0; j < object.baseDataWidth; j++)
     {
       out

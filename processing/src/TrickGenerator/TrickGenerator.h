@@ -10,8 +10,8 @@
 
 #define DURATION 1000
 #define INTERVAL 20
-#define DEFAULT_VALUE_MIN -5
-#define DEFAULT_VALUE_MAX 5
+#define DEFAULT_VALUE_MIN 0
+#define DEFAULT_VALUE_MAX 0
 #define DEFAULT_VALUE (DEFAULT_VALUE_MIN + (rand() % (int)(DEFAULT_VALUE_MAX - DEFAULT_VALUE_MIN + 1)))
 
 class TrickGenerator
